@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.MyTunesController">
+   <children>
+      <ProgressBar fx:id="progressBar" layoutX="223.0" layoutY="446.0" prefHeight="18.0" prefWidth="523.0" progress="0.0" />
+      <Label fx:id="txtNowPlaying" alignment="CENTER" layoutX="223.0" layoutY="381.0" prefHeight="40.0" prefWidth="523.0" text="Song Title - Artist Name" />
+      <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="587.0" layoutY="511.0" showTickLabels="true" showTickMarks="true" value="50.0" />
+      <Label layoutX="637.0" layoutY="485.0" text="Volume" />
+      <TextField fx:id="searchBar" layoutX="571.0" layoutY="48.0" />
+      <HBox layoutX="296.0" layoutY="498.0" prefHeight="18.0" prefWidth="226.0">
+         <children>
+            <Button fx:id="btnPlay" mnemonicParsing="false" text="Play">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnPause" mnemonicParsing="false" text="Pause">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnPrevious" mnemonicParsing="false" text="Previous">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnNext" mnemonicParsing="false" text="Next">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
