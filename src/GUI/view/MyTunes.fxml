@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.MyTunesController">
    <children>
       <ProgressBar fx:id="progressBar" layoutX="223.0" layoutY="446.0" prefHeight="18.0" prefWidth="523.0" progress="0.0" />
@@ -19,7 +18,7 @@
       <TextField fx:id="searchBar" layoutX="571.0" layoutY="48.0" />
       <HBox layoutX="296.0" layoutY="498.0" prefHeight="18.0" prefWidth="226.0">
          <children>
-            <Button fx:id="btnPlay" mnemonicParsing="false" text="Play">
+            <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#clickPlay" text="Play">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>

@@ -29,7 +29,6 @@ public class MyTunes extends Application {
 
 
     public static void main (String[] args) {
-        System.out.println("Hey girl!");
         launch();
     }
 }
