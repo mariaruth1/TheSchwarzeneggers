@@ -24,4 +24,61 @@ public class Song {
         this.songLenth = songLenth;
         this.genre = genre;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public int getSongLenth() {
+        return songLenth;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public void setSongLenth(int songLenth) {
+        this.songLenth = songLenth;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    @Override
+    public String toString() {
+        return  title + " " + year + " " + artist + " " + album + " " + songLenth + " " + genre;
+    }
 }
