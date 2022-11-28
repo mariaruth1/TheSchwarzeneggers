@@ -25,6 +25,7 @@ public class MyTunes extends Application {
 
 
         stage.show();
+
     }
 
 
