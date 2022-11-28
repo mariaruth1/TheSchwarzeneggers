@@ -7,13 +7,13 @@ public class Playlist {
 
     private int songs;
 
-    private int songLenth;
+    private int songLength;
 
 
-    public Playlist(int id, String title, int songs, int songLenth) {
+    public Playlist(int id, String title, int songs, int songLength) {
         this.id = id;
         this.title = title;
-        this.songLenth = songLenth;
+        this.songLength = songLength;
     }
 
     public int getId() {
@@ -24,8 +24,8 @@ public class Playlist {
         return title;
     }
 
-    public int getSongLenth() {
-        return songLenth;
+    public int getSongLength() {
+        return songLength;
     }
 
     public void setTitle(String title) {
@@ -33,13 +33,13 @@ public class Playlist {
     }
 
     public void setSongLenth(int songLenth) {
-        this.songLenth = songLenth;
+        this.songLength = songLenth;
     }
 
 
     @Override
     public String toString() {
-        return  title + " " + songs + " " + songLenth;
+        return  title + " " + songs + " " + songLength;
     }
 }
 
