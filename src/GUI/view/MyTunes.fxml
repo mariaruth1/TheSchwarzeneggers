@@ -13,27 +13,32 @@
    <children>
       <ProgressBar fx:id="progressBar" layoutX="223.0" layoutY="446.0" prefHeight="18.0" prefWidth="523.0" progress="0.0" />
       <Label fx:id="txtNowPlaying" alignment="CENTER" layoutX="223.0" layoutY="381.0" prefHeight="40.0" prefWidth="523.0" text="Song Title - Artist Name" />
-      <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="587.0" layoutY="511.0" showTickLabels="true" showTickMarks="true" value="50.0" />
+      <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="587.0" layoutY="511.0" onDragDetected="#dragVolumeSlider" showTickLabels="true" showTickMarks="true" value="50.0" />
       <Label layoutX="637.0" layoutY="485.0" text="Volume" />
       <TextField fx:id="searchBar" layoutX="571.0" layoutY="48.0" />
-      <HBox layoutX="296.0" layoutY="498.0" prefHeight="18.0" prefWidth="226.0">
+      <HBox layoutX="233.0" layoutY="498.0" prefHeight="26.0" prefWidth="282.0">
          <children>
             <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#clickPlay" text="Play">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnPause" mnemonicParsing="false" text="Pause">
+            <Button fx:id="btnPause" mnemonicParsing="false" onAction="#clickPause" text="Pause">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnPrevious" mnemonicParsing="false" text="Previous">
+            <Button fx:id="btnStop" mnemonicParsing="false" onAction="#clickStop" text="Stop">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnNext" mnemonicParsing="false" text="Next">
+            <Button fx:id="btnPrevious" mnemonicParsing="false" onAction="#clickPrevious" text="Previous">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnNext" mnemonicParsing="false" onAction="#clickNext" text="Next">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
