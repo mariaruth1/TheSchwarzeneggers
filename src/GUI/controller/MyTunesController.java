@@ -1,4 +1,5 @@
 package GUI.controller;
+import entities.Song;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -15,6 +16,8 @@ public class MyTunesController implements Initializable {
     public Button btnPause;
     public Button btnPrevious;
     public Button btnNext;
+    private ListView<Song> lstSongs;
+
 
 
 
