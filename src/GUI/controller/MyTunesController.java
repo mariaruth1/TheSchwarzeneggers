@@ -1,4 +1,5 @@
 package GUI.controller;
+import LogicLayer.Player;
 import entities.Song;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -19,7 +20,7 @@ public class MyTunesController implements Initializable {
     private ListView<Song> lstSongs;
 
 
-
+    Player player = new Player();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -28,6 +29,6 @@ public class MyTunesController implements Initializable {
 
 
     public void clickPlay(ActionEvent actionEvent) {
-        //Media and media-player class - play media
+        player.playSong();
     }
 }
