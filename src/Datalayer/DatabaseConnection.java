@@ -6,10 +6,10 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 
 public class DatabaseConnection {
-   // public static void main(String[] args) {
-       // DatabaseConnection DBC = new DatabaseConnection();
-     //   DBC.addSongToDataBase( "navn",1999,"John", "songs","jazz",1.20,"pathy");
-   // }
+   //public static void main(String[] args) {
+     //   DatabaseConnection DBC = new DatabaseConnection();
+       //DBC.addSongToDataBase( "navn",1999,"John", "songs","jazz",1.20,"pathy");
+    //}
 
 
     public void addSongToDataBase(String title,int year,String artist,String album,String genre,double songLength,String path) {
@@ -28,7 +28,10 @@ public class DatabaseConnection {
         } catch (SQLServerException e) {
             throw new RuntimeException(e);
         }
-        String sql = "INSERT INTO Songs (Title, Year, Artist, Album, Genre, SongLength, Path)" + "VALUES" + "('" + title + "', '" + year + "', '" + artist + "', '" + album + "', '" + genre + "', '" + songLength + "', '" + path + "')";
+        //above code makes a connection to the database
+        // below code runs the SQL code to add a song to the database based onthe imput the meteod got
+        String sql = "INSERT INTO Songs (Title, Year, Artist, Album, Genre, SongLength, Path)" +
+                "VALUES" + "('" + title + "', '" + year + "', '" + artist + "', '" + album + "', '" + genre + "', '" + songLength + "', '" + path + "')";
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
