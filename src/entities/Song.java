@@ -11,17 +11,17 @@ public class Song {
 
     private String album;
 
-    private int songLenth;
+    private int songLength;
 
     private String genre;
 
-    public Song(int id, String title, int year, String artist, String album, int songLenth, String genre) {
+    public Song(int id, String title, int year, String artist, String album, int songLength, String genre) {
         this.id = id;
         this.title = title;
         this.year = year;
         this.artist = artist;
         this.album = album;
-        this.songLenth = songLenth;
+        this.songLength = songLength;
         this.genre = genre;
     }
 
@@ -45,8 +45,8 @@ public class Song {
         return album;
     }
 
-    public int getSongLenth() {
-        return songLenth;
+    public int getSongLength() {
+        return songLength;
     }
 
     public String getGenre() {
@@ -69,8 +69,8 @@ public class Song {
         this.album = album;
     }
 
-    public void setSongLenth(int songLenth) {
-        this.songLenth = songLenth;
+    public void setSongLength(int songLength) {
+        this.songLength = songLength;
     }
 
     public void setGenre(String genre) {
@@ -79,6 +79,6 @@ public class Song {
 
     @Override
     public String toString() {
-        return  title + " " + year + " " + artist + " " + album + " " + songLenth + " " + genre;
+        return  title + " " + year + " " + artist + " " + album + " " + songLength + " " + genre;
     }
 }

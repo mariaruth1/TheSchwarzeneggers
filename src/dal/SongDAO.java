@@ -8,7 +8,6 @@ import java.util.List;
 
 public class SongDAO {
 
-
     public List<Song> getAllSongs()
     {
         return null;
@@ -31,7 +30,16 @@ public class SongDAO {
 
     private int getNextId()
     {
-        throw new RuntimeException();
+        {
+            List<Song> songs = getAllSongs();
+            int biggestId = 0;
+            for(Song s : songs)
+            {
+                if (biggestId<s.getId())
+                    biggestId = s.getId();
+            }
+            return biggestId+1;
+        }
     }
 
     public Song getSong(int id)
