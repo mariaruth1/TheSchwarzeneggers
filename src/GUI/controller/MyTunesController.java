@@ -1,40 +1,38 @@
 package GUI.controller;
 import LogicLayer.Player;
-import entities.Song;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MyTunesController implements Initializable {
 
-    public ProgressBar progressBar;
-    public Label txtNowPlaying;
-    public Slider volumeSlider;
-    public TextField searchBar;
-    public Button btnPlay;
-    public Button btnPause;
-    public Button btnPrevious;
-    public Button btnNext;
-    private ListView<Song> lstSongs;
+    @FXML
+    private ProgressBar progressBar;
+    @FXML
+    private Label txtNowPlaying;
+    @FXML
+    private Slider volumeSlider;
+    @FXML
+    private TextField searchBar;
+    @FXML
+    private Button btnPlay, btnPause, btnStop, btnPrevious, btnNext;
 
 
     Player player = new Player();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Call to database here?
+
     }
 
 
     @FXML
     private void clickPlay(ActionEvent actionEvent) {
         player.playSong();
-        progressBar.setProgress(player.songProgress());
     }
 
     @FXML
@@ -57,7 +55,9 @@ public class MyTunesController implements Initializable {
         player.nextSong();
     }
 
-    public void dragVolumeSlider(MouseEvent mouseEvent) {
-        //TODO implement method
+    @FXML
+    private void dragVolumeSlider(MouseEvent mouseEvent) {
+
     }
+
 }
