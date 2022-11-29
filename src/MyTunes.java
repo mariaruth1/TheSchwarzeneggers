@@ -13,7 +13,7 @@ public class MyTunes extends Application {
     {
 
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GUI/view/MyTunes.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GUI/view/AddSongMenu.fxml")));
 
         Scene scene = new Scene(root);
 

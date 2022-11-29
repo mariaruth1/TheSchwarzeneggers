@@ -1,5 +1,6 @@
 package dal;
 
+import entities.Playlist;
 import entities.Song;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class PlaylistDAO {
         throw new RuntimeException();
     }
 
-    public void createPlaylist()
+    public Playlist addPlaylist(String name)
     {
         throw new RuntimeException();
     }
@@ -20,8 +21,15 @@ public class PlaylistDAO {
         throw new RuntimeException();
     }
 
-    public void getNextId()
+    private int getNextId()
     {
-        throw new RuntimeException();
-    }
-}
+                List<Song> songs = getAllPlaylists();
+                int biggestId = 0;
+                for(Song s : songs)
+                {
+                    if (biggestId<s.getId())
+                        biggestId = s.getId();
+                }
+                return biggestId+1;
+            }
+        }

@@ -7,13 +7,14 @@ public class Playlist {
 
     private int songs;
 
-    private int songLength;
+    private int playlistLength;
 
 
-    public Playlist(int id, String title, int songs, int songLength) {
+    public Playlist(int id, String title, int songs, int playlistLength) {
         this.id = id;
         this.title = title;
-        this.songLength = songLength;
+        this.songs = songs;
+        this.playlistLength = playlistLength;
     }
 
     public int getId() {
@@ -24,22 +25,22 @@ public class Playlist {
         return title;
     }
 
-    public int getSongLength() {
-        return songLength;
+    public int getPlaylistLength() {
+        return playlistLength;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setSongLenth(int songLenth) {
-        this.songLength = songLenth;
+    public void setSongLength(int playlistLength) {
+        this.playlistLength = playlistLength;
     }
 
 
     @Override
     public String toString() {
-        return  title + " " + songs + " " + songLength;
+        return  title + " " + songs + " " + playlistLength;
     }
 }
 
