@@ -6,10 +6,12 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 
 public class DatabaseConnection {
-   //public static void main(String[] args) {
-     //   DatabaseConnection DBC = new DatabaseConnection();
-       //DBC.addSongToDataBase( "navn",1999,"John", "songs","jazz",1.20,"pathy");
-    //}
+   /**
+    public static void main(String[] args) {
+        DatabaseConnection DBC = new DatabaseConnection();
+       DBC.addSongToDataBase( "Super Best Song",1999,"Mads", "songs","jazz",1.20,"pathy");
+    }
+    **/
 
 
     public void addSongToDataBase(String title,int year,String artist,String album,String genre,double songLength,String path) {

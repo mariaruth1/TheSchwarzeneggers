@@ -3,14 +3,13 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.io.File;
 
+
 public class Player {
-    String fileName = "songs/Kirk Osamayo - Wander To The Moon.mp3";
+
+    String fileName ="songs/Kirk Osamayo - Wander To The Moon.mp3";
     Media media = new Media(new File(fileName).toURI().toString());
-    //media = new Media(songs.get(songNumber).toURI().toString());
+    //Media media = new Media(songs.get(songNumber).toURI().toString());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
-
-
-
 
     public void playSong(){
         try {
@@ -21,6 +20,9 @@ public class Player {
         }
     }
 
+    public String getCurrentSong(){
+        return fileName; //placeholder implementation
+    }
 
     public void pauseSong() {
         try {
@@ -55,5 +57,17 @@ public class Player {
         }
     }
 
+    public void volumeIncrement(double volume){
+        if (volume == 0)
+            mediaPlayer.setVolume(0);
+        if(volume == 25)
+            mediaPlayer.setVolume(0.25);
+        if(volume == 50)
+            mediaPlayer.setVolume(0.5);
+        if(volume == 75)
+            mediaPlayer.setVolume(0.75);
+        if(volume == 100)
+            mediaPlayer.setVolume(1.0);
+    }
 }
 

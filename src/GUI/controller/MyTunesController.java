@@ -26,7 +26,7 @@ public class MyTunesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        txtNowPlaying.setText(player.getCurrentSong());
     }
 
 
@@ -57,7 +57,7 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void dragVolumeSlider(MouseEvent mouseEvent) {
-
+        player.volumeIncrement(volumeSlider.getBlockIncrement());
     }
 
 }

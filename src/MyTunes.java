@@ -10,18 +10,12 @@ public class MyTunes extends Application {
     @Override
     public void start(Stage stage) throws Exception
     {
-
-
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GUI/view/AddSongMenu.fxml")));
-
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GUI/view/MyTunes.fxml")));
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("MyTunes");
         stage.centerOnScreen();
-
-
         stage.show();
     }
 
