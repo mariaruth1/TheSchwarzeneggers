@@ -11,9 +11,9 @@ public class SongModel {
     private final ObservableList<Playlist> playlists;
     private LogicManager bll = new LogicManager();
 
-    public SongModel(){
-    songs = FXCollections.observableArrayList();
-    playlists = FXCollections.observableArrayList();
+    public SongModel() {
+        songs = FXCollections.observableArrayList();
+        playlists = FXCollections.observableArrayList();
     }
 
     public void search(String text) {
@@ -27,10 +27,10 @@ public class SongModel {
         return song;
     }
 
-    public Playlist createPlaylist(String name)
-    {
+    public Playlist createPlaylist(String name) {
         Playlist playlist = bll.createPlaylist(name);
         playlists.add(playlist);
         return playlist;
     }
+
 }

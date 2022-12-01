@@ -11,7 +11,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,5 +52,18 @@ public class AddSongMenuController implements Initializable {
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
+    }
+
+    // looks through files only mp3 works
+    public void clickChoose(ActionEvent actionEvent) {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "MP3 FILES", "mp3");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            txtFile.setText(chooser.getSelectedFile().toString());
+            txtFile.setEditable(false);
+        }
     }
 }

@@ -47,7 +47,7 @@
             <TextField fx:id="txtFile" layoutX="68.0" layoutY="191.0" prefHeight="25.0" prefWidth="228.0" />
             <Label layoutX="36.0" layoutY="195.0" text="File" />
             <ChoiceBox fx:id="choiceBox" layoutX="68.0" layoutY="116.0" prefHeight="25.0" prefWidth="84.0" />
-            <Button layoutX="308.0" layoutY="191.0" mnemonicParsing="false" text="Choose..." />
+            <Button layoutX="308.0" layoutY="191.0" mnemonicParsing="false" onAction="#clickChoose" text="Choose..." />
          </children>
       </AnchorPane>
    </children>
