@@ -21,8 +21,13 @@ public class MyTunesController implements Initializable {
     @FXML
     private Button btnPlay, btnPause, btnStop, btnPrevious, btnNext;
 
-
     Player player = new Player();
+
+
+    private double songProgress = player.getSongProgress();
+    private double songLength = player.getSongLength();
+    private double currentPercentProgress = songProgress/songLength;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,9 +60,27 @@ public class MyTunesController implements Initializable {
         player.nextSong();
     }
 
+    /**
+     *
+     * @FXML
+    private void bindProgressBar(){
+        progressBar.progressProperty().bind(
+                Bindings.createDoubleBinding(() -> player.getSongProgress() / player.getSongLength()
+        ));
+    }
+
+    @FXML
+    private void setValueProgressBar(){
+        DoubleProperty num1 = new SimpleDoubleProperty(songProgress);
+        DoubleProperty num2 = new SimpleDoubleProperty(songLength);
+        NumberBinding result = Bindings.divide(num1,num2);
+        num1.setValue(num2);
+    }
+     */
+
     @FXML
     private void dragVolumeSlider(MouseEvent mouseEvent) {
         player.volumeIncrement(volumeSlider.getBlockIncrement());
+        //do i need a listener?
     }
-
 }

@@ -1,8 +1,9 @@
 package LogicLayer;
-
 import Datalayer.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
+import javax.xml.datatype.Duration;
 import java.io.File;
 
 
@@ -12,6 +13,14 @@ public class Player {
     Media media = new Media(new File(fileName).toURI().toString());
     //Media media = new Media(songs.get(songNumber).toURI().toString());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+    public double getSongProgress(){
+        return mediaPlayer.getCurrentTime().toMillis();
+    }
+
+    public double getSongLength(){
+        return mediaPlayer.getStopTime().toMillis();
+    }
 
     public void playSong(){
         try {
