@@ -11,7 +11,6 @@ public class Song {
 
     private String album;
 
-    private int songLength;
 
     private String genre;
 
@@ -21,7 +20,6 @@ public class Song {
         this.year = year;
         this.artist = artist;
         this.album = album;
-        this.songLength = songLength;
         this.genre = genre;
     }
 
@@ -45,9 +43,6 @@ public class Song {
         return album;
     }
 
-    public int getSongLength() {
-        return songLength;
-    }
 
     public String getGenre() {
         return genre;
@@ -69,16 +64,12 @@ public class Song {
         this.album = album;
     }
 
-    public void setSongLength(int songLength) {
-        this.songLength = songLength;
-    }
-
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
     @Override
     public String toString() {
-        return  title + " " + year + " " + artist + " " + album + " " + songLength + " " + genre;
+        return  title + " " + year + " " + artist + " " + album + " " + genre;
     }
 }

@@ -1,8 +1,8 @@
 package LogicLayer;
 
 
-import dal.PlaylistDAO;
-import dal.SongDAO;
+import Datalayer.PlaylistDAO;
+import Datalayer.SongDAO;
 import entities.Playlist;
 import entities.Song;
 import org.apache.tika.exception.TikaException;
@@ -13,7 +13,7 @@ import org.apache.tika.parser.mp3.Mp3Parser;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
+import Datalayer.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +22,9 @@ import java.util.List;
 public class LogicManager {
     public static void main(String[] args) {
         LogicManager DBC = new LogicManager();
-        DBC.getSongMetadata(("songs/SUPERARE - Bikinis & Swimshorts.mp3"));
+        DBC.addSong(("songs/Atch - Time Out.mp3"));
+
+
     }
 
     private SongDAO songDAO = new SongDAO();
@@ -57,7 +59,7 @@ public class LogicManager {
         return outputPath;
     }
 
-    private void getSongMetadata(String filePath){
+    private String getSongTitle(String filePath){
         //looks for relevant metadata on the file, that can be added
         try {
 
@@ -69,29 +71,16 @@ public class LogicManager {
             parser.parse(input, (org.xml.sax.ContentHandler) handler, metadata, parseCtx);
             input.close();
 
-            String[] metadataNames = metadata.names();
-            for(String name : metadataNames){
-                System.out.println(name + ": " + metadata.get(name));
-            }
             String title = metadata.get("title");
-            String artist = metadata.get("xmpDM:artist");
-            String date = metadata.get("xmpDM:releaseDate");
-            String genre = metadata.get("xmpDM:genre");
-            String album = metadata.get("xmpDM:album");
-            String duration = metadata.get("xmpDM:duration");
 
-            String year = "";
-            if(date != null) {
-                if (date.length() > 0) {
-                    year = date.substring(0, 4);
-                    Integer.parseInt(year);
-                }
-            }
+            if(title == null){
+                File f = new File(filePath);
+                String fileTitle = f.getName();
+                String fileTileWithOutMP3 = fileTitle.substring(0, fileTitle.length() - 4);
+                return fileTileWithOutMP3;
+            }else return title;
 
 
-
-            System.out.println(title + " " + artist + " " + genre + " " + album + " " + year  + " " + duration);
-            // return (title, artist, genre, album, year);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -101,11 +90,149 @@ public class LogicManager {
         } catch (TikaException e) {
             e.printStackTrace();
         }
+
+        return null;
+    }
+    private String getSongArtist(String filePath){
+        //looks for relevant metadata on the file, that can be added
+        try {
+
+            InputStream input = new FileInputStream(new File(filePath));
+            ContentHandler handler = (ContentHandler) new DefaultHandler();
+            Metadata metadata = new Metadata();
+            Parser parser = new Mp3Parser();
+            ParseContext parseCtx = new ParseContext();
+            parser.parse(input, (org.xml.sax.ContentHandler) handler, metadata, parseCtx);
+            input.close();
+
+            String artist = metadata.get("xmpDM:artist");
+
+            return artist;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (TikaException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private int getSongReleaseYear(String filePath){
+        //looks for relevant metadata on the file, that can be added
+        try {
+
+            InputStream input = new FileInputStream(new File(filePath));
+            ContentHandler handler = (ContentHandler) new DefaultHandler();
+            Metadata metadata = new Metadata();
+            Parser parser = new Mp3Parser();
+            ParseContext parseCtx = new ParseContext();
+            parser.parse(input, (org.xml.sax.ContentHandler) handler, metadata, parseCtx);
+            input.close();
+
+
+            String date = metadata.get("xmpDM:releaseDate");
+
+
+            String year = "";
+            if(date != null) {
+                if (date.length() > 0) {
+                    year = date.substring(0, 4);
+                    return Integer.parseInt(year);
+                }
+            } else return 0;
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (TikaException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+    private String getSongGenre(String filePath){
+        //looks for relevant metadata on the file, that can be added
+        try {
+
+            InputStream input = new FileInputStream(new File(filePath));
+            ContentHandler handler = (ContentHandler) new DefaultHandler();
+            Metadata metadata = new Metadata();
+            Parser parser = new Mp3Parser();
+            ParseContext parseCtx = new ParseContext();
+            parser.parse(input, (org.xml.sax.ContentHandler) handler, metadata, parseCtx);
+            input.close();
+
+            String genre = metadata.get("xmpDM:genre");
+
+            return genre;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (TikaException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    private String getSongAlbum(String filePath){
+        //looks for relevant metadata on the file, that can be added
+        try {
+
+            InputStream input = new FileInputStream(new File(filePath));
+            ContentHandler handler = (ContentHandler) new DefaultHandler();
+            Metadata metadata = new Metadata();
+            Parser parser = new Mp3Parser();
+            ParseContext parseCtx = new ParseContext();
+            parser.parse(input, (org.xml.sax.ContentHandler) handler, metadata, parseCtx);
+            input.close();
+
+            String album = metadata.get("xmpDM:album");
+
+
+            return album;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (TikaException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
     public void addSong(String filePath) {
-        //moveFile(filePath);
-        //DatabaseConnection dc = new DatabaseConnection();
-        //dc.addSongToDataBase(songName, 2000,"artist", "album","genre",1.3 ,"c/path");
+
+        String title = getSongTitle(filePath);
+        String artist = getSongArtist(filePath);
+        String album = getSongAlbum(filePath);
+        String genre = getSongGenre(filePath);
+        int year = getSongReleaseYear(filePath);
+
+
+
+        DatabaseConnection dc = new DatabaseConnection();
+        int nextiD = dc.getNextSongID();
+
+
+        dc.addSongToDataBase(title, year,artist, album,genre,filePath, nextiD);
+
+        moveFile(filePath);
     }
 
 
