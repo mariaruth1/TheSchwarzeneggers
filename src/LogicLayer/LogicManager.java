@@ -21,9 +21,7 @@ import java.util.List;
 public class LogicManager {
     public static void main(String[] args) {
         LogicManager DBC = new LogicManager();
-        DBC.addSong(("songs/Atch - Time Out.mp3"));
-
-
+        DBC.addSong("Sang navn",543,"John Doe","best Album","jazz", "path of no return" );
     }
 
     private SongDAO songDAO = new SongDAO();
@@ -36,7 +34,8 @@ public class LogicManager {
 
     public Song createSong(String title, String artist) {
 
-        return songDAO.addSong(title, artist);
+      //  return songDAO.addSong(title, artist);
+        return null;
     }
 
     public Playlist createPlaylist(String name) {
@@ -44,7 +43,6 @@ public class LogicManager {
         return playlistDAO.addPlaylist(name);
     }
 
-    //String inputPath = "C:\\Users\\madsp\\Documents/Atch - Time Out.mp3";
 
     private String moveFile(String inputPath) {
         File f = new File(inputPath);
@@ -59,7 +57,7 @@ public class LogicManager {
     }
 
     private String getSongTitle(String filePath){
-        //looks for relevant metadata on the file, that can be added
+        //looks for a title on the file, that can be added
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -93,7 +91,7 @@ public class LogicManager {
         return null;
     }
     private String getSongArtist(String filePath){
-        //looks for relevant metadata on the file, that can be added
+        //looks for an artist on the file, that can be added
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -105,8 +103,11 @@ public class LogicManager {
             input.close();
 
             String artist = metadata.get("xmpDM:artist");
+            if(artist == null) {
+                return "";
+            }else return artist;
 
-            return artist;
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -118,11 +119,11 @@ public class LogicManager {
             e.printStackTrace();
         }
 
-        return null;
+        return "";
     }
 
     private int getSongReleaseYear(String filePath){
-        //looks for relevant metadata on the file, that can be added
+        //looks for a year on the file, that can be added
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -159,7 +160,7 @@ public class LogicManager {
         return 0;
     }
     private String getSongGenre(String filePath){
-        //looks for relevant metadata on the file, that can be added
+        //looks for a genre on the file, that can be added
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -171,8 +172,9 @@ public class LogicManager {
             input.close();
 
             String genre = metadata.get("xmpDM:genre");
-
-            return genre;
+            if(genre == null) {
+                return "";
+            }else return genre;
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -184,10 +186,10 @@ public class LogicManager {
             e.printStackTrace();
         }
 
-        return null;
+        return "";
     }
     private String getSongAlbum(String filePath){
-        //looks for relevant metadata on the file, that can be added
+        //looks for an album on the file, that can be added
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -199,9 +201,9 @@ public class LogicManager {
             input.close();
 
             String album = metadata.get("xmpDM:album");
-
-
-            return album;
+            if(album == null) {
+                return "";
+            }else return album;
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -213,25 +215,21 @@ public class LogicManager {
             e.printStackTrace();
         }
 
-        return null;
+        return "";
     }
-    public void addSong(String filePath) {
 
-        String title = getSongTitle(filePath);
-        String artist = getSongArtist(filePath);
-        String album = getSongAlbum(filePath);
-        String genre = getSongGenre(filePath);
-        int year = getSongReleaseYear(filePath);
+
+    public void addSong(String title,int year,String artist,String album,String genre,String filePath) {
 
 
 
-        DatabaseConnection dc = new DatabaseConnection();
-        int nextiD = dc.getNextSongID();
+        int nextiD = songDAO.getNextSongID();
 
+        songDAO.addSong(title, year,artist, album,genre,filePath, nextiD);
 
-        dc.addSongToDataBase(title, year,artist, album,genre,filePath, nextiD);
+        songDAO.addSongToDataBase(title, year,artist, album,genre,filePath, nextiD);
 
-        moveFile(filePath);
+        //moveFile(filePath);
     }
 
 

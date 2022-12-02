@@ -1,5 +1,7 @@
 package GUI.controller;
 import LogicLayer.Player;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +33,15 @@ public class MyTunesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        volumeSlider.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+            double volume = volumeSlider.getValue()/100;
+            player.volumeIncrement(volume);
+            }
+        });
         txtNowPlaying.setText(player.getCurrentSong());
+
     }
 
 
@@ -58,29 +68,5 @@ public class MyTunesController implements Initializable {
     @FXML
     private void clickNext(ActionEvent actionEvent) {
         player.nextSong();
-    }
-
-    /**
-     *
-     * @FXML
-    private void bindProgressBar(){
-        progressBar.progressProperty().bind(
-                Bindings.createDoubleBinding(() -> player.getSongProgress() / player.getSongLength()
-        ));
-    }
-
-    @FXML
-    private void setValueProgressBar(){
-        DoubleProperty num1 = new SimpleDoubleProperty(songProgress);
-        DoubleProperty num2 = new SimpleDoubleProperty(songLength);
-        NumberBinding result = Bindings.divide(num1,num2);
-        num1.setValue(num2);
-    }
-     */
-
-    @FXML
-    private void dragVolumeSlider(MouseEvent mouseEvent) {
-        player.volumeIncrement(volumeSlider.getBlockIncrement());
-        //do i need a listener?
     }
 }

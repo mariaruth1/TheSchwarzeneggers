@@ -69,16 +69,7 @@ public class Player {
     }
 
     public void volumeIncrement(double volume){
-        if (volume == 0)
-            mediaPlayer.setVolume(0);
-        if(volume == 25)
-            mediaPlayer.setVolume(0.25);
-        if(volume == 50)
-            mediaPlayer.setVolume(0.5);
-        if(volume == 75)
-            mediaPlayer.setVolume(0.75);
-        if(volume == 100)
-            mediaPlayer.setVolume(1.0);
+        mediaPlayer.setVolume(volume);
     }
 }
 
