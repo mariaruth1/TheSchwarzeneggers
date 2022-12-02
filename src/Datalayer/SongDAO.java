@@ -20,9 +20,8 @@ public class SongDAO {
         return null;
     }
 
-    public Song addSong(String title,int year,String artist,String album,String genre,String path, int iD)
+    public Song addSong(String title, String artist)
     {
-
 
         return null;
     }
@@ -47,12 +46,10 @@ public class SongDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public Song getSong(int id)
     {
-
         throw new RuntimeException();
     }
     public void addSongToDataBase(String title,int year,String artist,String album,String genre,String path, int iD) {
