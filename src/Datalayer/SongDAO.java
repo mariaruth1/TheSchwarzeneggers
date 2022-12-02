@@ -1,15 +1,12 @@
 package Datalayer;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import entities.Song;
 
-import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SongDAO {
@@ -17,12 +14,6 @@ public class SongDAO {
 
     public List<Song> getAllSongs()
     {
-        return null;
-    }
-
-    public Song addSong(String title, String artist)
-    {
-
         return null;
     }
 
@@ -71,5 +62,16 @@ public class SongDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public void removeFromDataBase(String title){
+
+        String sql ="DELETE FROM Songs WHERE Title='" + title + "';";
+
+        try(Connection con = dbc.getConnection();) {
+            con.createStatement().execute(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
