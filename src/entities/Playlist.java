@@ -9,8 +9,7 @@ public class Playlist {
 
     private int playlistLength;
 
-
-    public Playlist(int id, String title, int songs, int playlistLength) {
+    public Playlist(int id, String title) {
         this.id = id;
         this.title = title;
         this.songs = songs;
@@ -40,7 +39,7 @@ public class Playlist {
 
     @Override
     public String toString() {
-        return  title + " " + songs + " " + playlistLength;
+        return  "id" +id+ "name" +title;
     }
 }
 
