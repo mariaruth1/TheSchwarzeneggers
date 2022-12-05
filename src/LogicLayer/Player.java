@@ -4,6 +4,7 @@ import entities.Song;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.io.File;
+import java.util.List;
 
 
 public class Player {
@@ -15,9 +16,8 @@ public class Player {
     //Media media = new Media(songs.get(songNumber).toURI().toString());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
 
-    public void getNextSong(){
-        songDAO.getAllSongs();
-
+    public List<Song> getAllSongs(){
+        return songDAO.getAllSongs();
     }
 
     public double getSongProgress(){
@@ -78,4 +78,3 @@ public class Player {
         mediaPlayer.setVolume(volume);
     }
 }
-

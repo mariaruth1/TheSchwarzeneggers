@@ -14,7 +14,7 @@ public class MyTunes extends Application {
     {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GUI/view/NewPlaylistMenu.fxml")));
         Scene scene = new Scene(root);
-        //ProgressBar progressBar = new ProgressBar();
+        ProgressBar progressBar = new ProgressBar();
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("MyTunes");
