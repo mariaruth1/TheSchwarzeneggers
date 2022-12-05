@@ -7,14 +7,34 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SongDAO {
+
     DatabaseConnection dbc = new DatabaseConnection();
+    List<Song> masterSongList;
 
     public List<Song> getAllSongs()
     {
-        return null;
+        masterSongList = new ArrayList<>();
+
+        try(Connection con = dbc.getConnection();){
+            ResultSet rs = con.createStatement().executeQuery("SELECT iD, Title, ReleaseYear, Artist, Album, Genre, SongPath FROM Songs");
+            while (rs.next()){
+                int id = rs.getInt("iD");
+                String title = rs.getString("Title");
+                int year = rs.getInt("ReleaseYear");
+                String artist = rs.getString("Artist");
+                String album = rs.getString("Album");
+                String genre = rs.getString("Genre");
+                String path = rs.getString("SongPath");
+                masterSongList.add(new Song(id, title,year, artist, album, genre, path));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return masterSongList;
     }
 
     public void deleteSong(Song song)
@@ -43,10 +63,11 @@ public class SongDAO {
     {
         throw new RuntimeException();
     }
+
     public void addSongToDataBase(String title,int year,String artist,String album,String genre,String path, int iD) {
 
         // makes a connection to the database and makes a prepared statement, that adds a song to database
-        String sql = "INSERT INTO Songs (Title, Year, Artist, Album, Genre, Path, iD) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Songs (Title, ReleaseYear, Artist, Album, Genre, SongPath, iD) VALUES (?,?,?,?,?,?,?)";
 
         try(Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);

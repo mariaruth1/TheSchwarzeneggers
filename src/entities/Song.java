@@ -1,7 +1,7 @@
 package entities;
 
 public class Song {
-    private final int id;
+    private int id;
 
     private String title;
 
@@ -11,16 +11,21 @@ public class Song {
 
     private String album;
 
-
     private String genre;
 
-    public Song(int id, String title, int year, String artist, String album, int songLength, String genre) {
+    private String path;
+
+    public Song(int id, String title, int year, String artist, String album, String genre, String path) {
         this.id = id;
         this.title = title;
         this.year = year;
         this.artist = artist;
         this.album = album;
         this.genre = genre;
+        this.path = path;
+    }
+
+    public Song(){
     }
 
     public int getId() {
@@ -43,10 +48,12 @@ public class Song {
         return album;
     }
 
-
     public String getGenre() {
         return genre;
     }
+
+    public String getPath(){return path;}
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -68,8 +75,11 @@ public class Song {
         this.genre = genre;
     }
 
+    public void getPath(String path){this.path = path;}
+
+
     @Override
     public String toString() {
-        return  title + " " + year + " " + artist + " " + album + " " + genre;
+        return  title + " " + year + " " + artist + " " + album + " " + genre + " " + path;
     }
 }

@@ -226,11 +226,6 @@ public class LogicManager {
 
         //moveFile(filePath);
     }
-
-
-
-
-
 }
 
 

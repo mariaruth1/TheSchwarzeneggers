@@ -1,20 +1,19 @@
 package entities;
 
 public class Playlist {
+
     private final int id;
 
     private String title;
 
-    private int songs;
-
-    private int playlistLength;
+    private int songCount;
 
 
-    public Playlist(int id, String title, int songs, int playlistLength) {
+
+    public Playlist(int id, String title, int songs) {
         this.id = id;
         this.title = title;
-        this.songs = songs;
-        this.playlistLength = playlistLength;
+        this.songCount = songCount;
     }
 
     public int getId() {
@@ -25,22 +24,15 @@ public class Playlist {
         return title;
     }
 
-    public int getPlaylistLength() {
-        return playlistLength;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setSongLength(int playlistLength) {
-        this.playlistLength = playlistLength;
-    }
 
 
     @Override
     public String toString() {
-        return  title + " " + songs + " " + playlistLength;
+        return  title + " " + songCount;
     }
 }
 
