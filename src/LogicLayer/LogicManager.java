@@ -43,6 +43,11 @@ public class LogicManager {
         return playlistDAO.addPlaylist(name);
     }
 
+    public List<Playlist> getAllPlaylists()
+    {
+        return playlistDAO.getAllPlaylists();
+    }
+
 
     private String moveFile(String inputPath) {
         File f = new File(inputPath);

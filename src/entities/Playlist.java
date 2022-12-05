@@ -9,8 +9,7 @@ public class Playlist {
     private int songCount;
 
 
-
-    public Playlist(int id, String title, int songs) {
+    public Playlist(int id, String title) {
         this.id = id;
         this.title = title;
         this.songCount = songCount;
@@ -32,7 +31,8 @@ public class Playlist {
 
     @Override
     public String toString() {
-        return  title + " " + songCount;
+        //return  title + " " + songCount;
+        return  "id" +id+ "name" +title;
     }
 }
 
