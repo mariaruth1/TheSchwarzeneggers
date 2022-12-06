@@ -12,15 +12,15 @@ import org.apache.tika.parser.mp3.Mp3Parser;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import Datalayer.*;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class LogicManager {
+public class SongManager {
     public static void main(String[] args) {
-        LogicManager DBC = new LogicManager();
+        SongManager DBC = new SongManager();
         DBC.addSong("Sang navn",543,"John Doe","best Album","jazz", "path of no return" );
     }
 

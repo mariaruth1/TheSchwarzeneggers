@@ -1,6 +1,6 @@
 package GUI.model;
 
-import LogicLayer.LogicManager;
+import LogicLayer.SongManager;
 import entities.Playlist;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 public class PlaylistModel {
 
     private final ObservableList<Playlist> playlists;
-    private LogicManager bll = new LogicManager();
+    private SongManager bll = new SongManager();
 
     public PlaylistModel() {
         playlists = FXCollections.observableArrayList();
