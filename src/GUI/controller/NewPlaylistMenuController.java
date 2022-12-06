@@ -1,6 +1,5 @@
 package GUI.controller;
 
-import GUI.model.PlaylistModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -8,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class NewPlaylistMenuController {
-    PlaylistModel model = new PlaylistModel();
+
     @FXML
     private TextField txtPlaylist;
     @FXML

@@ -1,15 +1,16 @@
 package LogicLayer;
-import Datalayer.SongDAO;
+
 import entities.Song;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
 import java.io.File;
 import java.util.List;
 
 
 public class Player {
     Song song = new Song();
-    SongDAO songDAO = new SongDAO();
+
 
     String fileName = "songs/Jenna Jay - Someone Real - Jenna Jay.mp3";
     Media media = new Media(new File(fileName).toURI().toString());
@@ -17,7 +18,7 @@ public class Player {
     MediaPlayer mediaPlayer = new MediaPlayer(media);
 
     public List<Song> getAllSongs(){
-        return songDAO.getAllSongs();
+        return SongManager.getAllSongs();
     }
 
     public double getSongProgress(){

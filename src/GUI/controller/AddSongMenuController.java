@@ -1,6 +1,6 @@
 package GUI.controller;
 
-import GUI.model.SongModel;
+import LogicLayer.SongManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,8 +13,6 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,7 +29,7 @@ public class AddSongMenuController implements Initializable {
     @FXML
     ChoiceBox<String> choiceBox;
     ObservableList<String> genres = FXCollections.observableArrayList("Pop", "Rock", "Disco", "Metal", "Country", "Classical", "Country", "Jazz", "Blues", "Hip hop", "Techno", "Folk");
-    SongModel model = new SongModel();
+   SongManager songManager = new SongManager();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,7 +44,7 @@ public class AddSongMenuController implements Initializable {
     }
 
     public void clickSave(ActionEvent actionEvent) {
-        model.createSong(txtTitle.getText(), txtArtist.getText(), choiceBox.getSelectionModel().getSelectedItem());
+        songManager.createSong(txtTitle.getText(), txtArtist.getText(), choiceBox.getSelectionModel().getSelectedItem());
         txtTitle.clear();
         txtArtist.clear();
         Node n = (Node) actionEvent.getSource();

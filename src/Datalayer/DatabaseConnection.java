@@ -1,5 +1,5 @@
 package Datalayer;
-import java.sql.*;
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 

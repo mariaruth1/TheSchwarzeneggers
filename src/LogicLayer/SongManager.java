@@ -1,8 +1,7 @@
 package LogicLayer;
 
-import Datalayer.PlaylistDAO;
+
 import Datalayer.SongDAO;
-import entities.Playlist;
 import entities.Song;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
@@ -25,7 +24,7 @@ public class SongManager {
     }
 
     private SongDAO songDAO = new SongDAO();
-    private PlaylistDAO playlistDAO = new PlaylistDAO();
+
 
     public List<Song> searchSongs(String query) {
 
@@ -36,16 +35,6 @@ public class SongManager {
 
       //  return songDAO.addSong(title, artist);
         return null;
-    }
-
-    public Playlist createPlaylist(String name) {
-
-        return playlistDAO.addPlaylist(name);
-    }
-
-    public List<Playlist> getAllPlaylists()
-    {
-        return playlistDAO.getAllPlaylists();
     }
 
 
@@ -231,6 +220,24 @@ public class SongManager {
 
         //moveFile(filePath);
     }
+
+    //model stuff
+
+    private SongManager bll = new SongManager();
+
+
+
+    public void search(String text) {
+        songs.clear();
+        songs.addAll(bll.searchSongs(text));
+    }
+
+    public Song createSong(String title, String artist, String genre) {
+        Song song = bll.createSong(title, artist);
+        songs.add(song);
+        return song;
+    }
+
 }
 
 

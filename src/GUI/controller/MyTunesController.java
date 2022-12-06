@@ -1,4 +1,5 @@
 package GUI.controller;
+
 import LogicLayer.Player;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -6,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -68,5 +69,23 @@ public class MyTunesController implements Initializable {
     @FXML
     private void clickNext(ActionEvent actionEvent) {
         player.nextSong();
+    }
+
+    public void createNewSong(ActionEvent actionEvent) {
+    }
+
+    public void clickCreateNewSong(ActionEvent actionEvent) {
+    }
+
+    public void clickDelteSong(ActionEvent actionEvent) {
+    }
+
+    public void clickEditSongDetails(ActionEvent actionEvent) {
+    }
+
+    public void clickCreatePlaylist(ActionEvent actionEvent) {
+    }
+
+    public void clickDeletePlaylist(ActionEvent actionEvent) {
     }
 }

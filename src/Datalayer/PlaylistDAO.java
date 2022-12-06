@@ -1,22 +1,17 @@
 package Datalayer;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import entities.Playlist;
-import entities.Song;
 
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PlaylistDAO {
     DatabaseConnection dbc = new DatabaseConnection();
-    SongDAO songDAO = new SongDAO();
+
 
     public static void main(String[] args) {
         PlaylistDAO playlistDAO = new PlaylistDAO();
