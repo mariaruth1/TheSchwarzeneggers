@@ -44,7 +44,7 @@ public class AddSongMenuController implements Initializable {
     }
 
     public void clickSave(ActionEvent actionEvent) {
-        songManager.createSong(txtTitle.getText(), txtArtist.getText(), choiceBox.getSelectionModel().getSelectedItem());
+        songManager.addSong(txtTitle.getText(), txtArtist.getText(), choiceBox.getSelectionModel().getSelectedItem());
         txtTitle.clear();
         txtArtist.clear();
         Node n = (Node) actionEvent.getSource();

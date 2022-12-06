@@ -62,7 +62,7 @@ public class PlaylistDAO {
         }
     }
 
-    public Playlist getPlaylist(int id) {
+    public Playlist getPlaylistID(int id) {
         List<Playlist> playlists = getAllPlaylists();
         for (Playlist p : playlists) {
             if (p.getId() == id)
@@ -72,7 +72,7 @@ public class PlaylistDAO {
     }
 
 
-        public void getPlaylists(String name) {
+        public void getPlaylistID(String name) {
 
         try (Connection con = dbc.getConnection();) {
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM Playlist");
@@ -111,4 +111,6 @@ public class PlaylistDAO {
             throw new RuntimeException(e);
         }
     }
+
+    //Update name of playlist
 }

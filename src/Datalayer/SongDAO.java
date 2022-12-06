@@ -13,11 +13,11 @@ import java.util.List;
 public class SongDAO {
 
     DatabaseConnection dbc = new DatabaseConnection();
-    List<Song> masterSongList;
+    List<Song> mistressSonglist;
 
     public List<Song> getAllSongs()
     {
-        masterSongList = new ArrayList<>();
+        mistressSonglist = new ArrayList<>();
 
         try(Connection con = dbc.getConnection();){
             ResultSet rs = con.createStatement().executeQuery("SELECT iD, Title, ReleaseYear, Artist, Album, Genre, SongPath FROM Songs");
@@ -29,23 +29,14 @@ public class SongDAO {
                 String album = rs.getString("Album");
                 String genre = rs.getString("Genre");
                 String path = rs.getString("SongPath");
-                masterSongList.add(new Song(id, title,year, artist, album, genre, path));
+                mistressSonglist.add(new Song(id, title,year, artist, album, genre, path));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return masterSongList;
+        return mistressSonglist;
     }
 
-    public void deleteSong(Song song)
-    {
-        throw new RuntimeException();
-    }
-
-    public void updateSong()
-    {
-        throw new RuntimeException();
-    }
 
     public int getNextSongID(){
         try(Connection con = dbc.getConnection();){
@@ -59,10 +50,6 @@ public class SongDAO {
         }
     }
 
-    public Song getSong(int id)
-    {
-        throw new RuntimeException();
-    }
 
     public void addSongToDataBase(String title,int year,String artist,String album,String genre,String path, int iD) {
 
@@ -94,5 +81,9 @@ public class SongDAO {
             throw new RuntimeException(e);
         }
 
+    }
+    public void updateSong()
+    {
+        throw new RuntimeException();
     }
 }

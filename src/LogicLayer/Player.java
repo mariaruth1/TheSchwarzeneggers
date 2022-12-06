@@ -17,10 +17,6 @@ public class Player {
     //Media media = new Media(songs.get(songNumber).toURI().toString());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
 
-    public List<Song> getAllSongs(){
-        return SongManager.getAllSongs();
-    }
-
     public double getSongProgress(){
         return mediaPlayer.getCurrentTime().toMillis();
     }

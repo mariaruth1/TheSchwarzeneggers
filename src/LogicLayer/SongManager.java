@@ -31,12 +31,6 @@ public class SongManager {
         throw new RuntimeException();
     }
 
-    public Song createSong(String title, String artist) {
-
-      //  return songDAO.addSong(title, artist);
-        return null;
-    }
-
 
     private String moveFile(String inputPath) {
         File f = new File(inputPath);
@@ -218,7 +212,7 @@ public class SongManager {
 
         songDAO.addSongToDataBase(title, year,artist, album,genre,filePath, nextiD);
 
-        //moveFile(filePath);
+        moveFile(filePath);
     }
 
     //model stuff
@@ -228,15 +222,11 @@ public class SongManager {
 
 
     public void search(String text) {
-        songs.clear();
-        songs.addAll(bll.searchSongs(text));
+        //songs.clear();
+        //songs.addAll(bll.searchSongs(text));
     }
 
-    public Song createSong(String title, String artist, String genre) {
-        Song song = bll.createSong(title, artist);
-        songs.add(song);
-        return song;
-    }
+
 
 }
 
