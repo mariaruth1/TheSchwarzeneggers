@@ -17,7 +17,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddSongMenuController implements Initializable {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
+    }
+/**
     @FXML
     private TextField txtTitle;
     @FXML
@@ -29,7 +33,6 @@ public class AddSongMenuController implements Initializable {
     @FXML
     ChoiceBox<String> choiceBox;
     ObservableList<String> genres = FXCollections.observableArrayList("Pop", "Rock", "Disco", "Metal", "Country", "Classical", "Country", "Jazz", "Blues", "Hip hop", "Techno", "Folk");
-   SongManager songManager = new SongManager();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -63,5 +66,5 @@ public class AddSongMenuController implements Initializable {
             txtFile.setText(chooser.getSelectedFile().toString());
             txtFile.setEditable(false);
         }
-    }
+    }*/
 }

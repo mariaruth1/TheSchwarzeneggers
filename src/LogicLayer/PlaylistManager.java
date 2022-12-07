@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class PlaylistManager {
+    /**
     private final ObservableList<Playlist> playlists;
     PlaylistDAO playlistDAO = new PlaylistDAO();
 
@@ -24,4 +25,5 @@ public class PlaylistManager {
         playlists.clear();
         playlists.addAll(playlistDAO.getAllPlaylists());
     }
+    */
 }

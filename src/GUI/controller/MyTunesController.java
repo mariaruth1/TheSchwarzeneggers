@@ -1,18 +1,27 @@
 package GUI.controller;
-
 import LogicLayer.MusicManager;
+import LogicLayer.SongManager;
+import entities.Song;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MyTunesController implements Initializable {
 
+
+    @FXML
+    private TableView<Song> songListTable;
+    @FXML
+    private TableColumn<Song, String> columnTitle, columnArtist, columnGenre;
+    @FXML
+    private TableColumn<Song, Integer> columnYear;
     @FXML
     private ProgressBar progressBar;
     @FXML
@@ -24,11 +33,12 @@ public class MyTunesController implements Initializable {
     @FXML
     private Button btnPlay, btnPause, btnStop, btnPrevious, btnNext;
 
-    MusicManager player = new MusicManager();
+
+    MusicManager musicManager = new MusicManager();
 
 
-    private double songProgress = player.getSongProgress();
-    private double songLength = player.getSongLength();
+    private double songProgress = musicManager.getSongProgress();
+    private double songLength = musicManager.getSongLength();
     private double currentPercentProgress = songProgress/songLength;
 
 
@@ -38,37 +48,42 @@ public class MyTunesController implements Initializable {
             @Override
             public void invalidated(Observable observable) {
             double volume = volumeSlider.getValue()/100;
-            player.volumeIncrement(volume);
+            musicManager.volumeIncrement(volume);
             }
         });
-        txtNowPlaying.setText(player.getCurrentSong());
+        txtNowPlaying.setText(musicManager.getCurrentSong());
 
+        columnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        columnArtist.setCellValueFactory(new PropertyValueFactory<>("artist"));
+        columnYear.setCellValueFactory(new PropertyValueFactory<>("year"));
+        columnGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        songListTable.setItems(musicManager.getMistressListAgain());
     }
 
 
     @FXML
     private void clickPlay(ActionEvent actionEvent) {
-        player.playSong();
+        musicManager.playSong();
     }
 
     @FXML
     private void clickPause(ActionEvent actionEvent) {
-        player.pauseSong();
+        musicManager.pauseSong();
     }
 
     @FXML
     private void clickStop(ActionEvent actionEvent) {
-        player.stopSong();
+        musicManager.stopSong();
     }
 
     @FXML
     private void clickPrevious(ActionEvent actionEvent) {
-        player.previousSong();
+        musicManager.previousSong();
     }
 
     @FXML
     private void clickNext(ActionEvent actionEvent) {
-        player.nextSong();
+        musicManager.nextSong();
     }
 
     public void createNewSong(ActionEvent actionEvent) {
@@ -87,5 +102,8 @@ public class MyTunesController implements Initializable {
     }
 
     public void clickDeletePlaylist(ActionEvent actionEvent) {
+    }
+
+    public void clickReset(ActionEvent actionEvent) {
     }
 }

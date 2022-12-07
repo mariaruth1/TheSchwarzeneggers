@@ -3,6 +3,8 @@ package LogicLayer;
 
 import Datalayer.SongDAO;
 import entities.Song;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
@@ -18,12 +20,23 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class SongManager {
-    public static void main(String[] args) {
-        SongManager DBC = new SongManager();
-        DBC.addSong("Sang navn",543,"John Doe","best Album","jazz", "path of no return" );
+    private SongDAO songDAO = new SongDAO();
+
+    private final ObservableList<Song> mistressSongList;
+
+    public SongManager() {
+        mistressSongList = FXCollections.observableArrayList();
     }
 
-    private SongDAO songDAO = new SongDAO();
+    public void getAllSongs(){
+        mistressSongList.clear();
+        mistressSongList.addAll(songDAO.getAllSongs());
+    }
+
+    public ObservableList<Song> getMistressSongList(){
+        getAllSongs();
+        return mistressSongList;
+    }
 
 
     public List<Song> searchSongs(String query) {
@@ -214,19 +227,6 @@ public class SongManager {
 
         moveFile(filePath);
     }
-
-    //model stuff
-
-    private SongManager bll = new SongManager();
-
-
-
-    public void search(String text) {
-        //songs.clear();
-        //songs.addAll(bll.searchSongs(text));
-    }
-
-
 
 }
 
