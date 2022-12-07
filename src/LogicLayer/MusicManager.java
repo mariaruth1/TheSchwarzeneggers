@@ -9,7 +9,7 @@ import java.io.File;
 
 
 public class MusicManager {
-    Song song = new Song();
+
     SongManager songManager = new SongManager();
 
 

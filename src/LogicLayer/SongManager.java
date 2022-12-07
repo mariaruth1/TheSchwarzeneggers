@@ -220,10 +220,10 @@ public class SongManager {
     }
 
 
-    public void addSong(String title,int year,String artist,String album,String genre,String filePath) {
+    public void addSong(String title,int year,String artist,String genre,String filePath) {
         int nextiD = songDAO.getNextSongID();
 
-        songDAO.addSongToDataBase(title, year,artist, album,genre,filePath, nextiD);
+        songDAO.addSongToDataBase(title, year,artist,genre,filePath, nextiD);
 
         moveFile(filePath);
     }

@@ -17,11 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddSongMenuController implements Initializable {
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
-    }
-/**
     @FXML
     private TextField txtTitle;
     @FXML
@@ -45,16 +41,17 @@ public class AddSongMenuController implements Initializable {
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
-
+    /*
     public void clickSave(ActionEvent actionEvent) {
-        songManager.addSong(txtTitle.getText(), txtArtist.getText(), choiceBox.getSelectionModel().getSelectedItem());
+        SongManager sm = new SongManager();
+        sm.addSong(txtTitle.getText(), txtArtist.getText(), choiceBox.getSelectionModel().getSelectedItem());
         txtTitle.clear();
         txtArtist.clear();
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
-
+    */
     // looks through files only mp3 works
     public void clickChoose(ActionEvent actionEvent) {
         JFileChooser chooser = new JFileChooser();
@@ -66,5 +63,5 @@ public class AddSongMenuController implements Initializable {
             txtFile.setText(chooser.getSelectedFile().toString());
             txtFile.setEditable(false);
         }
-    }*/
+    }
 }
