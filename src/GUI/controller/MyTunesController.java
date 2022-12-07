@@ -1,6 +1,6 @@
 package GUI.controller;
 
-import LogicLayer.Player;
+import LogicLayer.MusicManager;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -24,7 +24,7 @@ public class MyTunesController implements Initializable {
     @FXML
     private Button btnPlay, btnPause, btnStop, btnPrevious, btnNext;
 
-    Player player = new Player();
+    MusicManager player = new MusicManager();
 
 
     private double songProgress = player.getSongProgress();
