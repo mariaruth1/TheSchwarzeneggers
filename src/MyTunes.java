@@ -12,7 +12,7 @@ public class MyTunes extends Application {
     @Override
     public void start(Stage stage) throws Exception
     {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GUI/view/MyTunes.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GUI/view/AddSongMenu.fxml")));
         Scene scene = new Scene(root);
         ProgressBar progressBar = new ProgressBar();
         stage.setScene(scene);

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="323.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.AddSongMenuController">
+<VBox prefHeight="354.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.AddSongMenuController">
    <children>
       <MenuBar VBox.vgrow="NEVER">
          <menus>
@@ -25,19 +25,25 @@
             </Menu>
          </menus>
       </MenuBar>
-      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefWidth="394.0" VBox.vgrow="ALWAYS">
+      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="231.0" prefWidth="392.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="35.0" layoutY="40.0" text="Title" />
-            <TextField fx:id="txtTitle" layoutX="68.0" layoutY="36.0" prefHeight="25.0" prefWidth="228.0" />
-            <Button layoutX="255.0" layoutY="244.0" mnemonicParsing="false" onAction="#clickSave" text="Save" />
-            <Button layoutX="308.0" layoutY="244.0" mnemonicParsing="false" onAction="#clickCancel" text="Cancel" />
-            <Label layoutX="32.0" layoutY="77.0" text="Artist" />
-            <Label layoutX="30.0" layoutY="120.0" text="Genre" />
-            <TextField fx:id="txtArtist" layoutX="68.0" layoutY="73.0" prefHeight="25.0" prefWidth="228.0" />
-            <TextField fx:id="txtFile" layoutX="68.0" layoutY="148.0" prefHeight="25.0" prefWidth="228.0" />
-            <Label layoutX="49.0" layoutY="152.0" text="File" />
-            <ChoiceBox fx:id="choiceBox" layoutX="68.0" layoutY="116.0" prefHeight="25.0" prefWidth="84.0" />
-            <Button layoutX="302.0" layoutY="148.0" mnemonicParsing="false" onAction="#clickChoose" text="Choose..." />
+            <Label layoutX="32.0" layoutY="125.0" prefHeight="18.0" prefWidth="32.0" text="Year" textAlignment="CENTER" />
+            <TextField fx:id="txtYear" layoutX="66.0" layoutY="122.0" prefHeight="25.0" prefWidth="228.0" />
+            <Button layoutX="14.0" layoutY="277.0" mnemonicParsing="false" onAction="#clickSave" prefHeight="26.0" prefWidth="160.0" text="Save" />
+            <Button layoutX="207.0" layoutY="277.0" mnemonicParsing="false" onAction="#clickCancel" prefHeight="26.0" prefWidth="174.0" text="Cancel" />
+            <Label layoutX="30.0" layoutY="81.0" prefHeight="26.0" prefWidth="32.0" text="Artist" />
+            <Label layoutX="18.0" layoutY="176.0" text="Genre" />
+            <TextField fx:id="txtArtist" layoutX="66.0" layoutY="85.0" prefHeight="25.0" prefWidth="228.0" />
+            <TextField fx:id="txtFile" layoutX="66.0" layoutY="14.0" prefHeight="25.0" prefWidth="228.0" />
+            <Label contentDisplay="CENTER" layoutX="30.0" layoutY="17.0" prefHeight="18.0" prefWidth="32.0" text="File" />
+            <ChoiceBox fx:id="choiceBox" layoutX="66.0" layoutY="172.0" prefHeight="25.0" prefWidth="84.0" />
+            <Button layoutX="302.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickChoose" text="Choose..." />
+            <Label fx:id="text" alignment="CENTER" layoutX="24.0" layoutY="46.0" prefHeight="26.0" prefWidth="44.0" text="Title" />
+            <TextField fx:id="txtTitle" layoutX="66.0" layoutY="50.0" prefHeight="26.0" prefWidth="228.0" />
+            <Label fx:id="lbTitleError" layoutX="302.0" layoutY="51.0" opacity="0.0" text="*" textFill="RED" />
+            <Label fx:id="lbArtistError" layoutX="302.0" layoutY="89.0" opacity="0.0" text="*" textFill="RED" />
+            <Label fx:id="lbYearError" layoutX="302.0" layoutY="126.0" opacity="0.0" text="*" textFill="RED" />
+            <TextField fx:id="txtErrorMessage" editable="false" layoutX="20.0" layoutY="212.0" opacity="0.0" prefHeight="55.0" prefWidth="354.0" />
          </children>
       </AnchorPane>
    </children>

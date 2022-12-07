@@ -53,7 +53,7 @@ public class SongDAO {
     public void addSongToDataBase(String title,int year,String artist,String genre,String path, int iD) {
 
         // makes a connection to the database and makes a prepared statement, that adds a song to database
-        String sql = "INSERT INTO Songs (Title, ReleaseYear, Artist, Genre, SongPath, iD) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Songs (Title, ReleaseYear, Artist, Genre, SongPath, iD) VALUES (?,?,?,?,?,?)";
 
         try(Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
