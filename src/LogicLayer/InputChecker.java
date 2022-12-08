@@ -10,36 +10,23 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.io.*;
+        import java.io.*;
 
 public class InputChecker {
     AddSongMenuController aSMC = new AddSongMenuController();
 
-    public boolean checkTitle(String titleInput){
-        if (titleInput!=null&& titleInput!=""){
-            return true;
-        }
-        aSMC.titleError();
-        return false;
-    }
+
     public boolean checkYear(String yearInput){
-        if(yearInput!=null){
+        if(yearInput != null){
             try{
-            Integer.parseInt(yearInput);
+                Integer.parseInt(yearInput);
             } catch (Exception e) {
                 aSMC.yearError();
             }
         }
         return false;
     }
-    public boolean checkArtist(String artistInput){
-        if(artistInput!=null){
-            return true;
-        }
 
-        aSMC.artistError();
-        return false;
-    }
 
     public String getSongTitle(String filePath){
         //looks for a title on the file, that can be added
@@ -175,5 +162,4 @@ public class InputChecker {
         }
         return "";
     }
-
 }

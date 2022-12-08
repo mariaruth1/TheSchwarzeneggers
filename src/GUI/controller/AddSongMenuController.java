@@ -2,7 +2,6 @@ package GUI.controller;
 
 import LogicLayer.InputChecker;
 import LogicLayer.SongManager;
-import entities.Song;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -48,16 +47,16 @@ public class AddSongMenuController implements Initializable {
     }
 
     public void clickSave(ActionEvent actionEvent) {
-        if(checkImput()==true){
+
             SongManager sm = new SongManager();
             String title = txtTitle.getText();
-            String year = txtYear.getText();
-            int numberYear = Integer.parseInt(year);
+            int year = checkImput(txtYear.getText());
             String artist = txtArtist.getText();
             String genre = choiceBox.toString();
+
             String path = txtFile.getText();
 
-            sm.addSong(title, numberYear, artist, genre, path);
+            sm.addSong(title, year, artist, genre, path);
 
             txtTitle.clear();
             txtArtist.clear();
@@ -66,39 +65,23 @@ public class AddSongMenuController implements Initializable {
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
-        }
+
     }
 
-   private boolean checkImput(){
+   private int checkImput(String year){
        InputChecker iC = new InputChecker();
-       boolean titleTest = iC.checkTitle(txtTitle.getText());
-       boolean yearTest = iC.checkYear(txtYear.getText());
-       boolean artistTest = iC.checkArtist(txtArtist.getText());
-
-       if(titleTest == true && (artistTest == true && yearTest == true)){
-           return true;
+       if(iC.checkYear(year)==true){
+           return Integer.parseInt(year);
        }
-       return false;
+       return 0;
    }
-    @FXML
-    private Label lbTitleError;
-    @FXML
-    private Label lbArtistError;
+
     @FXML
     private Label lbYearError;
 
     @FXML
     private TextField txtErrorMessage;
-    public void titleError() {
-    lbTitleError.setOpacity(1);
-        txtErrorMessage.setOpacity(1);
-    txtErrorMessage.setText("invaild title");
-    }
-    public void artistError() {
-    lbArtistError.setOpacity(1);
-        txtErrorMessage.setOpacity(1);
-        txtErrorMessage.setText("invaild artist");
-    }
+
     public void yearError() {
     lbYearError.setOpacity(1);
         txtErrorMessage.setOpacity(1);
