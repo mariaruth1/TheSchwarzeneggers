@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -38,6 +37,7 @@ public class AddSongMenuController implements Initializable {
         choiceBox.getItems().addAll(genres);
     }
 
+
     @FXML
     private void clickCancel(ActionEvent actionEvent) {
         Node n = (Node) actionEvent.getSource();
@@ -52,7 +52,7 @@ public class AddSongMenuController implements Initializable {
             String title = txtTitle.getText();
             int year = checkImput(txtYear.getText());
             String artist = txtArtist.getText();
-            String genre = choiceBox.toString();
+            String genre = choiceBox.getValue();
 
             String path = txtFile.getText();
 
@@ -75,17 +75,13 @@ public class AddSongMenuController implements Initializable {
        }
        return 0;
    }
-
     @FXML
-    private Label lbYearError;
-
-    @FXML
-    private TextField txtErrorMessage;
+    TextField txtErrorMessage = new TextField();
 
     public void yearError() {
-    lbYearError.setOpacity(1);
-        txtErrorMessage.setOpacity(1);
-        txtErrorMessage.setText("invaild year, must be a vaild number");
+
+        this.txtErrorMessage.setOpacity(100);
+        this.txtErrorMessage.setText("invaild year, must be a vaild number");
     }
 
     // looks through files only mp3 works, should really be changed to non jfilechooser and make the chooser window be the child of the main window

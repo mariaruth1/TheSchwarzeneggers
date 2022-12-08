@@ -36,24 +36,10 @@ public class SongDAO {
         return mistressSonglist;
     }
 
-
-    public int getNextSongID(){
-        try(Connection con = dbc.getConnection();){
-            ResultSet rs = con.createStatement().executeQuery("SELECT TOP 1 * FROM Songs ORDER BY iD DESC;");
-            rs.next();
-            int id = rs.getInt("iD");
-            int nextID = id+1;
-            return nextID;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void addSongToDataBase(String title,int year,String artist,String genre,String path, int iD) {
+    public void addSongToDataBase(String title,int year,String artist,String genre,String path) {
 
         // makes a connection to the database and makes a prepared statement, that adds a song to database
-        String sql = "INSERT INTO Songs (Title, ReleaseYear, Artist, Genre, SongPath, iD) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO Songs (Title, ReleaseYear, Artist, Genre, SongPath) VALUES (?,?,?,?,?)";
 
         try(Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -62,7 +48,6 @@ public class SongDAO {
             ps.setString(3,artist);
             ps.setString(4,genre);
             ps.setString(5,path);
-            ps.setInt(6,iD);
             ps.execute();
 
         } catch (SQLException e) {

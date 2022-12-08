@@ -50,17 +50,13 @@ public class SongManager {
         return outputPath;
     }
 
-
-
-
     public void addSong(String title, int year, String artist, String genre, String filePath) {
-        int nextiD = songDAO.getNextSongID();
-
-        songDAO.addSongToDataBase(title, year,artist,genre,filePath, nextiD);
-
-        moveFile(filePath);
+        String newPath = moveFile(filePath);
+        songDAO.addSongToDataBase(title, year,artist,genre,newPath);
     }
-
+    public void removeSong(String title){
+        songDAO.removeFromDataBase(title);
+    }
 }
 
 

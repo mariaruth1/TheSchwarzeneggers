@@ -40,7 +40,6 @@
             <Button layoutX="302.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickChoose" text="Choose..." />
             <Label fx:id="text" alignment="CENTER" layoutX="24.0" layoutY="46.0" prefHeight="26.0" prefWidth="44.0" text="Title" />
             <TextField fx:id="txtTitle" layoutX="66.0" layoutY="50.0" prefHeight="26.0" prefWidth="228.0" />
-            <Label fx:id="lbYearError" layoutX="302.0" layoutY="126.0" opacity="0.0" text="*" textFill="RED" />
             <TextField fx:id="txtErrorMessage" editable="false" layoutX="20.0" layoutY="212.0" opacity="0.0" prefHeight="55.0" prefWidth="354.0" />
          </children>
       </AnchorPane>
