@@ -63,7 +63,16 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void clickPlay(ActionEvent actionEvent) {
+        Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
+        String selectedSongPath = "";
+        if (selectedSong == null){
         musicManager.playSong();
+        }
+        else
+        {
+            selectedSongPath = selectedSong.getPath();
+            musicManager.playCurrentSong(selectedSongPath);
+        }
     }
 
     @FXML

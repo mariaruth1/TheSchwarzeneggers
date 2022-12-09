@@ -6,17 +6,34 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.util.List;
 
 
 public class MusicManager {
 
     SongManager songManager = new SongManager();
 
-
-    String fileName = "songs/Jenna Jay - Someone Real - Jenna Jay.mp3";
+    /*String fileName = "songs/Kirk Osamayo - Wander To The Moon.mp3";
     Media media = new Media(new File(fileName).toURI().toString());
-    //Media media = new Media(getMistressListAgain().get(song.getPath()).toURI().toString());
+
+    Media media = new Media(getMistressListAgain().get(songManager.getPath().toURI().toString());*/
+
+    String filename = getAllMP3Files();
+    Media media = new Media(new File(filename).toURI().toString());
+
     MediaPlayer mediaPlayer = new MediaPlayer(media);
+    public String getAllMP3Files()
+    {
+        List<Song> songs = songManager.getMistressSongList();
+        String songPath = "";
+
+        for(Song s : songs)
+        {
+            songPath = s.getPath();
+        }
+        return songPath;
+    }
+
 
     public double getSongProgress(){
         return mediaPlayer.getCurrentTime().toMillis();
@@ -24,6 +41,15 @@ public class MusicManager {
 
     public double getSongLength(){
         return mediaPlayer.getStopTime().toMillis();
+    }
+
+    public void playCurrentSong(String song){
+        try {
+            mediaPlayer.setCycleCount(mediaPlayer.INDEFINITE);
+            mediaPlayer.play();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void playSong(){
@@ -36,7 +62,7 @@ public class MusicManager {
     }
 
     public String getCurrentSong(){
-        return fileName; //placeholder implementation
+        return media.getSource(); //placeholder implementation
     }
 
     public ObservableList<Song> getMistressListAgain(){

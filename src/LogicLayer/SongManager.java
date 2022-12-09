@@ -51,12 +51,11 @@ public class SongManager {
     }
 
     public void addSong(String title, int year, String artist, String genre, String filePath) {
-        String newPath = moveFile(filePath);
-        songDAO.addSongToDataBase(title, year,artist,genre,newPath);
+        songDAO.addSongToDataBase(title, year,artist,genre,filePath);
+
+        moveFile(filePath);
     }
-    public void removeSong(String title){
-        songDAO.removeFromDataBase(title);
-    }
+
 }
 
 
