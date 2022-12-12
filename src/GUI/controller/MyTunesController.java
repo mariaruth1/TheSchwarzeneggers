@@ -1,15 +1,21 @@
 package GUI.controller;
 import LogicLayer.MusicManager;
-import LogicLayer.SongManager;
 import entities.Song;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -89,6 +95,8 @@ public class MyTunesController implements Initializable {
     private void clickPrevious(ActionEvent actionEvent) {
         musicManager.previousSong();
     }
+    @FXML
+    Button btnCreateNewSong;
 
     @FXML
     private void clickNext(ActionEvent actionEvent) {
@@ -96,12 +104,27 @@ public class MyTunesController implements Initializable {
     }
 
     public void createNewSong(ActionEvent actionEvent) {
+
     }
 
-    public void clickCreateNewSong(ActionEvent actionEvent) {
+    public void clickCreateNewSong(ActionEvent actionEvent){
+        Node n = (Node) actionEvent.getSource();
+        Window stage = n.getScene().getWindow();
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/view/AddSongMenu.fxml"));
+            Stage addSongWindow = new Stage();
+            addSongWindow.setScene(new Scene(root));
+            addSongWindow.setTitle("Add Songs");
+            addSongWindow.initOwner(stage);
+            addSongWindow.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void clickDelteSong(ActionEvent actionEvent) {
+    public void clickDeleteSong(ActionEvent actionEvent) {
     }
 
     public void clickEditSongDetails(ActionEvent actionEvent) {
@@ -115,4 +138,6 @@ public class MyTunesController implements Initializable {
 
     public void clickReset(ActionEvent actionEvent) {
     }
+
+
 }

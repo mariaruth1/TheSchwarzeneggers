@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MusicManager {
 
-    SongManager songManager = new SongManager();
+    SongManager songManager = SongManager.getInstance();
 
     /*String fileName = "songs/Kirk Osamayo - Wander To The Moon.mp3";
     Media media = new Media(new File(fileName).toURI().toString());

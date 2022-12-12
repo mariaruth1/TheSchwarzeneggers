@@ -40,7 +40,7 @@
             <Button layoutX="302.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickChoose" text="Choose..." />
             <Label fx:id="text" alignment="CENTER" layoutX="24.0" layoutY="46.0" prefHeight="26.0" prefWidth="44.0" text="Title" />
             <TextField fx:id="txtTitle" layoutX="66.0" layoutY="50.0" prefHeight="26.0" prefWidth="228.0" />
-            <TextField fx:id="txtErrorMessage" editable="false" layoutX="20.0" layoutY="212.0" opacity="0.0" prefHeight="55.0" prefWidth="354.0" />
+            <TextField fx:id="txtErrorMessage" editable="false" layoutX="14.0" layoutY="212.0" prefHeight="58.0" prefWidth="360.0" text="Year must only contain numbers, or the year will be saved as zero. The file will be moved into the program folder" />
          </children>
       </AnchorPane>
    </children>

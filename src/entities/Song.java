@@ -21,7 +21,13 @@ public class Song {
         this.genre = genre;
         this.path = path;
     }
-
+    public Song(String title, int year, String artist, String genre, String path) {
+        this.title = title;
+        this.year = year;
+        this.artist = artist;
+        this.genre = genre;
+        this.path = path;
+    }
     public int getId() {
         return id;
     }

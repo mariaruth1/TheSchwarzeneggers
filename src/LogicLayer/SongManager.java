@@ -13,11 +13,19 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class SongManager {
+    private static SongManager instance=null;
     private SongDAO songDAO = new SongDAO();
 
     private final ObservableList<Song> mistressSongList;
 
-    public SongManager() {
+    // Makes it so it is only possible to have one or zero instance of this class at all time
+    public static SongManager getInstance(){
+        if(instance == null){
+            instance = new SongManager();
+        } return instance;
+    }
+
+    private SongManager() {
         mistressSongList = FXCollections.observableArrayList();
     }
 
@@ -51,6 +59,7 @@ public class SongManager {
     }
 
     public void addSong(String title, int year, String artist, String genre, String filePath) {
+        mistressSongList.add(new Song(title, year, artist,genre,filePath));
         songDAO.addSongToDataBase(title, year,artist,genre,filePath);
 
         moveFile(filePath);

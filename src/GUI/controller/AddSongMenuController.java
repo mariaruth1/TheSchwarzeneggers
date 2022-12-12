@@ -10,11 +10,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import java.awt.*;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.io.File;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddSongMenuController implements Initializable {
@@ -30,7 +34,6 @@ public class AddSongMenuController implements Initializable {
     @FXML
     ChoiceBox<String> choiceBox;
     ObservableList<String> genres = FXCollections.observableArrayList("Pop", "Rock", "Disco", "Metal", "Country", "Classical", "Country", "Jazz", "Blues", "Hip hop", "Techno", "Folk");
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -48,7 +51,7 @@ public class AddSongMenuController implements Initializable {
 
     public void clickSave(ActionEvent actionEvent) {
 
-            SongManager sm = new SongManager();
+            SongManager sm = SongManager.getInstance();
             String title = txtTitle.getText();
             int year = checkImput(txtYear.getText());
             String artist = txtArtist.getText();
@@ -57,6 +60,7 @@ public class AddSongMenuController implements Initializable {
             String path = txtFile.getText();
 
             sm.addSong(title, year, artist, genre, path);
+            MyTunesController mtc = new MyTunesController();
 
             txtTitle.clear();
             txtArtist.clear();
@@ -66,8 +70,8 @@ public class AddSongMenuController implements Initializable {
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
 
-    }
 
+    }
    private int checkImput(String year){
        InputChecker iC = new InputChecker();
        if(iC.checkYear(year)==true){
@@ -81,20 +85,29 @@ public class AddSongMenuController implements Initializable {
     public void yearError() {
 
         this.txtErrorMessage.setOpacity(100);
-        this.txtErrorMessage.setText("invaild year, must be a vaild number");
+        this.txtErrorMessage.setText(" year must be a number");
     }
 
-    // looks through files only mp3 works, should really be changed to non jfilechooser and make the chooser window be the child of the main window
+    //lets you select a file on your pc when you click on the chooser button,
     public void clickChoose(ActionEvent actionEvent) {
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "MP3 FILES", "mp3");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            txtFile.setText(chooser.getSelectedFile().toString());
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select song");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Audio", "*.mp3"));
+
+        //the default folder you start in the is your default music folder.
+        String userprofile = System.getenv("USERPROFILE");
+        chooser.setInitialDirectory(new File(userprofile +"\\music"));
+
+        Node n = (Node) actionEvent.getSource();
+        Window stage = n.getScene().getWindow();
+
+        //this will put the full path into the path text field.
+        File selectedFile = chooser.showOpenDialog(stage);
+        if (selectedFile != null) {
+            txtFile.setText(selectedFile.getAbsolutePath().toString());
             txtFile.setEditable(false);
-            autoInput(chooser.getSelectedFile().toString());
+            autoInput(selectedFile.getAbsolutePath().toString());
         }
 
     }
