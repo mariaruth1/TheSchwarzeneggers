@@ -1,8 +1,11 @@
 package GUI.controller;
 import LogicLayer.MusicManager;
+import LogicLayer.SongManager;
 import entities.Song;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,12 +15,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class MyTunesController implements Initializable {
 
@@ -66,18 +71,30 @@ public class MyTunesController implements Initializable {
         songListTable.setItems(musicManager.getMistressListAgain());
     }
 
+    private void setProgressBar() {
+        musicManager.getSongProgress().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                progressBar.setProgress(newValue.toMillis() / musicManager.getSongLength());
+            }
+        });
+    }
+
 
     @FXML
     private void clickPlay(ActionEvent actionEvent) {
         Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
         String selectedSongPath = "";
         if (selectedSong == null){
-        musicManager.playSong();
+        musicManager.playFirstSong();
+        setProgressBar();
         }
         else
         {
             selectedSongPath = selectedSong.getPath();
-            musicManager.playCurrentSong(selectedSongPath);
+            System.out.println(selectedSongPath);
+            musicManager.playSelectedSong(selectedSongPath);
+            setProgressBar();
         }
     }
 
@@ -87,13 +104,9 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void clickStop(ActionEvent actionEvent) {
-        musicManager.stopSong();
-    }
-
-    @FXML
     private void clickPrevious(ActionEvent actionEvent) {
         musicManager.previousSong();
+        setProgressBar();
     }
     @FXML
     Button btnCreateNewSong;
@@ -101,6 +114,7 @@ public class MyTunesController implements Initializable {
     @FXML
     private void clickNext(ActionEvent actionEvent) {
         musicManager.nextSong();
+        setProgressBar();
     }
 
     public void createNewSong(ActionEvent actionEvent) {
@@ -137,7 +151,7 @@ public class MyTunesController implements Initializable {
     }
 
     public void clickReset(ActionEvent actionEvent) {
+        musicManager.stopSong();
+        setProgressBar();
     }
-
-
 }
