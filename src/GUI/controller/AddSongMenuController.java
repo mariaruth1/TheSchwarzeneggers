@@ -82,6 +82,18 @@ public class AddSongMenuController implements Initializable {
     @FXML
     TextField txtErrorMessage = new TextField();
 
+    @FXML
+    //private TextField txtErrorMessage;
+    public void titleError() {
+    //lbTitleError.setOpacity(1);
+        txtErrorMessage.setOpacity(1);
+    txtErrorMessage.setText("invalid title");
+    }
+    public void artistError() {
+    //lbArtistError.setOpacity(1);
+        txtErrorMessage.setOpacity(1);
+        txtErrorMessage.setText("invalid artist");
+    }
     public void yearError() {
 
         this.txtErrorMessage.setOpacity(100);

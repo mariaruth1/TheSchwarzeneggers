@@ -2,18 +2,22 @@ package LogicLayer;
 
 import Datalayer.PlaylistDAO;
 import entities.Playlist;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class PlaylistManager {
-    /**
+
+
     private final ObservableList<Playlist> playlists;
     PlaylistDAO playlistDAO = new PlaylistDAO();
 
-    public PlaylistModel() {
+    public PlaylistManager(ObservableList<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+
+    /** public PlaylistModel() {
 
         playlists = FXCollections.observableArrayList();
-    }
+    }*/
 
     public Playlist createPlaylist(String name) {
         Playlist playlist = playlistDAO.createPlaylist(name);
@@ -25,5 +29,5 @@ public class PlaylistManager {
         playlists.clear();
         playlists.addAll(playlistDAO.getAllPlaylists());
     }
-    */
+
 }

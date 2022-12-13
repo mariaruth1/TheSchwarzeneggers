@@ -28,6 +28,10 @@ public class Song {
         this.genre = genre;
         this.path = path;
     }
+
+    public Song() {
+    }
+
     public int getId() {
         return id;
     }

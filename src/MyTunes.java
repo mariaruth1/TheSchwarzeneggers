@@ -5,6 +5,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
+
+import javax.swing.event.ChangeListener;
+import java.time.Duration;
 import java.util.Objects;
 
 public class MyTunes extends Application {

@@ -13,10 +13,7 @@ public class PlaylistDAO {
     DatabaseConnection dbc = new DatabaseConnection();
 
 
-    public static void main(String[] args) {
-        PlaylistDAO playlistDAO = new PlaylistDAO();
-        playlistDAO.getAllPlaylists();
-    }
+
     public List<Playlist> getAllPlaylists()
     {
         List <Playlist> getAllPlaylists = new ArrayList<>();
@@ -110,6 +107,10 @@ public class PlaylistDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Playlist createPlaylist(String name) {
+        throw new RuntimeException();
     }
 
     //Update name of playlist
