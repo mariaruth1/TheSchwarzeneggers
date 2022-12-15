@@ -1,6 +1,6 @@
 package GUI.controller;
 
-import LogicLayer.InputChecker;
+import LogicLayer.InputManager;
 import LogicLayer.SongManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +18,6 @@ import javafx.stage.Window;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddSongMenuController implements Initializable {
@@ -52,7 +51,7 @@ public class AddSongMenuController implements Initializable {
     public void clickSave(ActionEvent actionEvent) {
         /**Gets all the inputs in the textfields, checks that year is number else it gets changed to 0.
          Then passes all the data to the Songmanager for futher processing */
-            InputChecker iC = new InputChecker();
+            InputManager iC = new InputManager();
             SongManager sm = SongManager.getInstance();
 
             String title = txtTitle.getText();
@@ -106,7 +105,7 @@ public class AddSongMenuController implements Initializable {
     }
     //trys to read the selected file and input the results into the AddNewSongView
     public void autoInput(String filepath){
-        InputChecker iC = new InputChecker();
+        InputManager iC = new InputManager();
         txtArtist.setText(iC.getSongArtist(filepath));
         txtYear.setText(iC.getSongReleaseYear(filepath));
         txtTitle.setText(iC.getSongTitle(filepath));

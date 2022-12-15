@@ -11,7 +11,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import java.io.*;
 
-public class InputChecker {
+public class InputManager {
     AddSongMenuController aSMC = new AddSongMenuController();
 
    //takes the year input from edit and add song and checks if it's a number else 0 is returned

@@ -1,6 +1,6 @@
 package GUI.controller;
 
-import LogicLayer.InputChecker;
+import LogicLayer.InputManager;
 import LogicLayer.MusicManager;
 import entities.Song;
 import javafx.collections.FXCollections;
@@ -46,7 +46,7 @@ public class EditSongMenuController implements Initializable {
 
     private Song upddateSong(){
         //Updates the selected song with values from the test fields
-        InputChecker ipc = new InputChecker();
+        InputManager ipc = new InputManager();
        String newTitle = txtSongEditTitle.getText();
        String newArtist = txtSongEditArtist.getText();
        int year = ipc.checkImput(txtSongEditYear.getText());
