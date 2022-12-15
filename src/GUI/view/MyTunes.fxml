@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.MyTunesController">
+<AnchorPane prefHeight="600.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.MyTunesController">
    <children>
       <ProgressBar fx:id="progressBar" layoutX="59.0" layoutY="523.0" prefHeight="18.0" prefWidth="523.0" progress="0.0" />
       <Label fx:id="txtNowPlaying" alignment="CENTER" layoutX="59.0" layoutY="497.0" prefHeight="26.0" prefWidth="523.0" text="Song Title - Artist Name" />
@@ -45,7 +45,7 @@
          </children>
       </HBox>
       <Button fx:id="btnCreateNewSong" layoutX="59.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickCreateNewSong" text="Create new Song" />
-      <TableView fx:id="songListTable" editable="true" layoutX="59.0" layoutY="81.0" prefHeight="375.0" prefWidth="321.0">
+      <TableView fx:id="songListTable" editable="true" layoutX="59.0" layoutY="81.0" onMouseClicked="#clickSongTable" prefHeight="375.0" prefWidth="321.0">
         <columns>
           <TableColumn fx:id="columnTitle" prefWidth="75.0" text="Title" />
           <TableColumn fx:id="columnArtist" prefWidth="75.0" text="Artist" />
@@ -56,7 +56,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TableView fx:id="playListTable" editable="true" layoutX="421.0" layoutY="81.0" prefHeight="375.0" prefWidth="328.0">
+      <TableView fx:id="playListTable" editable="true" layoutX="421.0" layoutY="81.0" onMouseClicked="#clickPlaylistTable" prefHeight="375.0" prefWidth="328.0">
          <columns>
             <TableColumn fx:id="columnPlaylistSongTitle" prefWidth="75.0" text="Title" />
             <TableColumn fx:id="columnPlaylistSongArtist" prefWidth="75.0" text="Artist" />
@@ -67,7 +67,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ChoiceBox fx:id="playlistChoicebox" layoutX="467.0" layoutY="48.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="playlistChoicebox" layoutX="467.0" layoutY="48.0" onMouseClicked="#clickChoicebox" prefWidth="150.0" />
       <Button fx:id="btnDeleteSong" layoutX="280.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickDeleteSong" text="Delete Song" />
       <Button fx:id="btnEditSongDetails" layoutX="172.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickEditSongDetails" text="Edit Song Details" />
       <Button fx:id="btnCreatePlaylist" layoutX="422.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickCreatePlaylist" text="Create Playlist" />

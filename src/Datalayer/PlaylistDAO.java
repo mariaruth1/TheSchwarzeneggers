@@ -15,8 +15,6 @@ public class PlaylistDAO {
     DatabaseConnection dbc = new DatabaseConnection();
 
     private SongDAO songDao = new SongDAO();
-    private HashMap<Playlist, Song> songAndPlaylistId = new HashMap<>();
-
 
     public List<Playlist> getAllPlaylists()
     {
@@ -146,10 +144,6 @@ public class PlaylistDAO {
         }
     }
 
-    public void addSongAndPlaylistIdToHashmap(int playlist_id, int song_id)
-    {
-        songAndPlaylistId.put(getPlaylist(playlist_id), songDao.getSong(song_id));
-    }
 
     public Playlist createPlaylist(String name) {
         throw new RuntimeException();

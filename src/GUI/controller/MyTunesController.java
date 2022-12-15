@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -55,6 +56,8 @@ public class MyTunesController implements Initializable {
 
     MusicManager musicManager = new MusicManager();
 
+    static boolean isPlaylistSelected = false;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         songListTable.setEditable(true);
@@ -87,6 +90,7 @@ public class MyTunesController implements Initializable {
         playlistChoicebox.setItems(musicManager.getPlaylistAgain());
         playlistChoicebox.getSelectionModel().selectedItemProperty().addListener((options,oldValue, newValue)->
         {
+            musicManager.setPlaylistId(newValue.getId());
             musicManager.selectPlaylist(newValue.getId());
             playListTable.refresh();
             playListTable.setItems(musicManager.getSelectedPlaylistSongs());
@@ -117,20 +121,25 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void clickPlay(ActionEvent actionEvent) {
-        Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
-        String selectedSongPath = "";
-        if (selectedSong == null){
-        musicManager.playFirstSong();
-        setProgressBar();
+        if (isPlaylistSelected == false) {
+            Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
+            String selectedSongPath = "";
+            if (selectedSong == null) {
+                musicManager.playFirstSong();
+                setProgressBar();
+            } else {
+                selectedSongPath = selectedSong.getPath();
+                System.out.println(selectedSongPath);
+                musicManager.playSelectedSong(selectedSongPath);
+                setProgressBar();
+            }
         }
         else
         {
-            selectedSongPath = selectedSong.getPath();
-            System.out.println(selectedSongPath);
-            musicManager.playSelectedSong(selectedSongPath);
-            setProgressBar();
+            System.out.println("It doesn't work!!!!!!!");
         }
     }
+
 
     @FXML
     private void clickPause(ActionEvent actionEvent) {
@@ -222,4 +231,20 @@ public class MyTunesController implements Initializable {
             musicManager.addSongToPlaylistAgain(playlist_id, song_id);
         }
     }
+
+    @FXML
+    private void clickSongTable(MouseEvent mouseEvent) {
+        isPlaylistSelected = false;
+    }
+
+    @FXML
+    private void clickPlaylistTable(MouseEvent mouseEvent) {
+        isPlaylistSelected = true;
+    }
+
+    @FXML
+    private void clickChoicebox(MouseEvent mouseEvent) {
+        isPlaylistSelected = true;
+    }
+
 }

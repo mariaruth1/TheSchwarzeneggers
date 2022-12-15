@@ -24,6 +24,7 @@ public class MusicManager {
     Media media;
     MediaPlayer mediaPlayer;
     private int songIndex;
+    private int playlistId;
 
     static Song currentSong = new Song();
     private String songTitle;
@@ -215,6 +216,15 @@ public class MusicManager {
 
     public void selectPlaylist(int id) {
         playlistManager.selectPlaylist(id);
+    }
+
+    public int getPlaylistId()
+    {
+        return playlistId;
+    }
+
+    public void setPlaylistId(int playlistId) {
+        this.playlistId = playlistId;
     }
 
     public ObservableList<Song> searchListSongs(String query)
