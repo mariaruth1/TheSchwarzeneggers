@@ -45,7 +45,7 @@
          </children>
       </HBox>
       <Button fx:id="btnCreateNewSong" layoutX="59.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickCreateNewSong" text="Create new Song" />
-      <TableView fx:id="songListTable" editable="true" layoutX="51.0" layoutY="81.0" prefHeight="375.0" prefWidth="365.0">
+      <TableView fx:id="songListTable" editable="true" layoutX="59.0" layoutY="81.0" prefHeight="375.0" prefWidth="321.0">
         <columns>
           <TableColumn fx:id="columnTitle" prefWidth="75.0" text="Title" />
           <TableColumn fx:id="columnArtist" prefWidth="75.0" text="Artist" />
@@ -56,21 +56,22 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TableView fx:id="playListTable" layoutX="421.0" layoutY="81.0" prefHeight="375.0" prefWidth="328.0">
+      <TableView fx:id="playListTable" editable="true" layoutX="421.0" layoutY="81.0" prefHeight="375.0" prefWidth="328.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="Title" />
-            <TableColumn prefWidth="75.0" text="Artist" />
-            <TableColumn prefWidth="75.0" text="Relase Year" />
-            <TableColumn prefWidth="75.0" text="Genre" />
+            <TableColumn fx:id="columnPlaylistSongTitle" prefWidth="75.0" text="Title" />
+            <TableColumn fx:id="columnPlaylistSongArtist" prefWidth="75.0" text="Artist" />
+            <TableColumn fx:id="columnPlaylistSongYear" prefWidth="75.0" text="Release Year" />
+            <TableColumn fx:id="columnPlaylistSongGenre" prefWidth="75.0" text="Genre" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ChoiceBox fx:id="playlistChoicebox" layoutX="452.0" layoutY="48.0" prefHeight="26.0" prefWidth="184.0" />
-      <Button fx:id="btnDeleteSong" layoutX="336.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickDeleteSong" text="Delete Song" />
-      <Button fx:id="btnEditSongDetails" layoutX="200.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickEditSongDetails" text="Edit Song Details" />
-      <Button fx:id="btnCreatePlaylist" layoutX="452.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickCreatePlaylist" text="Create Playlist" />
-      <Button fx:id="btnDeletePlaylist" layoutX="727.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickDeletePlaylist" text="Delete Playlist" />
+      <ChoiceBox fx:id="playlistChoicebox" layoutX="467.0" layoutY="48.0" prefWidth="150.0" />
+      <Button fx:id="btnDeleteSong" layoutX="280.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickDeleteSong" text="Delete Song" />
+      <Button fx:id="btnEditSongDetails" layoutX="172.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickEditSongDetails" text="Edit Song Details" />
+      <Button fx:id="btnCreatePlaylist" layoutX="422.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickCreatePlaylist" text="Create Playlist" />
+      <Button fx:id="btnDeletePlaylist" layoutX="658.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickDeletePlaylist" text="Delete Playlist" />
+      <Button fx:id="btnAddSongToPlaylist" layoutX="387.0" layoutY="269.0" mnemonicParsing="false" onAction="#clickAddSongToPlaylist" prefHeight="25.0" prefWidth="25.0" text="&gt;" />
    </children>
 </AnchorPane>

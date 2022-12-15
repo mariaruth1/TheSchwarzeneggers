@@ -1,17 +1,21 @@
 package Datalayer;
 
 import entities.Playlist;
+import entities.Song;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PlaylistDAO {
     DatabaseConnection dbc = new DatabaseConnection();
 
+    private SongDAO songDao = new SongDAO();
+    private HashMap<Playlist, Song> songAndPlaylistId = new HashMap<>();
 
 
     public List<Playlist> getAllPlaylists()
@@ -59,15 +63,27 @@ public class PlaylistDAO {
         }
     }
 
-    public Playlist getPlaylistID(int id) {
+    public Playlist getPlaylist(int id){
         List<Playlist> playlists = getAllPlaylists();
-        for (Playlist p : playlists) {
-            if (p.getId() == id)
+
+        for(Playlist p : playlists)
+        {
+            if (p.getId()==id)
                 return p;
         }
         return null;
     }
 
+    public List<Song> getSongsFromPlaylist(int playlist_id)
+    {
+        List<Integer> songIds = getSongIdsFromPlaylist(playlist_id);
+        List<Song> songsInPlaylist = new ArrayList<>();
+
+        for (int id : songIds) {
+            songsInPlaylist.add(songDao.getSong(id));
+        }
+        return songsInPlaylist;
+    }
 
         public void getPlaylistID(String name) {
 
@@ -97,16 +113,42 @@ public class PlaylistDAO {
         }
     }
 
-    public void addSongToPlaylist(int playlist_id, int song_id)
+    public List<Integer> getSongIdsFromPlaylist(int playlist_id)
     {
+        List<Integer> songIds = new ArrayList<>();
+        String sql = "SELECT song_id FROM Playlists_Songs WHERE playlist_id =?";
         try(Connection con = dbc.getConnection();) {
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM Playlist_Songs");
-            rs.next();
-            int id_playlist = rs.getInt("playlist_id");
-            int id_song = rs.getInt("song_id");
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,playlist_id);
+            ResultSet rst  = ps.executeQuery();
+            while(rst.next())
+            {
+                songIds.add(rst.getInt("song_id"));
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return songIds;
+    }
+
+    public void addSongToPlaylist(int playlist_id, int song_id)
+    {
+        String sql = "INSERT INTO Playlists_Songs (playlist_id, song_id) VALUES (?,?)";
+
+        try(Connection con = dbc.getConnection();) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,playlist_id);
+            ps.setInt(2,song_id);
+            ps.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addSongAndPlaylistIdToHashmap(int playlist_id, int song_id)
+    {
+        songAndPlaylistId.put(getPlaylist(playlist_id), songDao.getSong(song_id));
     }
 
     public Playlist createPlaylist(String name) {

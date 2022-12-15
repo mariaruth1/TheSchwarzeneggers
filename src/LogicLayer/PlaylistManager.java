@@ -1,28 +1,23 @@
 package LogicLayer;
 
 import Datalayer.PlaylistDAO;
+import Datalayer.SongDAO;
 import entities.Playlist;
+import entities.Song;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class PlaylistManager {
 
-
     private final ObservableList<Playlist> playlists;
+    private ObservableList<Song> playlistSongs;
     PlaylistDAO playlistDAO = new PlaylistDAO();
+    SongDAO songDAO = new SongDAO();
 
-    public PlaylistManager(ObservableList<Playlist> playlists) {
-        this.playlists = playlists;
-    }
-
-    /** public PlaylistModel() {
+    public PlaylistManager() {
 
         playlists = FXCollections.observableArrayList();
-    }*/
-
-    public Playlist createPlaylist(String name) {
-        Playlist playlist = playlistDAO.createPlaylist(name);
-        playlists.add(playlist);
-        return playlist;
+        playlistSongs = FXCollections.observableArrayList();
     }
 
     public void fetchAllPlaylists() {
@@ -30,4 +25,29 @@ public class PlaylistManager {
         playlists.addAll(playlistDAO.getAllPlaylists());
     }
 
+    public ObservableList<Playlist> getPlaylists()
+    {
+        fetchAllPlaylists();
+        return playlists;
+    }
+
+    public Playlist createPlaylist(String name) {
+        Playlist playlist = playlistDAO.addPlaylist(name);
+        playlists.add(playlist);
+        return playlist;
+    }
+
+    public void addSongToPlaylist(int playlist_id, int song_id)
+    {
+        playlistDAO.addSongToPlaylist(playlist_id, song_id);
+        playlistSongs.add(songDAO.getSong(song_id));
+    }
+
+    public ObservableList<Song> getSelectedPlaylistSongs() {
+        return playlistSongs;
+    }
+
+    public void selectPlaylist(int id) {
+        playlistSongs = FXCollections.observableArrayList(playlistDAO.getSongsFromPlaylist(id));
+    }
 }

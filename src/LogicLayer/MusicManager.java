@@ -1,5 +1,6 @@
 package LogicLayer;
 
+import entities.Playlist;
 import entities.Song;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +18,20 @@ import java.util.List;
 public class MusicManager {
 
     SongManager songManager = SongManager.getInstance();
+    PlaylistManager playlistManager = new PlaylistManager();
+    Song song = new Song();
 
     Media media;
     MediaPlayer mediaPlayer;
     private int songIndex;
+
     static Song currentSong = new Song();
     private String songTitle;
-
 
     /**
      * @return observable list of all the songs in the database.
      */
+
     public ObservableList<Song> getMistressListAgain(){
         return songManager.getMistressSongList();
     }
@@ -35,6 +40,16 @@ public class MusicManager {
         return mediaPlayer == null;
     }
 
+
+    public ObservableList<Playlist> getPlaylistAgain()
+    {
+        return playlistManager.getPlaylists();
+    }
+
+    public void addSongToPlaylistAgain(int playlist_id, int song_id)
+    {
+        playlistManager.addSongToPlaylist(playlist_id, song_id);
+    }
 
     /**
      * Creates a list of strings with the path of a given song.
@@ -111,6 +126,10 @@ public class MusicManager {
         }
     }
 
+    public String getCurrentSongTitle(){
+        return song.getTitle(); //how to do?
+    }
+
     /**
      * @param path
      * @return the index of the song in the list.
@@ -118,24 +137,6 @@ public class MusicManager {
     public int getSongIndex(String path)
     {
         return getAllMP3Files().indexOf(path);
-    }
-
-    /**
-     *
-     * @param query
-     * @return
-     */
-    public ObservableList<Song> searchListSongs(String query){
-        ObservableList<Song> songs = getMistressListAgain();
-        List<Song> filtered = new ArrayList<>();
-
-        for(Song s: songs){
-            if(s.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                    (s.getArtist().toLowerCase().contains(query.toLowerCase()) ||
-                            (s.getGenre().toLowerCase().contains(query.toLowerCase()))))
-                filtered.add(s);
-        }
-        return FXCollections.observableArrayList(filtered);
     }
 
     /**
@@ -155,8 +156,7 @@ public class MusicManager {
      */
     public void stopSong() {
         try {
-            if(mediaPlayer!=null)
-                mediaPlayer.stop();
+            if(mediaPlayer!=null) mediaPlayer.stop();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -167,56 +167,71 @@ public class MusicManager {
      * If there is no previous song to play it restarts the first song.
      */
     public void previousSong() {
+        int previousSongIndex = songIndex-1;
+        String previousSongPath = getAllMP3Files().get(previousSongIndex);
         try {
-            if (mediaPlayer != null) {
-
-                if (songIndex > 0) {
-                    songIndex--;
-                }
-                playSelectedSong(getAllMP3Files().get(songIndex));
+            if (songIndex == -1){
+                playFirstSong();
             }
-
-            } catch(Exception e){
-                throw new RuntimeException(e);
-            }
-    }
-
-    /**
-     * Based on the current song index it goes to the next index and plays that song.
-     * If there is no next song to play it starts playing the list from the first song again.
-     */
-    public void nextSong() {
-        try {
-            if (mediaPlayer != null) {
-
-                if (songIndex < getAllMP3Files().size()-1) {
-                    songIndex++;
-                }
-                else{
-                    songIndex = 0;
-                }
-                playSelectedSong(getAllMP3Files().get(songIndex));
-            }
-
-        } catch(Exception e){
+            playSelectedSong(previousSongPath);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * Enables the volume to be set to a specific value,
-     * but only if there is a MediaPlayer instantiated.
+     * Based on the current song index it goes to the next index and plays that song.
+     * If there is no next song the play it starts playing the list from the first song again.
+     */
+    public void nextSong() {
+        int nextSongIndex = songIndex+1;
+        String nextSongPath = getAllMP3Files().get(nextSongIndex);
+        try {
+            if (songIndex == getAllMP3Files().size()){
+                playFirstSong();
+            }
+            playSelectedSong(nextSongPath);
+            System.out.println(nextSongIndex);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Enables the volume to be set to a specific value.
      * @param volume
      */
     public void volumeIncrement(double volume){
-        if(mediaPlayer!=null)
-            mediaPlayer.setVolume(volume);
+        mediaPlayer.setVolume(volume);
     }
 
-    public void removeSongPassThrough(Song selected){
-        SongManager.getInstance().removeSong(selected);
+    public Song removeSongPassThrough(Song selected) {
+        return selected;
     }
-    public void updateSongPassThrough(Song selected){
-        SongManager.getInstance().updateSong(selected);
+
+    public ObservableList<Song> getSelectedPlaylistSongs() {
+        return playlistManager.getSelectedPlaylistSongs();
+    }
+
+    public void selectPlaylist(int id) {
+        playlistManager.selectPlaylist(id);
+    }
+
+    public ObservableList<Song> searchListSongs(String query)
+    {
+            ObservableList<Song> songs = getMistressListAgain();
+            List<Song> filtered = new ArrayList<>();
+
+            for(Song s: songs){
+                if(s.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                (s.getArtist().toLowerCase().contains(query.toLowerCase()) ||
+                (s.getGenre().toLowerCase().contains(query.toLowerCase()))))
+                filtered.add(s);
+            }
+            return FXCollections.observableArrayList(filtered);
+        }
+
+    public Song updateSongPassThrough(Song newSong) {
+        return newSong;
     }
 }

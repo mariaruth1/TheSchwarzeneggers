@@ -1,18 +1,17 @@
 package entities;
 
-public class Playlist {
 
+import java.util.List;
+
+public class Playlist {
     private final int id;
 
     private String title;
-
-    private int songCount;
 
 
     public Playlist(int id, String title) {
         this.id = id;
         this.title = title;
-        this.songCount = songCount;
     }
 
     public int getId() {
@@ -28,11 +27,10 @@ public class Playlist {
     }
 
 
-
     @Override
     public String toString() {
         //return  title + " " + songCount;
-        return  "id" +id+ "name" +title;
+        return title;
     }
 }
 

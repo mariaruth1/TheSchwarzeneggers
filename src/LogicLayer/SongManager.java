@@ -5,6 +5,7 @@ import Datalayer.SongDAO;
 import entities.Song;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 import java.io.File;
 import java.io.IOException;

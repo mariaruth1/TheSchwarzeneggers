@@ -10,8 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class NewPlaylistMenuController {
+
+    PlaylistManager pm = new PlaylistManager();
     private ObservableList<Playlist> playlists;
-    PlaylistManager pm = new PlaylistManager(playlists);
     @FXML
     private TextField txtPlaylist;
     @FXML
@@ -23,7 +24,6 @@ public class NewPlaylistMenuController {
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
         }
-
     }
 
     @FXML

@@ -13,11 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
+import java.awt.*;
 
 
 import java.io.File;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddSongMenuController implements Initializable {
@@ -53,7 +54,6 @@ public class AddSongMenuController implements Initializable {
          Then passes all the data to the Songmanager for futher processing */
             InputManager iC = new InputManager();
             SongManager sm = SongManager.getInstance();
-
             String title = txtTitle.getText();
             int year = iC.checkImput(txtYear.getText());
             String artist = txtArtist.getText();
@@ -62,6 +62,7 @@ public class AddSongMenuController implements Initializable {
             String path = txtFile.getText();
 
             sm.addSong(title, year, artist, genre, path);
+            MyTunesController mtc = new MyTunesController();
 
             txtTitle.clear();
             txtArtist.clear();
@@ -70,6 +71,8 @@ public class AddSongMenuController implements Initializable {
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
+
+
     }
 
     @FXML

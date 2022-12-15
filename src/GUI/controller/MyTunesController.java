@@ -1,6 +1,9 @@
 package GUI.controller;
+
 import LogicLayer.MusicManager;
 import entities.Song;
+import entities.Playlist;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
@@ -22,18 +25,24 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-
 public class MyTunesController implements Initializable {
-
 
     @FXML
     private TableView<Song> songListTable;
+    @FXML
+    private TableView<Song> playListTable;
     @FXML
     private TableColumn<Song, String> columnTitle, columnArtist, columnGenre;
     @FXML
     private TableColumn<Song, Integer> columnYear;
     @FXML
+    private TableColumn<Song, String> columnPlaylistSongTitle, columnPlaylistSongArtist, columnPlaylistSongGenre;
+    @FXML
+    private TableColumn<Song, Integer> columnPlaylistSongYear;
+    @FXML
     private ProgressBar progressBar;
+    @FXML
+    ChoiceBox<Playlist> playlistChoicebox;
     @FXML
     private Label txtNowPlaying;
     @FXML
@@ -41,10 +50,10 @@ public class MyTunesController implements Initializable {
     @FXML
     private TextField searchBar;
     @FXML
-    private Button btnPlay, btnPause, btnReset, btnPrevious, btnNext, btnCreateNewSong;
+    private Button btnPlay, btnPause, btnReset, btnPrevious, btnNext, btnCreateNewSong, btnAddSongToPlaylist;
+
 
     MusicManager musicManager = new MusicManager();
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,6 +82,21 @@ public class MyTunesController implements Initializable {
         columnYear.setCellValueFactory(new PropertyValueFactory<>("year"));
         columnGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
         songListTable.setItems(musicManager.getMistressListAgain());
+
+
+        playlistChoicebox.setItems(musicManager.getPlaylistAgain());
+        playlistChoicebox.getSelectionModel().selectedItemProperty().addListener((options,oldValue, newValue)->
+        {
+            musicManager.selectPlaylist(newValue.getId());
+            playListTable.refresh();
+            playListTable.setItems(musicManager.getSelectedPlaylistSongs());
+        });
+
+        columnPlaylistSongTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        columnPlaylistSongArtist.setCellValueFactory(new PropertyValueFactory<>("artist"));
+        columnPlaylistSongYear.setCellValueFactory(new PropertyValueFactory<>("year"));
+        columnPlaylistSongGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        playListTable.setItems(musicManager.getSelectedPlaylistSongs());
     }
 
     private void setProgressBar() {
@@ -97,13 +121,14 @@ public class MyTunesController implements Initializable {
         String selectedSongPath = "";
         if (selectedSong == null){
         musicManager.playFirstSong();
-        //setProgressBar();
+        setProgressBar();
         }
         else
         {
             selectedSongPath = selectedSong.getPath();
+            System.out.println(selectedSongPath);
             musicManager.playSelectedSong(selectedSongPath);
-            //setProgressBar();
+            setProgressBar();
         }
     }
 
@@ -180,11 +205,21 @@ public class MyTunesController implements Initializable {
         }
     }
 
-
-
     public void clickCreatePlaylist(ActionEvent actionEvent) {
     }
 
     public void clickDeletePlaylist(ActionEvent actionEvent) {
+    }
+
+    public void clickAddSongToPlaylist(ActionEvent actionEvent) {
+        Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
+        int song_id;
+        int playlist_id;
+        if (selectedSong!=null)
+        {
+            song_id = selectedSong.getId();
+            playlist_id = playlistChoicebox.getSelectionModel().getSelectedItem().getId();
+            musicManager.addSongToPlaylistAgain(playlist_id, song_id);
+        }
     }
 }
