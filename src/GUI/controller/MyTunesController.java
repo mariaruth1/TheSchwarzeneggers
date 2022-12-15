@@ -1,8 +1,6 @@
 package GUI.controller;
-
 import LogicLayer.MusicManager;
 import entities.Song;
-
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
@@ -24,7 +22,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+
 public class MyTunesController implements Initializable {
+
 
     @FXML
     private TableView<Song> songListTable;
@@ -45,6 +45,7 @@ public class MyTunesController implements Initializable {
 
     MusicManager musicManager = new MusicManager();
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         volumeSlider.valueProperty().addListener(new InvalidationListener() {
@@ -55,14 +56,12 @@ public class MyTunesController implements Initializable {
             }
         });
 
-        txtNowPlaying.setText(musicManager.getCurrentSongTitle());
 
         columnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         columnArtist.setCellValueFactory(new PropertyValueFactory<>("artist"));
         columnYear.setCellValueFactory(new PropertyValueFactory<>("year"));
         columnGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
         songListTable.setItems(musicManager.getMistressListAgain());
-
     }
 
     private void setProgressBar() {
@@ -133,10 +132,39 @@ public class MyTunesController implements Initializable {
     }
 
     public void clickDeleteSong(ActionEvent actionEvent) {
+        if(songListTable.getSelectionModel().getSelectedItem()!=null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this song from the program? The file will still be on the computer", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                Song selected = songListTable.getSelectionModel().getSelectedItem();
+                musicManager.removeSongPassThrough(selected);
+            }
+        }
     }
 
     public void clickEditSongDetails(ActionEvent actionEvent) {
+        if(songListTable.getSelectionModel().getSelectedItem()!=null) {
+            Node n = (Node) actionEvent.getSource();
+            Window stage = n.getScene().getWindow();
+            Parent root;
+            try {
+                EditSongMenuController.selected = songListTable.getSelectionModel().getSelectedItem();
+                root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/view/EditSongMenu.fxml"));
+                Stage addSongWindow = new Stage();
+                addSongWindow.setScene(new Scene(root));
+                addSongWindow.setTitle("Add Songs");
+                addSongWindow.initOwner(stage);
+                addSongWindow.show();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+
 
     public void clickCreatePlaylist(ActionEvent actionEvent) {
     }

@@ -29,6 +29,8 @@ public class SongManager {
         mistressSongList = FXCollections.observableArrayList();
     }
 
+
+
     public void getAllSongs(){
         mistressSongList.clear();
         mistressSongList.addAll(songDAO.getAllSongs());
@@ -59,12 +61,19 @@ public class SongManager {
     }
 
     public void addSong(String title, int year, String artist, String genre, String filePath) {
-        mistressSongList.add(new Song(title, year, artist,genre,filePath));
-        songDAO.addSongToDataBase(title, year,artist,genre,filePath);
+        String newpath = moveFile(filePath);
+        mistressSongList.add(new Song(title, year, artist,genre,newpath));
+        songDAO.addSongToDataBase(title, year,artist,genre,newpath);
 
-        moveFile(filePath);
     }
+    public void removeSong(Song song){
+    songDAO.removeFromDataBase(song);
+    mistressSongList.remove(song);
+    }
+    public void updateSong(Song song){
+        songDAO.updateSong(song);
 
+    }
 }
 
 

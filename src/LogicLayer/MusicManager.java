@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -177,5 +176,12 @@ public class MusicManager {
      */
     public void volumeIncrement(double volume){
         mediaPlayer.setVolume(volume);
+    }
+
+    public void removeSongPassThrough(Song selected){
+        SongManager.getInstance().removeSong(selected);
+    }
+    public void updateSongPassThrough(Song selected){
+        SongManager.getInstance().updateSong(selected);
     }
 }

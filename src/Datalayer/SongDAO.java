@@ -55,9 +55,9 @@ public class SongDAO {
         }
 
     }
-    public void removeFromDataBase(String title){
-
-        String sql ="DELETE FROM Songs WHERE Title='" + title + "';";
+    public void removeFromDataBase(Song song){
+        int id = song.getId();
+        String sql ="DELETE FROM Songs WHERE iD='" + id + "';";
 
         try(Connection con = dbc.getConnection();) {
             con.createStatement().execute(sql);
@@ -66,8 +66,31 @@ public class SongDAO {
         }
 
     }
-    public void updateSong()
-    {
-        throw new RuntimeException();
+    public void updateSong(Song song){
+        String title = song.getTitle();
+        int releaseYear = song.getYear();
+        String artist = song.getArtist();
+        String genre = song.getGenre();
+        String path = song.getPath();
+
+        int id = song.getId();
+
+       // String sql = "UPDATE Songs\n" +
+         //       "SET Title = '" + title + "', ReleaseYear = '" + releaseYear + "', Artist = '" + artist + "', Genre = '" +genre + "', SongPath= '" + path + "'\n" +
+           //     "WHERE iD = "+ id + ";";
+        String sql = "UPDATE Songs SET Title = ?, ReleaseYear = ?, Artist = ?, Genre = ?, SongPath= ? WHERE iD = ?;";
+        try(Connection con = dbc.getConnection();) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1,title);
+            ps.setInt(2,releaseYear);
+            ps.setString(3,artist);
+            ps.setString(4,genre);
+            ps.setString(5,path);
+            ps.setInt(6,id);
+            ps.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

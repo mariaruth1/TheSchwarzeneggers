@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import java.awt.*;
+
 
 
 import java.io.File;
@@ -50,17 +50,19 @@ public class AddSongMenuController implements Initializable {
     }
 
     public void clickSave(ActionEvent actionEvent) {
-
+        /**Gets all the inputs in the textfields, checks that year is number else it gets changed to 0.
+         Then passes all the data to the Songmanager for futher processing */
+            InputChecker iC = new InputChecker();
             SongManager sm = SongManager.getInstance();
+
             String title = txtTitle.getText();
-            int year = checkImput(txtYear.getText());
+            int year = iC.checkImput(txtYear.getText());
             String artist = txtArtist.getText();
             String genre = choiceBox.getValue();
 
             String path = txtFile.getText();
 
             sm.addSong(title, year, artist, genre, path);
-            MyTunesController mtc = new MyTunesController();
 
             txtTitle.clear();
             txtArtist.clear();
@@ -69,33 +71,12 @@ public class AddSongMenuController implements Initializable {
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
-
-
     }
-   private int checkImput(String year){
-       InputChecker iC = new InputChecker();
-       if(iC.checkYear(year)==true){
-           return Integer.parseInt(year);
-       }
-       return 0;
-   }
+
     @FXML
     TextField txtErrorMessage = new TextField();
 
-    @FXML
-    //private TextField txtErrorMessage;
-    public void titleError() {
-    //lbTitleError.setOpacity(1);
-        txtErrorMessage.setOpacity(1);
-    txtErrorMessage.setText("invalid title");
-    }
-    public void artistError() {
-    //lbArtistError.setOpacity(1);
-        txtErrorMessage.setOpacity(1);
-        txtErrorMessage.setText("invalid artist");
-    }
     public void yearError() {
-
         this.txtErrorMessage.setOpacity(100);
         this.txtErrorMessage.setText(" year must be a number");
     }
@@ -123,7 +104,7 @@ public class AddSongMenuController implements Initializable {
         }
 
     }
-    //trys to read the selected file and input the results into the add new song UI
+    //trys to read the selected file and input the results into the AddNewSongView
     public void autoInput(String filepath){
         InputChecker iC = new InputChecker();
         txtArtist.setText(iC.getSongArtist(filepath));

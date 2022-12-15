@@ -9,27 +9,33 @@ import org.apache.tika.parser.mp3.Mp3Parser;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-        import java.io.*;
+import java.io.*;
 
 public class InputChecker {
     AddSongMenuController aSMC = new AddSongMenuController();
 
-
-    public boolean checkYear(String yearInput){
+   //takes the year input from edit and add song and checks if it's a number else 0 is returned
+    private boolean checkYear(String yearInput){
         if(yearInput != null){
             try{
                 Integer.parseInt(yearInput);
+                return true;
             } catch (Exception e) {
                 aSMC.yearError();
             }
         }
         return false;
     }
+    public int checkImput(String year){
+        if(checkYear(year)==true){
+            return Integer.parseInt(year);
+        }
+        return 0;
+    }
 
 
     public String getSongTitle(String filePath){
-        //looks for a title on the file, that can be added
+        //looks for a title on the file, that can be added to textfield
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -49,7 +55,6 @@ public class InputChecker {
                 return fileTileWithOutMP3;
             }else return title;
 
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -63,7 +68,7 @@ public class InputChecker {
         return null;
     }
     public String getSongArtist(String filePath){
-        //looks for an artist on the file, that can be added
+        //looks for an artist on the file, that can be added to textfield
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -79,8 +84,6 @@ public class InputChecker {
                 return "";
             }else return artist;
 
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -95,7 +98,7 @@ public class InputChecker {
     }
 
     public String getSongReleaseYear(String filePath){
-        //looks for a year on the file, that can be added
+        //looks for a year on the file, that can be added to textfield
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -132,9 +135,8 @@ public class InputChecker {
         return "";
     }
     public String getSongGenre(String filePath) {
-        //looks for a genre on the file, that can be added
+        //looks for a genre on the file, that can be added to textfield
         try {
-
             InputStream input = new FileInputStream(new File(filePath));
             ContentHandler handler = (ContentHandler) new DefaultHandler();
             Metadata metadata = new Metadata();
@@ -146,10 +148,7 @@ public class InputChecker {
             String genre = metadata.get("xmpDM:genre");
             if (genre == null) {
                 return "";
-            } else if(genre == "Pop" || genre =="Rock" || genre =="Disco" || genre =="Metal"  || genre =="Classical"
-                    || genre =="Country" || genre =="Jazz" || genre =="Blues" || genre =="Hip hop" || genre =="Techno" || genre =="Folk"){
-                return genre;
-            } else return "";
+            } else return genre;
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
