@@ -35,6 +35,10 @@ public class Song {
         setPath(path);
     }
 
+    public Song(String title) {
+        setTitle(title);
+    }
+
     public Song() {
     }
 
@@ -108,10 +112,5 @@ public class Song {
 
     public void setPath(String path) {
         this.path.set(path);
-    }
-
-    @Override
-    public String toString() {
-        return  title + " " + year + " " + artist + " " + genre + " " + path;
     }
 }

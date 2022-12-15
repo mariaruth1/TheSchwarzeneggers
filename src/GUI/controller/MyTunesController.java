@@ -48,6 +48,8 @@ public class MyTunesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        songListTable.setEditable(true);
+
         volumeSlider.valueProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
@@ -56,6 +58,15 @@ public class MyTunesController implements Initializable {
             }
         });
 
+        //txtNowPlaying.setText(musicManager.getCurrentSongTitle());
+
+        searchBar.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                songListTable.getItems().clear();
+                songListTable.setItems(musicManager.searchListSongs(newValue));
+            }
+        });
 
         columnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         columnArtist.setCellValueFactory(new PropertyValueFactory<>("artist"));
@@ -65,9 +76,15 @@ public class MyTunesController implements Initializable {
     }
 
     private void setProgressBar() {
+        if (musicManager.isMediaPlayerNull()) {
+            return;
+        }
         musicManager.getSongProgress().addListener(new ChangeListener<Duration>() {
             @Override
             public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                if (musicManager.isMediaPlayerNull()) {
+                    return;
+                }
                 progressBar.setProgress(newValue.toMillis() / musicManager.getSongLength());
             }
         });
@@ -80,14 +97,13 @@ public class MyTunesController implements Initializable {
         String selectedSongPath = "";
         if (selectedSong == null){
         musicManager.playFirstSong();
-        setProgressBar();
+        //setProgressBar();
         }
         else
         {
             selectedSongPath = selectedSong.getPath();
-            System.out.println(selectedSongPath);
             musicManager.playSelectedSong(selectedSongPath);
-            setProgressBar();
+            //setProgressBar();
         }
     }
 

@@ -18,7 +18,7 @@
       <Label fx:id="txtNowPlaying" alignment="CENTER" layoutX="59.0" layoutY="497.0" prefHeight="26.0" prefWidth="523.0" text="Song Title - Artist Name" />
       <Slider fx:id="volumeSlider" blockIncrement="25.0" layoutX="349.0" layoutY="544.0" minorTickCount="0" prefHeight="38.0" prefWidth="236.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" />
       <Label layoutX="582.0" layoutY="554.0" text="Volume" />
-      <TextField fx:id="searchBar" layoutX="59.0" layoutY="48.0" />
+      <TextField fx:id="searchBar" layoutX="59.0" layoutY="48.0" promptText="search songs" />
       <HBox layoutX="59.0" layoutY="549.0" prefHeight="26.0" prefWidth="282.0">
          <children>
             <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#clickPlay" text="Play">
