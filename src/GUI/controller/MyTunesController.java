@@ -61,6 +61,7 @@ public class MyTunesController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         songListTable.setEditable(true);
+        playListTable.setEditable(true);
 
         volumeSlider.valueProperty().addListener(new InvalidationListener() {
             @Override
@@ -189,7 +190,6 @@ public class MyTunesController implements Initializable {
             if (alert.getResult() == ButtonType.YES) {
                 Song selected = songListTable.getSelectionModel().getSelectedItem();
                 musicManager.removeSongPassThrough(selected);
-                playListTable.refresh();
             }
         }
     }
@@ -218,6 +218,11 @@ public class MyTunesController implements Initializable {
     public void clickCreatePlaylist(ActionEvent actionEvent) {
     }
 
+    /** First checks if the playlistChoicebox is not null.
+     * If not the code under will execute.
+     * Here we need the information of the selected playlist, we pass through our code.
+     */
+
     public void clickDeletePlaylist(ActionEvent actionEvent) {
         if(playlistChoicebox.getSelectionModel().getSelectedItem()!=null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this playlist?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
@@ -230,14 +235,20 @@ public class MyTunesController implements Initializable {
         }
     }
 
+    /**
+     * Checks if an item on songListTable and playlistChoicebox has been selected.
+     * If so executes the code under. Gets the id from the selected items and passes them through musicManager and so on.
+     * @param actionEvent
+     */
     public void clickAddSongToPlaylist(ActionEvent actionEvent) {
         Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
+        Playlist selectedPlaylist = playlistChoicebox.getSelectionModel().getSelectedItem();
         int song_id;
         int playlist_id;
-        if (selectedSong!=null)
+        if (selectedSong!=null && selectedPlaylist!=null)
         {
             song_id = selectedSong.getId();
-            playlist_id = playlistChoicebox.getSelectionModel().getSelectedItem().getId();
+            playlist_id = selectedPlaylist.getId();
             musicManager.addSongToPlaylistAgain(playlist_id, song_id);
         }
     }
@@ -257,10 +268,15 @@ public class MyTunesController implements Initializable {
         isPlaylistSelected = true;
     }
 
+    /**
+     * Checks if playlistChoicebox and a selected item from the playlistTable is not null.
+     * Then executes the code under.
+     * Here we need the information of the selected song, we pass through our code.
+     */
     public void clickRemoveSongFromPlaylist(ActionEvent actionEvent) {
         if(playlistChoicebox.getSelectionModel().getSelectedItem()!=null && playListTable.getSelectionModel().getSelectedItem()!=null) {
                 Song selected = playListTable.getSelectionModel().getSelectedItem();
-                musicManager.removeSongFromPlaylist(selected);
+                musicManager.removeOneSongFromPlaylist(selected);
             }
         }
 

@@ -200,14 +200,22 @@ public class MusicManager {
     }
 
     public void removeSongPassThrough(Song selected) {
-        playlistManager.removeSongFromPlaylist(selected);
+        playlistManager.removeSongsFromPlaylist(selected);
         SongManager.getInstance().removeSong(selected);
     }
 
+    /**
+     *
+     * @return the list of song ids from playlistManager.
+     */
     public ObservableList<Song> getSelectedPlaylistSongs() {
         return playlistManager.getSelectedPlaylistSongs();
     }
 
+    /**
+     * Does the same in playlistManager, it's a passthrough to make less connections.
+     * @param id
+     */
     public void selectPlaylist(int id) {
         playlistManager.selectPlaylist(id);
     }
@@ -224,8 +232,13 @@ public class MusicManager {
         playlistManager.removePlaylist(selected);
     }
 
-    public void removeSongFromPlaylist(Song selected) {
-        playlistManager.removeSongFromPlaylist(selected);
+    public void removeOneSongFromPlaylist(Song selected) {
+        playlistManager.removeOneSongFromPlaylist(selected);
+    }
+
+    public void removeSongsFromPlaylist(Song selected)
+    {
+        playlistManager.removeSongsFromPlaylist(selected);
     }
 
 
@@ -242,7 +255,7 @@ public class MusicManager {
         return FXCollections.observableArrayList(filtered);
     }
 
-    public Song updateSongPassThrough(Song newSong) {
-        return newSong;
+    public void updateSongPassThrough(Song newSong) {
+        SongManager.getInstance().updateSong(newSong);
     }
 }
