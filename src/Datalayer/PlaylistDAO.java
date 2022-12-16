@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class PlaylistDAO {
@@ -71,6 +70,7 @@ public class PlaylistDAO {
         }
         return null;
     }
+
 
     public List<Song> getSongsFromPlaylist(int playlist_id)
     {
@@ -149,5 +149,34 @@ public class PlaylistDAO {
         throw new RuntimeException();
     }
 
-    //Update name of playlist
+    public void removePlaylistFromDatabase(Playlist playlist) {
+        int id = playlist.getId();
+        String sql ="DELETE FROM Playlist WHERE playlist_id='" + id + "';";
+
+        try(Connection con = dbc.getConnection();) {
+            con.createStatement().execute(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void removePlaylistFromPlaylistSongDatabase(Playlist playlist) {
+        int id = playlist.getId();
+        String sql ="DELETE FROM Playlists_Songs WHERE playlist_id='" + id + "';";
+
+        try(Connection con = dbc.getConnection();) {
+            con.createStatement().execute(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void removeSongFromPlaylist(Song song) {
+        int id = song.getId();
+        String sql = "DELETE FROM Playlists_Songs WHERE song_id='" +id+ "';";
+        try(Connection con = dbc.getConnection();) {
+            con.createStatement().execute(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

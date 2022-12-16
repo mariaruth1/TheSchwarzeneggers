@@ -50,4 +50,16 @@ public class PlaylistManager {
     public void selectPlaylist(int id) {
         playlistSongs = FXCollections.observableArrayList(playlistDAO.getSongsFromPlaylist(id));
     }
+
+    public void removePlaylist(Playlist playlist)
+    {
+        playlists.remove(playlist);
+        playlistDAO.removePlaylistFromPlaylistSongDatabase(playlist);
+        playlistDAO.removePlaylistFromDatabase(playlist);
+    }
+
+    public void removeSongFromPlaylist(Song selected) {
+        playlistSongs.remove(selected);
+        playlistDAO.removeSongFromPlaylist(selected);
+    }
 }

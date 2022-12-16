@@ -51,7 +51,7 @@ public class MyTunesController implements Initializable {
     @FXML
     private TextField searchBar;
     @FXML
-    private Button btnPlay, btnPause, btnReset, btnPrevious, btnNext, btnCreateNewSong, btnAddSongToPlaylist;
+    private Button btnPlay, btnPause, btnReset, btnPrevious, btnNext, btnCreateNewSong, btnAddSongToPlaylist, btnRemoveSongFromPlaylist;
 
 
     MusicManager musicManager = new MusicManager();
@@ -189,6 +189,7 @@ public class MyTunesController implements Initializable {
             if (alert.getResult() == ButtonType.YES) {
                 Song selected = songListTable.getSelectionModel().getSelectedItem();
                 musicManager.removeSongPassThrough(selected);
+                playListTable.refresh();
             }
         }
     }
@@ -218,6 +219,15 @@ public class MyTunesController implements Initializable {
     }
 
     public void clickDeletePlaylist(ActionEvent actionEvent) {
+        if(playlistChoicebox.getSelectionModel().getSelectedItem()!=null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this playlist?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                Playlist selected = playlistChoicebox.getSelectionModel().getSelectedItem();
+                musicManager.removePlaylist(selected);
+            }
+        }
     }
 
     public void clickAddSongToPlaylist(ActionEvent actionEvent) {
@@ -247,4 +257,13 @@ public class MyTunesController implements Initializable {
         isPlaylistSelected = true;
     }
 
-}
+    public void clickRemoveSongFromPlaylist(ActionEvent actionEvent) {
+        if(playlistChoicebox.getSelectionModel().getSelectedItem()!=null && playListTable.getSelectionModel().getSelectedItem()!=null) {
+                Song selected = playListTable.getSelectionModel().getSelectedItem();
+                musicManager.removeSongFromPlaylist(selected);
+            }
+        }
+
+    }
+
+
