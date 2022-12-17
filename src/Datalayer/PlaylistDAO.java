@@ -35,7 +35,6 @@ public class PlaylistDAO {
         }
         return getAllPlaylists;
     }
-
     /**
      * Adds a playlist by the name the user inputs.
      * The id will always be the last id+1.
@@ -44,32 +43,14 @@ public class PlaylistDAO {
      */
     public Playlist addPlaylist(String title_name)
     {
-        int id = getNextPlaylistID();
+
         try(Connection con = dbc.getConnection();) {
-            addPlaylistToDatabase(id, title_name);
+            addPlaylistToDatabase(title_name);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return new Playlist(id, title_name);
+        return new Playlist(title_name);
     }
-
-    /**
-     * Method to get a new id.
-     * Looks at the last row and adds +1 to that id.
-     * @return nextId +1
-     */
-    public int getNextPlaylistID(){
-        try(Connection con = dbc.getConnection();){
-            ResultSet rs = con.createStatement().executeQuery("SELECT TOP 1 * FROM Playlist ORDER BY playlist_id DESC;");
-            rs.next();
-            int id = rs.getInt("playlist_id");
-            int nextID = id+1;
-            return nextID;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * Does the same in SongDAO, gets the id of the song selected.
      * It's a passthrough to create less connections, so PlaylistManager doesn't have to call for SongDAO.
@@ -96,54 +77,58 @@ public class PlaylistDAO {
         }
         return songsInPlaylist;
     }
-
-        public void getPlaylistID(String name) {
+    public int getPlaylistID(String name) {
 
         try (Connection con = dbc.getConnection();) {
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM Playlist");
+            ResultSet rs = con.createStatement().executeQuery("SELECT playlist_id FROM Playlist WHERE title_name='" + name + "'");
             rs.next();
-            int playlist_name_id = rs.getInt("playlist_id");
-            String playlist_name = rs.getString("title_name");
+            return rs.getInt("playlist_id");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
     /**
      * Adds new playlist id and title name into the database.
-     * @param playlist_id
      * @param title_name
      */
-    public void addPlaylistToDatabase(int playlist_id, String title_name)
-    {
-        String sql = "INSERT INTO Playlist (playlist_id, title_name) VALUES (?,?)";
+    public void addPlaylistToDatabase(String title_name) {
+        String sql = "INSERT INTO Playlist (title_name) VALUES (?);";
 
-        try(Connection con = dbc.getConnection();) {
+        try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,playlist_id);
-            ps.setString(2,title_name);
+            ps.setString(1, title_name);
             ps.execute();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public int getNewestIdPlaylist() {
+
+        try (Connection con = dbc.getConnection();) {
+            ResultSet rs = con.createStatement().executeQuery("SELECT TOP 1 * FROM Playlist ORDER BY playlist_id DESC;");
+            rs.next();
+            int id = rs.getInt("playlist_id");
+            int nextID = id;
+            return nextID;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * Here we get the song ids and adds them to a list of integers.
      * @param playlist_id
      * @return
      */
-    public List<Integer> getSongIdsFromPlaylist(int playlist_id)
-    {
+    public List<Integer> getSongIdsFromPlaylist(int playlist_id) {
         List<Integer> songIds = new ArrayList<>();
         String sql = "SELECT song_id FROM Playlists_Songs WHERE playlist_id =?";
-        try(Connection con = dbc.getConnection();) {
+        try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,playlist_id);
-            ResultSet rst  = ps.executeQuery();
-            while(rst.next())
-            {
+            ps.setInt(1, playlist_id);
+            ResultSet rst = ps.executeQuery();
+            while (rst.next()) {
                 songIds.add(rst.getInt("song_id"));
             }
         } catch (SQLException e) {
@@ -151,21 +136,19 @@ public class PlaylistDAO {
         }
         return songIds;
     }
-
     /**
      * Adds playlist_id and song_id to Playlists_Songs table.
      * With this table, we can now see which playlist_id has what song_id.
      * @param playlist_id
      * @param song_id
      */
-    public void addSongToPlaylist(int playlist_id, int song_id)
-    {
+    public void addSongToPlaylist(int playlist_id, int song_id) {
         String sql = "INSERT INTO Playlists_Songs (playlist_id, song_id) VALUES (?,?)";
 
-        try(Connection con = dbc.getConnection();) {
+        try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,playlist_id);
-            ps.setInt(2,song_id);
+            ps.setInt(1, playlist_id);
+            ps.setInt(2, song_id);
             ps.execute();
 
         } catch (SQLException e) {
@@ -173,6 +156,40 @@ public class PlaylistDAO {
         }
     }
 
+    public void editPlaylistName(Playlist playlist) {
+        String title = playlist.getTitle();
+        int id = playlist.getId();
+
+        System.out.println(title +" " + id);
+        String sql = "UPDATE PlayList SET title_name = ? WHERE playlist_id = ? ;";
+
+        //I have no idea why this isn't working
+
+        try (Connection con = dbc.getConnection();) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setInt(2, id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * We get the id from the playlist that was selected.
+     * We then delete the rows depending on the id in Playlists_Songs in our database.
+     */
+    public void removePlaylistFromPlaylistSongDatabase(Playlist playlist) {
+        int id = playlist.getId();
+        String sql = "DELETE FROM Playlists_Songs WHERE playlist_id=?;";
+
+        try (Connection con = dbc.getConnection();) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * First we get the id of the playlist that was selected.
      * We then delete the row depending on the id in Playlist in the database.
@@ -187,22 +204,6 @@ public class PlaylistDAO {
             throw new RuntimeException(e);
         }
     }
-
-    /**
-     * We get the id from the playlist that was selected.
-     * We then delete the rows depending on the id in Playlists_Songs in our database.
-     */
-    public void removePlaylistFromPlaylistSongDatabase(Playlist playlist) {
-        int id = playlist.getId();
-        String sql ="DELETE FROM Playlists_Songs WHERE playlist_id='" + id + "';";
-
-        try(Connection con = dbc.getConnection();) {
-            con.createStatement().execute(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * First we get the id of the selected song.
      * We then delete a row depending on the song_id in Playlist_Songs.

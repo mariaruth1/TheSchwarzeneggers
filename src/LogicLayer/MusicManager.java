@@ -32,33 +32,36 @@ public class MusicManager {
      * @return observable list of all the songs in the database.
      */
 
-    public ObservableList<Song> getMistressListAgain() {
+    public ObservableList<Song> getMistressListAgain(){
         return songManager.getMistressSongList();
     }
 
-    public boolean isMediaPlayerNull() {
+    public boolean isMediaPlayerNull(){
         return mediaPlayer == null;
     }
 
 
-    public ObservableList<Playlist> getPlaylistAgain() {
+    public ObservableList<Playlist> getPlaylistAgain()
+    {
         return playlistManager.getPlaylists();
     }
 
-    public void addSongToPlaylistAgain(int playlist_id, int song_id) {
+    public void addSongToPlaylistAgain(int playlist_id, int song_id)
+    {
         playlistManager.addSongToPlaylist(playlist_id, song_id);
     }
 
     /**
      * Creates a list of strings with the path of a given song.
-     *
      * @return songPath of the relevant song.
      */
-    public List<String> getAllMP3Files() {
+    public List<String> getAllMP3Files()
+    {
         List<Song> songs = getMistressListAgain();
         List<String> songPaths = new ArrayList<>();
 
-        for (Song s : songs) {
+        for(Song s : songs)
+        {
             songPaths.add(s.getPath());
         }
         return songPaths;
@@ -67,14 +70,14 @@ public class MusicManager {
     /**
      * Measures the current Duration of a song, as an observable property.
      */
-    public ReadOnlyObjectProperty<Duration> getSongProgress() {
+    public ReadOnlyObjectProperty<Duration> getSongProgress(){
         return mediaPlayer.currentTimeProperty();
     }
 
     /**
      * @return Total length of a song in milliseconds.
      */
-    public double getSongLength() {
+    public double getSongLength(){
         return mediaPlayer.getTotalDuration().toMillis();
     }
 
@@ -86,13 +89,16 @@ public class MusicManager {
      * Finally, if there is no MediaPlayer a new instance is created, in order to play the selected song.
      * It also called the next song method when the song has finished playing,
      * as well as keeping track of the current song's index in the list.
-     * * @param song to be played.
+     ** @param song to be played.
      */
-    public void playSelectedSong(String song) {
+    public void playSelectedSong(String song){
         try {
-            if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            if (mediaPlayer != null && mediaPlayer.getStatus()==MediaPlayer.Status.PLAYING)
+            {
                 mediaPlayer.stop();
-            } else if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+            }
+            else if (mediaPlayer != null && mediaPlayer.getStatus()==MediaPlayer.Status.PAUSED)
+            {
                 mediaPlayer.play();
                 return;
             }
@@ -110,7 +116,7 @@ public class MusicManager {
      * If no song is selected,
      * calls the play selected song method on the default first index.
      */
-    public void playFirstSong() {
+    public void playFirstSong(){
         int currentSongIndex = 0;
         String currentSongPath = getAllMP3Files().get(currentSongIndex);
         try {
@@ -120,7 +126,7 @@ public class MusicManager {
         }
     }
 
-    public String getCurrentSongTitle() {
+    public String getCurrentSongTitle(){
         return song.getTitle(); //how to do?
     }
 
@@ -128,7 +134,8 @@ public class MusicManager {
      * @param path
      * @return the index of the song in the list.
      */
-    public int getSongIndex(String path) {
+    public int getSongIndex(String path)
+    {
         return getAllMP3Files().indexOf(path);
     }
 
@@ -137,7 +144,7 @@ public class MusicManager {
      */
     public void pauseSong() {
         try {
-            if (mediaPlayer != null)
+            if(mediaPlayer != null)
                 mediaPlayer.pause();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -149,7 +156,7 @@ public class MusicManager {
      */
     public void stopSong() {
         try {
-            if (mediaPlayer != null) mediaPlayer.stop();
+            if(mediaPlayer!=null) mediaPlayer.stop();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -160,10 +167,10 @@ public class MusicManager {
      * If there is no previous song to play it restarts the first song.
      */
     public void previousSong() {
-        int previousSongIndex = songIndex - 1;
+        int previousSongIndex = songIndex-1;
         String previousSongPath = getAllMP3Files().get(previousSongIndex);
         try {
-            if (songIndex == -1) {
+            if (songIndex == -1){
                 playFirstSong();
             }
             playSelectedSong(previousSongPath);
@@ -177,10 +184,10 @@ public class MusicManager {
      * If there is no next song the play it starts playing the list from the first song again.
      */
     public void nextSong() {
-        int nextSongIndex = songIndex + 1;
+        int nextSongIndex = songIndex+1;
         String nextSongPath = getAllMP3Files().get(nextSongIndex);
         try {
-            if (songIndex == getAllMP3Files().size()) {
+            if (songIndex == getAllMP3Files().size()){
                 playFirstSong();
             }
             playSelectedSong(nextSongPath);
@@ -192,70 +199,65 @@ public class MusicManager {
 
     /**
      * Enables the volume to be set to a specific value.
-     *
      * @param volume
      */
-    public void volumeIncrement(double volume) {
+    public void volumeIncrement(double volume){
         mediaPlayer.setVolume(volume);
     }
-
+    public void removePlaylist(Playlist selected) {
+        playlistManager.removePlaylist(selected);
+    }
     public void removeSongPassThrough(Song selected) {
-        playlistManager.removeSongsFromPlaylist(selected);
         SongManager.getInstance().removeSong(selected);
     }
-
-    /**
-     *
-     * @return the list of song ids from playlistManager.
-     */
     public ObservableList<Song> getSelectedPlaylistSongs() {
         return playlistManager.getSelectedPlaylistSongs();
     }
 
-    /**
-     * Does the same in playlistManager, it's a passthrough to make less connections.
-     * @param id
-     */
     public void selectPlaylist(int id) {
         playlistManager.selectPlaylist(id);
     }
 
-    public int getPlaylistId() {
+    public int getPlaylistId()
+    {
         return playlistId;
     }
 
     public void setPlaylistId(int playlistId) {
         this.playlistId = playlistId;
     }
-
-    public void removePlaylist(Playlist selected) {
-        playlistManager.removePlaylist(selected);
-    }
-
     public void removeOneSongFromPlaylist(Song selected) {
         playlistManager.removeOneSongFromPlaylist(selected);
     }
 
-    public void removeSongsFromPlaylist(Song selected)
+    public ObservableList<Song> searchListSongs(String query)
     {
-        playlistManager.removeSongsFromPlaylist(selected);
-    }
+            ObservableList<Song> songs = getMistressListAgain();
+            List<Song> filtered = new ArrayList<>();
 
-
-    public ObservableList<Song> searchListSongs(String query) {
-        ObservableList<Song> songs = getMistressListAgain();
-        List<Song> filtered = new ArrayList<>();
-
-        for (Song s : songs) {
-            if (s.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                    (s.getArtist().toLowerCase().contains(query.toLowerCase()) ||
-                            (s.getGenre().toLowerCase().contains(query.toLowerCase()))))
+            for(Song s: songs){
+                if(s.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                (s.getArtist().toLowerCase().contains(query.toLowerCase()) ||
+                (s.getGenre().toLowerCase().contains(query.toLowerCase()))))
                 filtered.add(s);
+            }
+            return FXCollections.observableArrayList(filtered);
         }
-        return FXCollections.observableArrayList(filtered);
-    }
 
     public void updateSongPassThrough(Song newSong) {
         SongManager.getInstance().updateSong(newSong);
     }
+    public void createPlaylistPassThrough(String playlistName){
+
+        playlistManager.createPlaylist(playlistName);
+
+    }
+    public void renamePlaylistPassThrough(String playlistName){
+        playlistManager.playlistRename(playlistName);
+    }
+
+    public  void oldSongpassthrough(String oldName){
+        playlistManager.getPlaylistName(oldName);
+    }
+
 }

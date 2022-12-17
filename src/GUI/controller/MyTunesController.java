@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static GUI.controller.NewPlaylistMenuController.playlistname;
+
 
 public class MyTunesController implements Initializable {
 
@@ -51,7 +53,7 @@ public class MyTunesController implements Initializable {
     @FXML
     private TextField searchBar;
     @FXML
-    private Button btnPlay, btnPause, btnReset, btnPrevious, btnNext, btnCreateNewSong, btnAddSongToPlaylist, btnRemoveSongFromPlaylist;
+    private Button btnPlay, btnPause, btnReset, btnPrevious, btnNext, btnCreateNewSong, btnAddSongToPlaylist;
 
 
     MusicManager musicManager = new MusicManager();
@@ -62,7 +64,6 @@ public class MyTunesController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         songListTable.setEditable(true);
         playListTable.setEditable(true);
-
         volumeSlider.valueProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
@@ -70,8 +71,6 @@ public class MyTunesController implements Initializable {
             musicManager.volumeIncrement(volume);
             }
         });
-
-        //txtNowPlaying.setText(musicManager.getCurrentSongTitle());
 
         searchBar.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -165,21 +164,24 @@ public class MyTunesController implements Initializable {
         setProgressBar();
     }
 
-    public void clickCreateNewSong(ActionEvent actionEvent){
-        Node n = (Node) actionEvent.getSource();
-        Window stage = n.getScene().getWindow();
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/view/AddSongMenu.fxml"));
-            Stage addSongWindow = new Stage();
-            addSongWindow.setScene(new Scene(root));
-            addSongWindow.setTitle("Add Songs");
-            addSongWindow.initOwner(stage);
-            addSongWindow.show();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void clickCreateNewSong(ActionEvent actionEvent){
+
+            Node n = (Node) actionEvent.getSource();
+            Window stage = n.getScene().getWindow();
+            Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/view/AddSongMenu.fxml"));
+                Stage addSongWindow = new Stage();
+                addSongWindow.setScene(new Scene(root));
+                addSongWindow.setTitle("Add Songs");
+                addSongWindow.initOwner(stage);
+                addSongWindow.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
     }
 
     public void clickDeleteSong(ActionEvent actionEvent) {
@@ -193,6 +195,7 @@ public class MyTunesController implements Initializable {
             }
         }
     }
+
 
     public void clickEditSongDetails(ActionEvent actionEvent) {
         if(songListTable.getSelectionModel().getSelectedItem()!=null) {
@@ -214,15 +217,48 @@ public class MyTunesController implements Initializable {
             }
         }
     }
-
+    static boolean isEditingPlaylist = false;
     public void clickCreatePlaylist(ActionEvent actionEvent) {
-    }
+        isEditingPlaylist=false;
+            Node n = (Node) actionEvent.getSource();
+            Window stage = n.getScene().getWindow();
+            Parent root;
+            try {
+                playlistname = "";
+                root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/view/NewPlaylistMenu.fxml"));
+                Stage addPlaylistWindow = new Stage();
+                addPlaylistWindow.setScene(new Scene(root));
+                addPlaylistWindow.setTitle("Name your new playlist");
+                addPlaylistWindow.initOwner(stage);
+                addPlaylistWindow.show();
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+    public void clickEditPlaylistName(ActionEvent actionEvent) {
+        if(playlistChoicebox.getValue()!=null) {
+            isEditingPlaylist = true;
+            Node n = (Node) actionEvent.getSource();
+            Window stage = n.getScene().getWindow();
+            Parent root;
+            try {
+                playlistname = playlistChoicebox.getValue().toString();
+                    root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/view/NewPlaylistMenu.fxml"));
+                    Stage editPlaylistWindow = new Stage();
+                    editPlaylistWindow.setScene(new Scene(root));
+                    editPlaylistWindow.setTitle("Rename playlist");
+                    editPlaylistWindow.initOwner(stage);
+                    editPlaylistWindow.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+    }
     /** First checks if the playlistChoicebox is not null.
      * If not the code under will execute.
      * Here we need the information of the selected playlist, we pass through our code.
      */
-
     public void clickDeletePlaylist(ActionEvent actionEvent) {
         if(playlistChoicebox.getSelectionModel().getSelectedItem()!=null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this playlist?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
@@ -234,7 +270,6 @@ public class MyTunesController implements Initializable {
             }
         }
     }
-
     /**
      * Checks if an item on songListTable and playlistChoicebox has been selected.
      * If so executes the code under. Gets the id from the selected items and passes them through musicManager and so on.
@@ -253,6 +288,7 @@ public class MyTunesController implements Initializable {
         }
     }
 
+
     @FXML
     private void clickSongTable(MouseEvent mouseEvent) {
         isPlaylistSelected = false;
@@ -267,7 +303,6 @@ public class MyTunesController implements Initializable {
     private void clickChoicebox(MouseEvent mouseEvent) {
         isPlaylistSelected = true;
     }
-
     /**
      * Checks if playlistChoicebox and a selected item from the playlistTable is not null.
      * Then executes the code under.
@@ -275,11 +310,10 @@ public class MyTunesController implements Initializable {
      */
     public void clickRemoveSongFromPlaylist(ActionEvent actionEvent) {
         if(playlistChoicebox.getSelectionModel().getSelectedItem()!=null && playListTable.getSelectionModel().getSelectedItem()!=null) {
-                Song selected = playListTable.getSelectionModel().getSelectedItem();
-                musicManager.removeOneSongFromPlaylist(selected);
-            }
+            Song selected = playListTable.getSelectionModel().getSelectedItem();
+            musicManager.removeOneSongFromPlaylist(selected);
         }
-
     }
 
 
+}

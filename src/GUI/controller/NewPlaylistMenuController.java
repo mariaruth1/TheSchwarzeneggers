@@ -1,28 +1,63 @@
 package GUI.controller;
 
+import LogicLayer.MusicManager;
 import LogicLayer.PlaylistManager;
-import entities.Playlist;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class NewPlaylistMenuController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    PlaylistManager pm = new PlaylistManager();
-    private ObservableList<Playlist> playlists;
+import static GUI.controller.MyTunesController.isEditingPlaylist;
+
+
+public class NewPlaylistMenuController implements Initializable {
+
+    static String playlistname;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        txtPlaylist.clear();
+        getPlaylistname(playlistname);
+    }
+    public void getOldPlaylistName(){
+        mm.oldSongpassthrough(playlistname);
+    }
+
+    MusicManager mm = new MusicManager();
+
     @FXML
     private TextField txtPlaylist;
+
     @FXML
     private void clickSave(ActionEvent actionEvent) {
-        {
-            pm.createPlaylist(txtPlaylist.getText());
+
+        if (txtPlaylist.getText() != null) {
+            if (isEditingPlaylist == false) {
+                mm.createPlaylistPassThrough(txtPlaylist.getText());
+                txtPlaylist.clear();
+                Node n = (Node) actionEvent.getSource();
+                Stage stage = (Stage) n.getScene().getWindow();
+                stage.close();
+            } else {
+                getOldPlaylistName();
+                mm.renamePlaylistPassThrough(txtPlaylist.getText());
+                Node n = (Node) actionEvent.getSource();
+                Stage stage = (Stage) n.getScene().getWindow();
+                stage.close();
+            }
+        }
+    }
+
+    public void getPlaylistname(String text){
+        if(isEditingPlaylist ==true){
+            txtPlaylist.setText(text);
+        } else{
             txtPlaylist.clear();
-            Node n = (Node) actionEvent.getSource();
-            Stage stage = (Stage) n.getScene().getWindow();
-            stage.close();
         }
     }
 
@@ -33,4 +68,6 @@ public class NewPlaylistMenuController {
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
+
+
 }

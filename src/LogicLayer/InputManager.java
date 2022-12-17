@@ -93,7 +93,6 @@ public class InputManager {
         } catch (TikaException e) {
             e.printStackTrace();
         }
-
         return "";
     }
 
@@ -131,7 +130,6 @@ public class InputManager {
         } catch (TikaException e) {
             e.printStackTrace();
         }
-
         return "";
     }
     public String getSongGenre(String filePath) {

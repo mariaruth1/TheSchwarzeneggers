@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.MyTunesController">
+<AnchorPane prefHeight="600.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.MyTunesController">
    <children>
       <ProgressBar fx:id="progressBar" layoutX="59.0" layoutY="523.0" prefHeight="18.0" prefWidth="523.0" progress="0.0" />
       <Label fx:id="txtNowPlaying" alignment="CENTER" layoutX="59.0" layoutY="497.0" prefHeight="26.0" prefWidth="523.0" text="Song Title - Artist Name" />
       <Slider fx:id="volumeSlider" blockIncrement="25.0" layoutX="349.0" layoutY="544.0" minorTickCount="0" prefHeight="38.0" prefWidth="236.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" />
       <Label layoutX="582.0" layoutY="554.0" text="Volume" />
-      <TextField fx:id="searchBar" layoutX="59.0" layoutY="48.0" promptText="search songs" />
+      <TextField fx:id="searchBar" layoutX="59.0" layoutY="48.0" prefHeight="26.0" prefWidth="322.0" promptText="search songs" />
       <HBox layoutX="59.0" layoutY="549.0" prefHeight="26.0" prefWidth="282.0">
          <children>
             <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#clickPlay" text="Play">
@@ -67,12 +59,12 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ChoiceBox fx:id="playlistChoicebox" layoutX="467.0" layoutY="48.0" onMouseClicked="#clickChoicebox" prefWidth="150.0" />
-      <Button fx:id="btnDeleteSong" layoutX="280.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickDeleteSong" text="Delete Song" />
-      <Button fx:id="btnEditSongDetails" layoutX="172.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickEditSongDetails" text="Edit Song Details" />
+      <ChoiceBox fx:id="playlistChoicebox" layoutX="422.0" layoutY="48.0" onMouseClicked="#clickChoicebox" prefHeight="26.0" prefWidth="194.0" />
+      <Button fx:id="btnDeleteSong" layoutX="276.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickDeleteSong" prefHeight="26.0" prefWidth="106.0" text="Delete Song" />
+      <Button fx:id="btnEditSongDetails" layoutX="166.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickEditSongDetails" text="Edit Song Details" />
       <Button fx:id="btnCreatePlaylist" layoutX="422.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickCreatePlaylist" text="Create Playlist" />
       <Button fx:id="btnDeletePlaylist" layoutX="658.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickDeletePlaylist" text="Delete Playlist" />
       <Button fx:id="btnAddSongToPlaylist" layoutX="387.0" layoutY="269.0" mnemonicParsing="false" onAction="#clickAddSongToPlaylist" prefHeight="25.0" prefWidth="25.0" text="&gt;" />
-      <Button fx:id="btnRemoveSongFromPlaylist" layoutX="540.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickRemoveSongFromPlaylist" text="Remove Song" />
+      <Button fx:id="btnEditSongName" layoutX="620.0" layoutY="48.0" mnemonicParsing="false" onAction="#clickEditPlaylistName" prefHeight="26.0" prefWidth="130.0" text="Change playlist name" />
    </children>
 </AnchorPane>

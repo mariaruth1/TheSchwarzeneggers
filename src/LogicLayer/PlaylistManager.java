@@ -1,6 +1,7 @@
 package LogicLayer;
 
 import Datalayer.PlaylistDAO;
+import Datalayer.SongDAO;
 import entities.Playlist;
 import entities.Song;
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ public class PlaylistManager {
     private final ObservableList<Playlist> playlists;
     private ObservableList<Song> playlistSongs;
     PlaylistDAO playlistDAO = new PlaylistDAO();
+    SongDAO songDAO = new SongDAO();
 
     public PlaylistManager() {
 
@@ -27,10 +29,12 @@ public class PlaylistManager {
         playlists.addAll(playlistDAO.getAllPlaylists());
     }
 
-    public ObservableList<Playlist> getPlaylists() {
+    public ObservableList<Playlist> getPlaylists()
+    {
         fetchAllPlaylists();
         return playlists;
     }
+
 
     /**
      * Creates a playlist by user input (String name)
@@ -39,10 +43,13 @@ public class PlaylistManager {
      * @param name
      * @return
      */
-    public Playlist createPlaylist(String name) {
-        Playlist playlist = playlistDAO.addPlaylist(name);
+    public void createPlaylist(String name) {
+
+        playlistDAO.addPlaylistToDatabase(name);
+        int id = playlistDAO.getNewestIdPlaylist();
+        Playlist playlist = new Playlist(id, name);
         playlists.add(playlist);
-        return playlist;
+
     }
 
     /**
@@ -73,6 +80,18 @@ public class PlaylistManager {
      */
     public void selectPlaylist(int id) {
         playlistSongs = FXCollections.observableArrayList(playlistDAO.getSongsFromPlaylist(id));
+    }
+    private int playlistId;
+
+    public void playlistRename(String playlistName){
+        int id = this.playlistId;
+        Playlist playlist = new Playlist(id, playlistName);
+        playlistDAO.editPlaylistName(playlist);
+    }
+
+    public void getPlaylistName(String playlistName){
+        this.playlistId = playlistDAO.getPlaylistID(playlistName);
+
     }
 
     /**
@@ -105,9 +124,10 @@ public class PlaylistManager {
      * If the user deletes a song from theMistressList, we have to delete all the ids in the Playlist_Songs table too.
      * @param selected
      */
-    public void removeSongsFromPlaylist(Song selected)
-    {
+    public void removeSongsFromPlaylist(Song selected) {
         playlistSongs.remove(selected);
         playlistDAO.removeSongsFromPlaylist(selected);
     }
+
+
 }

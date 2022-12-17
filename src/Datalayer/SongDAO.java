@@ -75,9 +75,7 @@ public class SongDAO {
 
         int id = song.getId();
 
-       // String sql = "UPDATE Songs\n" +
-         //       "SET Title = '" + title + "', ReleaseYear = '" + releaseYear + "', Artist = '" + artist + "', Genre = '" +genre + "', SongPath= '" + path + "'\n" +
-           //     "WHERE iD = "+ id + ";";
+
         String sql = "UPDATE Songs SET Title = ?, ReleaseYear = ?, Artist = ?, Genre = ?, SongPath= ? WHERE iD = ?;";
         try(Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
