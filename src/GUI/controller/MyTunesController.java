@@ -64,6 +64,7 @@ public class MyTunesController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         songListTable.setEditable(true);
         playListTable.setEditable(true);
+
         volumeSlider.valueProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
@@ -71,6 +72,8 @@ public class MyTunesController implements Initializable {
             musicManager.volumeIncrement(volume);
             }
         });
+
+        //add back text here
 
         searchBar.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -93,14 +96,14 @@ public class MyTunesController implements Initializable {
             musicManager.setPlaylistId(newValue.getId());
             musicManager.selectPlaylist(newValue.getId());
             playListTable.refresh();
-            playListTable.setItems(musicManager.getSelectedPlaylistSongs());
+            playListTable.setItems(musicManager.getPlaylistSongs());
         });
 
         columnPlaylistSongTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         columnPlaylistSongArtist.setCellValueFactory(new PropertyValueFactory<>("artist"));
         columnPlaylistSongYear.setCellValueFactory(new PropertyValueFactory<>("year"));
         columnPlaylistSongGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
-        playListTable.setItems(musicManager.getSelectedPlaylistSongs());
+        playListTable.setItems(musicManager.getPlaylistSongs());
     }
 
     private void setProgressBar() {
@@ -121,23 +124,32 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void clickPlay(ActionEvent actionEvent) {
-        if (isPlaylistSelected == false) {
-            Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
-            String selectedSongPath = "";
+        Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
+        Song selectedSongInPlaylist = playListTable.getSelectionModel().getSelectedItem();
+        String selectedSongPath;
+        if (!isPlaylistSelected) {
             if (selectedSong == null) {
                 musicManager.playFirstSong();
-                setProgressBar();
-            } else {
-                selectedSongPath = selectedSong.getPath();
-                System.out.println(selectedSongPath);
-                musicManager.playSelectedSong(selectedSongPath);
-                setProgressBar();
             }
+            else {
+                selectedSongPath = selectedSong.getPath();
+                musicManager.stopSong();
+                musicManager.playSelectedSong(selectedSongPath);
+            }
+            txtNowPlaying.setText(musicManager.getCurrentSongTitle());
         }
-        else
-        {
-            System.out.println("It doesn't work!!!!!!!");
+        else {
+            if (selectedSongInPlaylist == null) {
+                musicManager.stopSong();
+                musicManager.playFirstSongInPlaylist();
+            } else {
+                selectedSongPath = selectedSongInPlaylist.getPath();
+                musicManager.stopSong();
+                musicManager.playSelectedPlaylistSong(selectedSongPath);
+            }
+            txtNowPlaying.setText(musicManager.getCurrentPlaylistSongTitle());
         }
+        setProgressBar();
     }
 
 
@@ -149,21 +161,41 @@ public class MyTunesController implements Initializable {
     @FXML
     private void clickReset(ActionEvent actionEvent) {
         musicManager.stopSong();
+        txtNowPlaying.setText("No song selected");
         setProgressBar();
     }
 
     @FXML
     private void clickPrevious(ActionEvent actionEvent) {
-        musicManager.previousSong();
+        if (!isPlaylistSelected) {
+            musicManager.previousSong();
+            txtNowPlaying.setText(musicManager.getCurrentSongTitle());
+        }
+        else {
+            musicManager.previousPlaylistSong();
+            txtNowPlaying.setText(musicManager.getCurrentPlaylistSongTitle());
+        }
         setProgressBar();
     }
 
     @FXML
     private void clickNext(ActionEvent actionEvent) {
-        musicManager.nextSong();
+        if (!isPlaylistSelected) {
+            musicManager.nextSong();
+            txtNowPlaying.setText(musicManager.getCurrentSongTitle());
+        }
+        else {
+            musicManager.nextPlaylistSong();
+            txtNowPlaying.setText(musicManager.getCurrentPlaylistSongTitle());
+        }
         setProgressBar();
     }
 
+    @FXML
+    private void clickShuffle(ActionEvent actionEvent) {
+        //TODO
+        throw new RuntimeException();
+    }
 
     public void clickCreateNewSong(ActionEvent actionEvent){
 

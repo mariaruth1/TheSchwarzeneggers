@@ -18,7 +18,6 @@ import java.awt.*;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddSongMenuController implements Initializable {
@@ -71,10 +70,15 @@ public class AddSongMenuController implements Initializable {
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
-
-
     }
 
+   private int checkInput(String year){
+       InputManager iC = new InputManager();
+       if(iC.checkYear(year)==true){
+           return Integer.parseInt(year);
+       }
+       return 0;
+   }
     @FXML
     TextField txtErrorMessage = new TextField();
 

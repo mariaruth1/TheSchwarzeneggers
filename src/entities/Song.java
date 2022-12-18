@@ -18,6 +18,7 @@ public class Song {
 
     private StringProperty path = new SimpleStringProperty();
 
+
     public Song(int id, String title, int year, String artist, String genre, String path) {
         setId(id);
         setTitle(title);
@@ -112,5 +113,10 @@ public class Song {
 
     public void setPath(String path) {
         this.path.set(path);
+    }
+
+    @Override
+    public String toString() {
+        return  title + " " + year + " " + artist + " " + genre + " " + path;
     }
 }

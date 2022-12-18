@@ -15,7 +15,7 @@ public class InputManager {
     AddSongMenuController aSMC = new AddSongMenuController();
 
    //takes the year input from edit and add song and checks if it's a number else 0 is returned
-    private boolean checkYear(String yearInput){
+   public boolean checkYear(String yearInput){
         if(yearInput != null){
             try{
                 Integer.parseInt(yearInput);

@@ -11,6 +11,8 @@ public class Playlist {
 
     private StringProperty title = new SimpleStringProperty();
 
+    private List<Song> songsInPlaylist;
+
 
     public Playlist(int id, String title) {
         this.id = id;
