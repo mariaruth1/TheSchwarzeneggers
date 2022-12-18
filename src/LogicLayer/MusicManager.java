@@ -24,7 +24,6 @@ public class MusicManager {
     private int songIndex;
     private int playlistId;
 
-    //static Song currentSong = new Song();
 
     /**
      * @return observable list of all the songs in the database.
@@ -34,11 +33,17 @@ public class MusicManager {
         return songManager.getMistressSongList();
     }
 
+    /**
+     * @return true if there is currently a MediaPlayer instantiated, false if not.
+     */
     public boolean isMediaPlayerNull() {
         return mediaPlayer == null;
     }
 
 
+    /**
+     * @return an observable list of all playlists..
+     */
     public ObservableList<Playlist> getPlaylistAgain()
     {
         return playlistManager.getPlaylists();
@@ -50,8 +55,7 @@ public class MusicManager {
     }
 
     /**
-     * Creates a list of strings with the path of a given song.
-     * @return songPath of the relevant song.
+     * @return list of all song paths.
      */
     public List<String> getAllSongPaths() {
         List<Song> songs = getMistressListAgain();
@@ -64,6 +68,9 @@ public class MusicManager {
         return songPaths;
     }
 
+    /**
+     * @return list of all song paths on a playlist
+     */
     public List<String> getPlaylistSongPaths(){
         List<Song> songs = getPlaylistSongs();
         List<String> playlistSongPaths = new ArrayList<>();
@@ -92,11 +99,8 @@ public class MusicManager {
     }
 
     /**
-     * First checks if there is currently a MediaPlayer instantiated as this is necessary to play a song.
-     * Then if there is a song already playing,
-     * and calls the stop method, in order to prevent multiple songs playing simultaneously.
-     * Then checks if there is a MediaPlayer instantiated and the song is paused, the play method can now be called.
-     * Finally, if there is no MediaPlayer a new instance is created, in order to play the selected song.
+     * Calls the mediaPlayerStatus method to deal with any media currently being played.
+     * If there is no MediaPlayer a new instance is created, in order to play the selected song.
      * It also called the next song method when the song has finished playing,
      * as well as keeping track of the current song's index in the list.
      ** @param song to be played.
@@ -114,6 +118,13 @@ public class MusicManager {
         }
     }
 
+    /**
+     * Calls the mediaPlayerStatus method to deal with any media currently being played.
+     * If there is no MediaPlayer a new instance is created, in order to play the selected song.
+     * It also called the next song method when the song has finished playing,
+     * as well as keeping track of the current song's index in the playlist.
+     ** @param song of the selected playlist to be played.
+     */
     public void playSelectedPlaylistSong(String song){
         try {
             mediaPlayerStatus();
@@ -127,6 +138,12 @@ public class MusicManager {
         }
     }
 
+    /**
+     * First checks if there is currently a MediaPlayer instantiated as this is necessary to play a song.
+     * Then if there is a song already playing,
+     * and calls the stop method, in order to prevent multiple songs playing simultaneously.
+     * Then checks if there is a MediaPlayer instantiated and the song is paused, the play method can now be called.
+     */
     private void mediaPlayerStatus(){
         if (mediaPlayer != null && mediaPlayer.getStatus()==MediaPlayer.Status.PLAYING)
         {
@@ -289,6 +306,10 @@ public class MusicManager {
         }
     }
 
+    /**
+     * Based on the current song index it goes to the next index and plays that song.
+     * If there is no next song to play it starts playing the playlist from the first song again.
+     */
     public void nextPlaylistSong() {
         try {
             if (mediaPlayer != null) {
@@ -348,6 +369,10 @@ public class MusicManager {
         playlistManager.removeOneSongFromPlaylist(selected);
     }
 
+    /**
+     * @param query to be input by the user.
+     * @return songs to an observable list that contain the query.
+     */
     public ObservableList<Song> searchListSongs(String query)
     {
             ObservableList<Song> songs = getMistressListAgain();

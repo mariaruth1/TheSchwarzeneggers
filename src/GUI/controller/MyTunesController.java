@@ -191,12 +191,6 @@ public class MyTunesController implements Initializable {
         setProgressBar();
     }
 
-    @FXML
-    private void clickShuffle(ActionEvent actionEvent) {
-        //TODO
-        throw new RuntimeException();
-    }
-
     public void clickCreateNewSong(ActionEvent actionEvent){
 
             Node n = (Node) actionEvent.getSource();
