@@ -10,8 +10,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,6 +168,9 @@ public class MusicManager {
         }
     }
 
+    /**
+     * @return filename of the song currently playing, with folder name and filetype trimmed off.
+     */
     public String getCurrentSongTitle() {
         if (mediaPlayer != null) {
             String songTitle = getAllSongPaths().get(songIndex);
@@ -178,6 +179,9 @@ public class MusicManager {
         return "No song selected";
     }
 
+    /**
+     * @return filename of the playlist song currently playing, with folder name and filetype trimmed off.
+     */
     public String getCurrentPlaylistSongTitle() {
         if (mediaPlayer != null) {
             String playlistSongTitle = getPlaylistSongPaths().get(songIndex);
@@ -187,13 +191,17 @@ public class MusicManager {
     }
 
     /**
-     * @param path
+     * @param path of song.
      * @return the index of the song in the list.
      */
     public int getSongIndex(String path) {
         return getAllSongPaths().indexOf(path);
     }
 
+    /**
+     * @param path of song in playlist.
+     * @return the index of the song in the playlist.
+     */
     public int getPlaylistSongIndex(String path){
         return getPlaylistSongPaths().indexOf(path);
     }
@@ -226,54 +234,44 @@ public class MusicManager {
      * If there is no previous song to play it restarts the first song.
      */
     public void previousSong() {
-        int previousSongIndex = songIndex - 1;
-        String previousSongPath = getAllSongPaths().get(previousSongIndex);
         try {
             if (mediaPlayer != null) {
 
-               if (songIndex > 0) {
+                if (songIndex > 0)
                     songIndex--;
-               }
 
-               else{
-                   songIndex = 0;
-               }
-                playSelectedSong(previousSongPath);
+                playSelectedSong(getAllSongPaths().get(songIndex));
+
             }
-
             } catch(Exception e){
                 throw new RuntimeException(e);
             }
     }
 
-    public void previousPlaylistSong(){
-        int previousSongIndex = songIndex - 1;
-        String previousSongPath = getPlaylistSongPaths().get(previousSongIndex);
+    /**
+     * Based on the current playlist song index it goes back to the previous index and plays that song.
+     * If there is no previous song to play it restarts the first song in the chosen playlist.
+     */
+    public void previousPlaylistSong() {
         try {
             if (mediaPlayer != null) {
 
                 if (songIndex > 0) {
                     songIndex--;
                 }
-
-                else{
-                    songIndex = 0;
-                }
-                playSelectedPlaylistSong(previousSongPath);
+                playSelectedPlaylistSong(getPlaylistSongPaths().get(songIndex));
             }
 
-        } catch(Exception e){
-            throw new RuntimeException(e);
+            } catch(Exception e){
+                throw new RuntimeException(e);
+            }
         }
-    }
 
     /**
      * Based on the current song index it goes to the next index and plays that song.
      * If there is no next song to play it starts playing the list from the first song again.
      */
     public void nextSong() {
-        int nextSongIndex = songIndex+1;
-        String nextSongPath = getAllSongPaths().get(nextSongIndex);
         try {
             if (mediaPlayer != null) {
 
@@ -283,7 +281,7 @@ public class MusicManager {
                 else{
                     songIndex = 0;
                 }
-                playSelectedSong(nextSongPath);
+                playSelectedSong(getAllSongPaths().get(songIndex));
             }
 
         } catch(Exception e){
@@ -292,8 +290,6 @@ public class MusicManager {
     }
 
     public void nextPlaylistSong() {
-        int nextSongIndex = songIndex+1;
-        String nextSongPath = getPlaylistSongPaths().get(nextSongIndex);
         try {
             if (mediaPlayer != null) {
 
@@ -303,7 +299,7 @@ public class MusicManager {
                 else{
                     songIndex = 0;
                 }
-                playSelectedPlaylistSong(nextSongPath);
+                playSelectedPlaylistSong(getPlaylistSongPaths().get(songIndex));
             }
 
         } catch(Exception e){
@@ -315,7 +311,7 @@ public class MusicManager {
     /**
      * Enables the volume to be set to a specific value,
      * but only if there is a MediaPlayer instantiated.
-     * @param volume
+     * @param volume to be set from volume slider.
      */
     public void volumeIncrement(double volume){
         if(mediaPlayer!=null)

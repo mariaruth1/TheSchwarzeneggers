@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.MyTunesController">
+<AnchorPane prefHeight="600.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.MyTunesController">
    <children>
       <ProgressBar fx:id="progressBar" layoutX="59.0" layoutY="523.0" prefHeight="18.0" prefWidth="523.0" progress="0.0" />
-      <Label fx:id="txtNowPlaying" alignment="CENTER" layoutX="59.0" layoutY="497.0" prefHeight="26.0" prefWidth="523.0" text="Song Title - Artist Name" />
+      <Label fx:id="txtNowPlaying" alignment="CENTER" layoutX="59.0" layoutY="497.0" prefHeight="26.0" prefWidth="523.0" text="No song selected" />
       <Slider fx:id="volumeSlider" blockIncrement="25.0" layoutX="349.0" layoutY="544.0" minorTickCount="0" prefHeight="38.0" prefWidth="236.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" />
       <Label layoutX="582.0" layoutY="554.0" text="Volume" />
       <TextField fx:id="searchBar" layoutX="59.0" layoutY="48.0" prefHeight="26.0" prefWidth="322.0" promptText="search songs" />
