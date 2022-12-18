@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import javafx.stage.Stage;
@@ -53,8 +54,9 @@ public class MyTunesController implements Initializable {
     @FXML
     private TextField searchBar;
     @FXML
-    private Button btnPlay, btnPause, btnReset, btnPrevious, btnNext, btnCreateNewSong, btnAddSongToPlaylist;
-
+    private Button btnCreateNewSong;
+    @FXML
+    private ImageView btnPlay, btnPause, btnReset, btnPrevious, btnNext, btnAddSongToPlaylist;
 
     MusicManager musicManager = new MusicManager();
 
@@ -123,7 +125,7 @@ public class MyTunesController implements Initializable {
 
 
     @FXML
-    private void clickPlay(ActionEvent actionEvent) {
+    private void clickPlay(MouseEvent mouseEvent) {
         Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
         Song selectedSongInPlaylist = playListTable.getSelectionModel().getSelectedItem();
         String selectedSongPath;
@@ -154,19 +156,19 @@ public class MyTunesController implements Initializable {
 
 
     @FXML
-    private void clickPause(ActionEvent actionEvent) {
+    private void clickPause(MouseEvent mouseEvent) {
         musicManager.pauseSong();
     }
 
     @FXML
-    private void clickReset(ActionEvent actionEvent) {
+    private void clickReset(MouseEvent mouseEvent) {
         musicManager.stopSong();
         txtNowPlaying.setText("No song selected");
         setProgressBar();
     }
 
     @FXML
-    private void clickPrevious(ActionEvent actionEvent) {
+    private void clickPrevious(MouseEvent mouseEvent) {
         if (!isPlaylistSelected) {
             musicManager.previousSong();
             txtNowPlaying.setText(musicManager.getCurrentSongTitle());
@@ -179,7 +181,7 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void clickNext(ActionEvent actionEvent) {
+    private void clickNext(MouseEvent mouseEvent) {
         if (!isPlaylistSelected) {
             musicManager.nextSong();
             txtNowPlaying.setText(musicManager.getCurrentSongTitle());
@@ -305,9 +307,8 @@ public class MyTunesController implements Initializable {
     /**
      * Checks if an item on songListTable and playlistChoicebox has been selected.
      * If so executes the code under. Gets the id from the selected items and passes them through musicManager and so on.
-     * @param actionEvent
      */
-    public void clickAddSongToPlaylist(ActionEvent actionEvent) {
+    public void clickAddSongToPlaylist(MouseEvent mouseEvent) {
         Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
         Playlist selectedPlaylist = playlistChoicebox.getSelectionModel().getSelectedItem();
         int song_id;

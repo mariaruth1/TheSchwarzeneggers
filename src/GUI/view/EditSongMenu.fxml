@@ -6,18 +6,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="290.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.EditSongMenuController">
+<AnchorPane prefHeight="290.0" prefWidth="320.0" style="-fx-background-color: #131560;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.EditSongMenuController">
    <children>
       <TextField fx:id="txtSongEditYear" layoutX="24.0" layoutY="101.0" prefHeight="26.0" prefWidth="266.0" />
       <TextField fx:id="txtSongEditTitle" layoutX="24.0" layoutY="50.0" prefHeight="26.0" prefWidth="266.0" />
       <TextField fx:id="txtSongEditArtist" layoutX="24.0" layoutY="153.0" prefHeight="26.0" prefWidth="266.0" />
-      <ChoiceBox fx:id="choiceEditGenre" layoutX="24.0" layoutY="204.0" prefWidth="150.0" />
-      <Label layoutX="133.0" layoutY="14.0" text="Edit song" />
-      <Label layoutX="27.0" layoutY="32.0" text="Song title" />
-      <Label layoutX="22.0" layoutY="83.0" text="Release Year" />
-      <Label layoutX="26.0" layoutY="135.0" text="Artist" />
-      <Label layoutX="24.0" layoutY="186.0" text="Genre" />
-      <Button fx:id="btnSaveEdit" defaultButton="true" layoutX="27.0" layoutY="248.0" mnemonicParsing="false" onAction="#clickSaveEdit" prefHeight="26.0" prefWidth="120.0" text="Save" />
-      <Button fx:id="btnCancelEdit" cancelButton="true" layoutX="181.0" layoutY="248.0" mnemonicParsing="false" onAction="#clickCancelEdit" prefHeight="26.0" prefWidth="120.0" text="Cancel" />
+      <ChoiceBox fx:id="choiceEditGenre" layoutX="24.0" layoutY="204.0" prefWidth="150.0" style="-fx-background-color: #ACAADE;" />
+      <Label layoutX="133.0" layoutY="14.0" text="Edit song" textFill="WHITE" />
+      <Label layoutX="27.0" layoutY="32.0" text="Song title" textFill="WHITE" />
+      <Label layoutX="22.0" layoutY="83.0" text="Release Year" textFill="WHITE" />
+      <Label layoutX="26.0" layoutY="135.0" text="Artist" textFill="WHITE" />
+      <Label layoutX="24.0" layoutY="186.0" text="Genre" textFill="WHITE" />
+      <Button fx:id="btnSaveEdit" defaultButton="true" layoutX="27.0" layoutY="248.0" mnemonicParsing="false" onAction="#clickSaveEdit" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: #ACAADE;" text="Save" textFill="#131560" />
+      <Button fx:id="btnCancelEdit" cancelButton="true" layoutX="181.0" layoutY="248.0" mnemonicParsing="false" onAction="#clickCancelEdit" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: #ACAADE;" text="Cancel" textFill="#131560" />
    </children>
 </AnchorPane>

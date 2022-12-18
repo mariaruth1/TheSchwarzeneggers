@@ -8,12 +8,12 @@
 
 <VBox prefHeight="121.0" prefWidth="253.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.NewPlaylistMenuController">
    <children>
-      <AnchorPane prefHeight="100.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
+      <AnchorPane prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #131560;" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="52.0" layoutY="14.0" text="Please write a playlist name" />
+            <Label layoutX="52.0" layoutY="14.0" text="Please write a playlist name" textFill="WHITE" />
             <TextField fx:id="txtPlaylist" layoutX="11.0" layoutY="42.0" prefHeight="25.0" prefWidth="228.0" />
-            <Button layoutX="32.0" layoutY="79.0" mnemonicParsing="false" onAction="#clickSave" prefHeight="30.0" prefWidth="90.0" text="Save" />
-            <Button layoutX="136.0" layoutY="79.0" mnemonicParsing="false" onAction="#clickCancel" prefHeight="30.0" prefWidth="90.0" text="Cancel" />
+            <Button layoutX="32.0" layoutY="79.0" mnemonicParsing="false" onAction="#clickSave" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ACAADE;" text="Save" textFill="#1d2079" />
+            <Button layoutX="136.0" layoutY="79.0" mnemonicParsing="false" onAction="#clickCancel" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ACAADE;" text="Cancel" textFill="#131560" />
          </children>
       </AnchorPane>
    </children>
