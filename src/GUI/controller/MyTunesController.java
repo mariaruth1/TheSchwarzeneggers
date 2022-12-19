@@ -241,7 +241,7 @@ public class MyTunesController implements Initializable {
                 root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/view/EditSongMenu.fxml"));
                 Stage addSongWindow = new Stage();
                 addSongWindow.setScene(new Scene(root));
-                addSongWindow.setTitle("Add Songs");
+                addSongWindow.setTitle("Edit Song");
                 addSongWindow.initOwner(stage);
                 addSongWindow.show();
 
