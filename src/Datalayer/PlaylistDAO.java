@@ -52,14 +52,20 @@ public class PlaylistDAO {
         return new Playlist(title_name);
     }
     /**
-     * Does the same in SongDAO, gets the id of the song selected.
-     * It's a passthrough to create less connections, so PlaylistManager doesn't have to call for SongDAO.
+     * A loop that goes through all the songs to find the id of the song, that has been selected.
      * @param id
-     * @return
+     * @return a song.
      */
     public Song getSong(int id){
-        return songDao.getSong(id);
+        List<Song> songs = songDao.getAllSongs();
+        for (Song s : songs) {
+            if(s.getId() == id) {
+                return s;
+            }
+        }
+        return null;
     }
+
 
     /**
      * We make a list to collect the song ids, that belong to the playlist, we have selected.
@@ -73,7 +79,7 @@ public class PlaylistDAO {
         List<Song> songsInPlaylist = new ArrayList<>();
 
         for (int id : songIds) {
-            songsInPlaylist.add(songDao.getSong(id));
+            songsInPlaylist.add(getSong(id));
         }
         return songsInPlaylist;
     }
@@ -181,15 +187,15 @@ public class PlaylistDAO {
      */
     public void removePlaylistFromPlaylistSongDatabase(Playlist playlist) {
         int id = playlist.getId();
-        String sql = "DELETE FROM Playlists_Songs WHERE playlist_id=?;";
+        String sql = "DELETE FROM Playlists_Songs WHERE playlist_id='" + id + "';";
 
-        try (Connection con = dbc.getConnection();) {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+        try(Connection con = dbc.getConnection();) {
+            con.createStatement().execute(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * First we get the id of the playlist that was selected.
      * We then delete the row depending on the id in Playlist in the database.

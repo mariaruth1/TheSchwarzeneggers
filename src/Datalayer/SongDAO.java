@@ -91,15 +91,4 @@ public class SongDAO {
             throw new RuntimeException(e);
         }
     }
-
-    public Song getSong(int id){
-        List<Song> songs = getAllSongs();
-        for (Song s : songs) {
-            if(s.getId() == id) {
-                return s;
-            }
-        }
-        return null;
-    }
-
 }

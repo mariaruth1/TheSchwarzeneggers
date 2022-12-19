@@ -1,7 +1,6 @@
 package LogicLayer;
 
 import Datalayer.PlaylistDAO;
-import Datalayer.SongDAO;
 import entities.Playlist;
 import entities.Song;
 import javafx.collections.FXCollections;
@@ -12,7 +11,6 @@ public class PlaylistManager {
     private final ObservableList<Playlist> playlists;
     private ObservableList<Song> playlistSongs;
     PlaylistDAO playlistDAO = new PlaylistDAO();
-    SongDAO songDAO = new SongDAO();
 
     public PlaylistManager() {
 
@@ -22,7 +20,7 @@ public class PlaylistManager {
 
     /**
      * First it clears the list as it is a final list, we have to in order to make changes to the list.
-     * It then adds all of the playlists from the playlistDAO method to the observable list playlists.
+     * It then adds all the playlists from the playlistDAO method to the observable list playlists.
      */
     public void fetchAllPlaylists() {
         playlists.clear();
@@ -34,7 +32,6 @@ public class PlaylistManager {
         fetchAllPlaylists();
         return playlists;
     }
-
 
     /**
      * Creates a playlist by user input (String name)
@@ -128,6 +125,4 @@ public class PlaylistManager {
         playlistSongs.remove(selected);
         playlistDAO.removeSongsFromPlaylist(selected);
     }
-
-
 }
