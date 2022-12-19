@@ -225,6 +225,7 @@ public class MyTunesController implements Initializable {
 
             if (alert.getResult() == ButtonType.YES) {
                 Song selected = songListTable.getSelectionModel().getSelectedItem();
+                musicManager.removeSongsFromPlaylist(selected);
                 musicManager.removeSongPassThrough(selected);
             }
         }

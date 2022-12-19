@@ -317,6 +317,11 @@ public class MusicManager {
         if(mediaPlayer!=null)
             mediaPlayer.setVolume(volume);
     }
+
+    /**
+     * We select the playlist from our controller and sends it through our codes.
+     * @param selected
+     */
     public void removePlaylist(Playlist selected) {
         playlistManager.removePlaylist(selected);
     }
@@ -344,8 +349,22 @@ public class MusicManager {
     public void setPlaylistId(int playlistId) {
         this.playlistId = playlistId;
     }
+
+    /**
+     * Passhtrough for the method in playlistManager.
+     * @param selected
+     */
     public void removeOneSongFromPlaylist(Song selected) {
         playlistManager.removeOneSongFromPlaylist(selected);
+    }
+
+    /**
+     * Passthrough for the method in playlistManager.
+     * @param selected
+     */
+    public void removeSongsFromPlaylist(Song selected)
+    {
+        playlistManager.removeSongsFromPlaylist(selected);
     }
 
     public ObservableList<Song> searchListSongs(String query)
