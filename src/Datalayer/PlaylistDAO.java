@@ -22,9 +22,9 @@ public class PlaylistDAO {
     public List<Playlist> getAllPlaylists()
     {
         List <Playlist> getAllPlaylists = new ArrayList<>();
-        try(Connection con = dbc.getConnection();)
+        try(Connection con = dbc.getConnection())
         {
-            PreparedStatement pS = (PreparedStatement) con.prepareStatement("Select * from Playlist");
+            PreparedStatement pS = con.prepareStatement("Select * from Playlist");
             ResultSet rst = pS.executeQuery();
             while (rst.next())
             {
@@ -35,22 +35,7 @@ public class PlaylistDAO {
         }
         return getAllPlaylists;
     }
-    /**
-     * Adds a playlist by the name the user inputs.
-     * The id will always be the last id+1.
-     * @param title_name
-     * @return new Playlist with id and title name.
-     */
-    public Playlist addPlaylist(String title_name)
-    {
 
-        try(Connection con = dbc.getConnection();) {
-            addPlaylistToDatabase(title_name);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return new Playlist(title_name);
-    }
     /**
      * A loop that goes through all the songs to find the id of the song, that has been selected.
      * @param id
@@ -65,7 +50,6 @@ public class PlaylistDAO {
         }
         return null;
     }
-
 
     /**
      * We make a list to collect the song ids, that belong to the playlist, we have selected.
@@ -83,6 +67,11 @@ public class PlaylistDAO {
         }
         return songsInPlaylist;
     }
+
+    /**
+     * @param name
+     * @return ID of the playlist.
+     */
     public int getPlaylistID(String name) {
 
         try (Connection con = dbc.getConnection();) {
@@ -101,7 +90,7 @@ public class PlaylistDAO {
     public void addPlaylistToDatabase(String title_name) {
         String sql = "INSERT INTO Playlist (title_name) VALUES (?);";
 
-        try (Connection con = dbc.getConnection();) {
+        try (Connection con = dbc.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, title_name);
             ps.execute();
@@ -110,9 +99,11 @@ public class PlaylistDAO {
         }
     }
 
+    /**
+     * @return the latest playlist ID.
+     */
     public int getNewestIdPlaylist() {
-
-        try (Connection con = dbc.getConnection();) {
+        try (Connection con = dbc.getConnection()) {
             ResultSet rs = con.createStatement().executeQuery("SELECT TOP 1 * FROM Playlist ORDER BY playlist_id DESC;");
             rs.next();
             int id = rs.getInt("playlist_id");
@@ -122,6 +113,7 @@ public class PlaylistDAO {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * Here we get the song ids and adds them to a list of integers.
      * @param playlist_id
@@ -142,6 +134,7 @@ public class PlaylistDAO {
         }
         return songIds;
     }
+
     /**
      * Adds playlist_id and song_id to Playlists_Songs table.
      * With this table, we can now see which playlist_id has what song_id.
@@ -162,11 +155,15 @@ public class PlaylistDAO {
         }
     }
 
+    /**
+     * This should change the name of a playlist in the database.
+     * @param playlist
+     */
     public void editPlaylistName(Playlist playlist) {
         String title = playlist.getTitle();
         int id = playlist.getId();
 
-        System.out.println(title +" " + id);
+        System.out.println("playlisttitle= " + title +" playlistId= " + id);
         String sql = "UPDATE PlayList SET title_name = ? WHERE playlist_id = ? ;";
 
         //I have no idea why this isn't working
@@ -178,7 +175,6 @@ public class PlaylistDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     /**
@@ -225,6 +221,10 @@ public class PlaylistDAO {
         }
     }
 
+    /**
+     * Removes all songs from a playlist.
+     * @param song
+     */
     public void removeSongsFromPlaylist(Song song) {
         int id = song.getId();
         String sql = "DELETE FROM Playlists_Songs WHERE song_id='" +id+ "';";

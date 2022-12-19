@@ -15,6 +15,10 @@ public class SongDAO {
     DatabaseConnection dbc = new DatabaseConnection();
     List<Song> mistressSonglist;
 
+    /**
+     * Retrieves all the songs from the database.
+     * @return list of Song.
+     */
     public List<Song> getAllSongs()
     {
         mistressSonglist = new ArrayList<>();
@@ -36,9 +40,15 @@ public class SongDAO {
         return mistressSonglist;
     }
 
+    /**
+     * Makes a connection to the database and makes a prepared statement, that adds a song to the database.
+     * @param title
+     * @param year
+     * @param artist
+     * @param genre
+     * @param path
+     */
     public void addSongToDataBase(String title,int year,String artist,String genre,String path) {
-
-        // makes a connection to the database and makes a prepared statement, that adds a song to database
         String sql = "INSERT INTO Songs (Title, ReleaseYear, Artist, Genre, SongPath) VALUES (?,?,?,?,?)";
 
         try(Connection con = dbc.getConnection();) {
@@ -53,8 +63,12 @@ public class SongDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
+
+    /**
+     * Removes a song from the database.
+     * @param song
+     */
     public void removeFromDataBase(Song song){
         int id = song.getId();
         String sql ="DELETE FROM Songs WHERE iD='" + id + "';";
@@ -64,15 +78,18 @@ public class SongDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
+
+    /**
+     * Updates song details based on user input.
+     * @param song
+     */
     public void updateSong(Song song){
         String title = song.getTitle();
         int releaseYear = song.getYear();
         String artist = song.getArtist();
         String genre = song.getGenre();
         String path = song.getPath();
-
         int id = song.getId();
 
 

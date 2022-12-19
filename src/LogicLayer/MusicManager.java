@@ -22,33 +22,28 @@ public class MusicManager {
     Media media;
     MediaPlayer mediaPlayer;
     private int songIndex;
-    private int playlistId;
 
 
     /**
      * @return observable list of all the songs in the database.
      */
-
     public ObservableList<Song> getMistressListAgain() {
         return songManager.getMistressSongList();
     }
 
     /**
-     * @return true if there is currently a MediaPlayer instantiated, false if not.
-     */
-    public boolean isMediaPlayerNull() {
-        return mediaPlayer == null;
-    }
-
-
-    /**
-     * @return an observable list of all playlists..
+     * @return an observable list of all playlists.
      */
     public ObservableList<Playlist> getPlaylistAgain()
     {
         return playlistManager.getPlaylists();
     }
 
+    /**
+     * Adds song to playlist.
+     * @param playlist_id
+     * @param song_id
+     */
     public void addSongToPlaylistAgain(int playlist_id, int song_id)
     {
         playlistManager.addSongToPlaylist(playlist_id, song_id);
@@ -81,8 +76,6 @@ public class MusicManager {
         }
         return playlistSongPaths;
     }
-
-
 
     /**
      * Measures the current Duration of a song, as an observable property.
@@ -240,7 +233,8 @@ public class MusicManager {
      */
     public void stopSong() {
         try {
-            if(mediaPlayer!=null) mediaPlayer.stop();
+            if(mediaPlayer!=null)
+                mediaPlayer.stop();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -346,29 +340,28 @@ public class MusicManager {
     public void removePlaylist(Playlist selected) {
         playlistManager.removePlaylist(selected);
     }
+
+    /**
+     * Removes song from database and mistress song list.
+     * @param selected
+     */
     public void removeSongPassThrough(Song selected) {
         SongManager.getInstance().removeSong(selected);
     }
 
     /**
-     *
      * @return the list of song ids from playlistManager.
      */
     public ObservableList<Song> getPlaylistSongs() {
         return playlistManager.getSelectedPlaylistSongs();
     }
 
+    /**
+     *
+     * @param id
+     */
     public void selectPlaylist(int id) {
         playlistManager.selectPlaylist(id);
-    }
-
-    public int getPlaylistId()
-    {
-        return playlistId;
-    }
-
-    public void setPlaylistId(int playlistId) {
-        this.playlistId = playlistId;
     }
 
     /**
@@ -406,20 +399,42 @@ public class MusicManager {
             return FXCollections.observableArrayList(filtered);
         }
 
+    /**
+     * Updates song info based on user input.
+      * @param newSong
+     */
     public void updateSongPassThrough(Song newSong) {
         SongManager.getInstance().updateSong(newSong);
     }
+
+    /**
+     * Creates a new playlist.
+     * @param playlistName
+     */
     public void createPlaylistPassThrough(String playlistName){
-
         playlistManager.createPlaylist(playlistName);
-
     }
+
+    /**
+     * Renames an existing playlist.
+     * @param playlistName
+     */
     public void renamePlaylistPassThrough(String playlistName){
         playlistManager.playlistRename(playlistName);
     }
 
-    public  void oldSongpassthrough(String oldName){
+    /**
+     * Gets name of current song that's being renames in order to rename it.
+     * @param oldName
+     */
+    public void getPlaylistName(String oldName){
         playlistManager.getPlaylistName(oldName);
     }
 
+    /**
+     * @return true if there is currently a MediaPlayer instantiated, false if not.
+     */
+    public boolean isMediaPlayerNull() {
+        return mediaPlayer == null;
+    }
 }

@@ -8,12 +8,12 @@ import javafx.collections.ObservableList;
 
 public class PlaylistManager {
 
+    private int playlistId;
     private final ObservableList<Playlist> playlists;
     private ObservableList<Song> playlistSongs;
     PlaylistDAO playlistDAO = new PlaylistDAO();
 
     public PlaylistManager() {
-
         playlists = FXCollections.observableArrayList();
         playlistSongs = FXCollections.observableArrayList();
     }
@@ -22,11 +22,14 @@ public class PlaylistManager {
      * First it clears the list as it is a final list, we have to in order to make changes to the list.
      * It then adds all the playlists from the playlistDAO method to the observable list playlists.
      */
-    public void fetchAllPlaylists() {
+    private void fetchAllPlaylists() {
         playlists.clear();
         playlists.addAll(playlistDAO.getAllPlaylists());
     }
 
+    /**
+     * @return an observable list of playlist.
+     */
     public ObservableList<Playlist> getPlaylists()
     {
         fetchAllPlaylists();
@@ -78,17 +81,23 @@ public class PlaylistManager {
     public void selectPlaylist(int id) {
         playlistSongs = FXCollections.observableArrayList(playlistDAO.getSongsFromPlaylist(id));
     }
-    private int playlistId;
 
+    /**
+     * Makes a new playlist based on the new playlist name.
+     * @param playlistName
+     */
     public void playlistRename(String playlistName){
         int id = this.playlistId;
         Playlist playlist = new Playlist(id, playlistName);
         playlistDAO.editPlaylistName(playlist);
     }
 
+    /**
+     * Gets the name of a playlist.
+     * @param playlistName
+     */
     public void getPlaylistName(String playlistName){
         this.playlistId = playlistDAO.getPlaylistID(playlistName);
-
     }
 
     /**

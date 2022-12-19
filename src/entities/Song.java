@@ -6,16 +6,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Song {
+
     private IntegerProperty id = new SimpleIntegerProperty();
-
     private StringProperty title = new SimpleStringProperty();
-
     private IntegerProperty year= new SimpleIntegerProperty();
-
     private StringProperty artist = new SimpleStringProperty();
-
     private StringProperty genre = new SimpleStringProperty();
-
     private StringProperty path = new SimpleStringProperty();
 
 

@@ -32,9 +32,7 @@ import static GUI.controller.NewPlaylistMenuController.playlistname;
 public class MyTunesController implements Initializable {
 
     @FXML
-    private TableView<Song> songListTable;
-    @FXML
-    private TableView<Song> playListTable;
+    private TableView<Song> songListTable, playListTable;
     @FXML
     private TableColumn<Song, String> columnTitle, columnArtist, columnGenre;
     @FXML
@@ -53,20 +51,18 @@ public class MyTunesController implements Initializable {
     private Slider volumeSlider;
     @FXML
     private TextField searchBar;
-    @FXML
-    private Button btnCreateNewSong;
-    @FXML
-    private ImageView btnPlay, btnPause, btnReset, btnPrevious, btnNext, btnAddSongToPlaylist;
 
     MusicManager musicManager = new MusicManager();
 
     static boolean isPlaylistSelected = false;
+    static boolean isEditingPlaylist = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         songListTable.setEditable(true);
         playListTable.setEditable(true);
 
+        //sets the volume slider based on user input, can not be changed before a song is playing.
         volumeSlider.valueProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
@@ -75,8 +71,7 @@ public class MyTunesController implements Initializable {
             }
         });
 
-        //add back text here
-
+        // filters the song list based on user input.
         searchBar.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -95,7 +90,6 @@ public class MyTunesController implements Initializable {
         playlistChoicebox.setItems(musicManager.getPlaylistAgain());
         playlistChoicebox.getSelectionModel().selectedItemProperty().addListener((options,oldValue, newValue)->
         {
-            musicManager.setPlaylistId(newValue.getId());
             musicManager.selectPlaylist(newValue.getId());
             playListTable.refresh();
             playListTable.setItems(musicManager.getPlaylistSongs());
@@ -108,6 +102,7 @@ public class MyTunesController implements Initializable {
         playListTable.setItems(musicManager.getPlaylistSongs());
     }
 
+    //allows progress bar to be updated based on the current song playing.
     private void setProgressBar() {
         if (musicManager.isMediaPlayerNull()) {
             return;
@@ -124,6 +119,10 @@ public class MyTunesController implements Initializable {
     }
 
 
+    /**
+     * Plays the first song in the main list if nothing else is selected, if something is selected it plays from there.
+     * @param mouseEvent
+     */
     @FXML
     private void clickPlay(MouseEvent mouseEvent) {
         Song selectedSong = songListTable.getSelectionModel().getSelectedItem();
@@ -167,6 +166,10 @@ public class MyTunesController implements Initializable {
         setProgressBar();
     }
 
+    /**
+     * Goes to the previous song in the current list/playlist being played.
+     * @param mouseEvent
+     */
     @FXML
     private void clickPrevious(MouseEvent mouseEvent) {
         if (!isPlaylistSelected) {
@@ -180,6 +183,10 @@ public class MyTunesController implements Initializable {
         setProgressBar();
     }
 
+    /**
+     * Goes to the next song in the current list/playlist being played.
+     * @param mouseEvent
+     */
     @FXML
     private void clickNext(MouseEvent mouseEvent) {
         if (!isPlaylistSelected) {
@@ -193,6 +200,10 @@ public class MyTunesController implements Initializable {
         setProgressBar();
     }
 
+    /**
+     * Opens the add song menu view.
+     * @param actionEvent
+     */
     public void clickCreateNewSong(ActionEvent actionEvent){
 
             Node n = (Node) actionEvent.getSource();
@@ -212,6 +223,10 @@ public class MyTunesController implements Initializable {
 
     }
 
+    /**
+     * Deletes a selected song from the list and displays a warning before action is taken.
+     * @param actionEvent
+     */
     public void clickDeleteSong(ActionEvent actionEvent) {
         if(songListTable.getSelectionModel().getSelectedItem()!=null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this song from the program? The file will still be on the computer", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
@@ -225,7 +240,10 @@ public class MyTunesController implements Initializable {
         }
     }
 
-
+    /**
+     * Opens the edit song menu view.
+     * @param actionEvent
+     */
     public void clickEditSongDetails(ActionEvent actionEvent) {
         if(songListTable.getSelectionModel().getSelectedItem()!=null) {
             Node n = (Node) actionEvent.getSource();
@@ -246,7 +264,12 @@ public class MyTunesController implements Initializable {
             }
         }
     }
-    static boolean isEditingPlaylist = false;
+
+    /**
+     * Opens the new playlist menu view.
+     * Makes isEditingPlaylist false.
+     * @param actionEvent
+     */
     public void clickCreatePlaylist(ActionEvent actionEvent) {
         isEditingPlaylist=false;
             Node n = (Node) actionEvent.getSource();
@@ -265,6 +288,12 @@ public class MyTunesController implements Initializable {
                 e.printStackTrace();
             }
     }
+
+    /**
+     * Opens the new playlist menu view.
+     * Makes isEditingPlaylist true.
+     * @param actionEvent
+     */
     public void clickEditPlaylistName(ActionEvent actionEvent) {
         if(playlistChoicebox.getValue()!=null) {
             isEditingPlaylist = true;
@@ -284,6 +313,7 @@ public class MyTunesController implements Initializable {
                 }
             }
     }
+
     /** First checks if the playlistChoicebox is not null.
      * If not the code under will execute.
      * Here we need the information of the selected playlist, we pass through our code.
@@ -299,6 +329,7 @@ public class MyTunesController implements Initializable {
             }
         }
     }
+
     /**
      * Checks if an item on songListTable and playlistChoicebox has been selected.
      * If so executes the code under. Gets the id from the selected items and passes them through musicManager and so on.
@@ -331,6 +362,7 @@ public class MyTunesController implements Initializable {
     private void clickChoicebox(MouseEvent mouseEvent) {
         isPlaylistSelected = true;
     }
+
     /**
      * Checks if playlistChoicebox and a selected item from the playlistTable is not null.
      * Then executes the code under.
@@ -342,6 +374,4 @@ public class MyTunesController implements Initializable {
             musicManager.removeOneSongFromPlaylist(selected);
         }
     }
-
-
 }

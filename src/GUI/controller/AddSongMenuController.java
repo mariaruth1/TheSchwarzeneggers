@@ -13,9 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import java.awt.*;
-
-
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,6 +29,9 @@ public class AddSongMenuController implements Initializable {
     private TextField txtFile;
     @FXML
     ChoiceBox<String> choiceBox;
+    @FXML
+    TextField txtErrorMessage = new TextField();
+
     ObservableList<String> genres = FXCollections.observableArrayList("Pop", "Rock", "Disco", "Metal", "Country", "Classical", "Country", "Jazz", "Blues", "Hip hop", "Techno", "Folk");
 
     @Override
@@ -39,29 +39,34 @@ public class AddSongMenuController implements Initializable {
         choiceBox.getItems().addAll(genres);
     }
 
-
+    /**
+     * Enables the user to change their mind and cancels the action.
+     * @param actionEvent
+     */
     @FXML
     private void clickCancel(ActionEvent actionEvent) {
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
-
     }
 
+    /**
+     * Gets all the inputs in the text fields, checks that year is number else it gets changed to 0.
+     * Then passes all the data to the SongManager for further processing.
+     * Saves the changes the user has made.
+     * @param actionEvent
+     */
     public void clickSave(ActionEvent actionEvent) {
-        /**Gets all the inputs in the textfields, checks that year is number else it gets changed to 0.
-         Then passes all the data to the Songmanager for futher processing */
+
             InputManager iC = new InputManager();
             SongManager sm = SongManager.getInstance();
             String title = txtTitle.getText();
-            int year = iC.checkImput(txtYear.getText());
+            int year = iC.checkInput(txtYear.getText());
             String artist = txtArtist.getText();
             String genre = choiceBox.getValue();
-
             String path = txtFile.getText();
 
             sm.addSong(title, year, artist, genre, path);
-            MyTunesController mtc = new MyTunesController();
 
             txtTitle.clear();
             txtArtist.clear();
@@ -72,22 +77,18 @@ public class AddSongMenuController implements Initializable {
             stage.close();
     }
 
-   private int checkInput(String year){
-       InputManager iC = new InputManager();
-       if(iC.checkYear(year)==true){
-           return Integer.parseInt(year);
-       }
-       return 0;
-   }
-    @FXML
-    TextField txtErrorMessage = new TextField();
-
+    /**
+     * Should display an error message if the user tried to enter invalid data.
+     */
     public void yearError() {
         this.txtErrorMessage.setOpacity(100);
         this.txtErrorMessage.setText(" year must be a number");
     }
 
-    //lets you select a file on your pc when you click on the chooser button,
+    /**
+     * Lets the user select a file on their pc when they click on the chooser button.
+     * @param actionEvent
+     */
     public void clickChoose(ActionEvent actionEvent) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select song");
@@ -110,7 +111,11 @@ public class AddSongMenuController implements Initializable {
         }
 
     }
-    //trys to read the selected file and input the results into the AddNewSongView
+
+    /**
+     * Trys to read the selected file and input the results into the AddNewSongView.
+     * @param filepath
+     */
     public void autoInput(String filepath){
         InputManager iC = new InputManager();
         txtArtist.setText(iC.getSongArtist(filepath));

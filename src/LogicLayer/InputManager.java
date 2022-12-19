@@ -14,7 +14,11 @@ import java.io.*;
 public class InputManager {
     AddSongMenuController aSMC = new AddSongMenuController();
 
-   //takes the year input from edit and add song and checks if it's a number else 0 is returned
+    /**
+     * Takes the year input from edit and add song and checks if it's a number else 0 is returned
+     * @param yearInput
+     * @return
+     */
    public boolean checkYear(String yearInput){
         if(yearInput != null){
             try{
@@ -26,16 +30,20 @@ public class InputManager {
         }
         return false;
     }
-    public int checkImput(String year){
+
+    public int checkInput(String year){
         if(checkYear(year)==true){
             return Integer.parseInt(year);
         }
         return 0;
     }
 
-
+    /**
+     * Looks for a title on the file, that can be added to text field.
+     * @param filePath
+     * @return
+     */
     public String getSongTitle(String filePath){
-        //looks for a title on the file, that can be added to textfield
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -67,8 +75,13 @@ public class InputManager {
 
         return null;
     }
+
+    /**
+     * Looks for the artist on the file, that can be added to text field.
+     * @param filePath
+     * @return
+     */
     public String getSongArtist(String filePath){
-        //looks for an artist on the file, that can be added to textfield
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -96,8 +109,12 @@ public class InputManager {
         return "";
     }
 
+    /**
+     * Looks for the year on the file, that can be added to text field.
+     * @param filePath
+     * @return
+     */
     public String getSongReleaseYear(String filePath){
-        //looks for a year on the file, that can be added to textfield
         try {
 
             InputStream input = new FileInputStream(new File(filePath));
@@ -132,8 +149,13 @@ public class InputManager {
         }
         return "";
     }
+
+    /**
+     * Looks for the genre on the file, that can be added to text field.
+     * @param filePath
+     * @return
+     */
     public String getSongGenre(String filePath) {
-        //looks for a genre on the file, that can be added to textfield
         try {
             InputStream input = new FileInputStream(new File(filePath));
             ContentHandler handler = (ContentHandler) new DefaultHandler();
